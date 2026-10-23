@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { saveSprint, type SprintState, type SprintTask } from "@/lib/agent-executor";
+import { saveSprint, getNextSprintNumber, getLessonsLearned, type SprintState, type SprintTask } from "@/lib/agent-executor";
 
 export async function POST(req: NextRequest) {
   try {
-    const { agents, brief } = await req.json();
+    let body: any = {};
+    try {
+      const text = await req.text();
+      if (text && text.trim().length > 0) {
+        body = JSON.parse(text);
+      }
+    } catch {}
+
+    const { agents, brief } = body;
     
     const key = process.env.TRELLO_API_KEY;
     const token = process.env.TRELLO_TOKEN;
@@ -13,8 +21,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: "Faltan credenciales de Trello" }, { status: 400 });
     }
 
-    // 1. Generar las tareas (siempre hacemos esto primero)
-    const tasksData = generateSprintTasks(brief, agents);
+    // ✅ Obtener lecciones aprendidas del sprint anterior
+    const lessonsLearned = getLessonsLearned();
+    const sprintNumber = getNextSprintNumber();
+
+    // Generar tareas con contexto de lecciones aprendidas
+    const tasksData = generateSprintTasks(brief, agents, lessonsLearned, sprintNumber);
     const sprintTasks: SprintTask[] = tasksData.map((task, i) => ({
       id: `task-${Date.now()}-${i}`,
       title: task.title,
@@ -23,31 +35,31 @@ export async function POST(req: NextRequest) {
       status: "pending"
     }));
 
-    // 2. ✅ CREAR EL ESTADO LOCAL SIEMPRE (incluso si Trello ya tiene las tarjetas)
     const newSprint: SprintState = {
-      sprintNumber: 1,
+      sprintNumber,
       startedAt: new Date().toISOString(),
       approvedBy: "human",
       tasks: sprintTasks,
-      status: "planned"
+      status: "planned",
+      lessonsLearned
     };
     
-    saveSprint(newSprint); // ¡Esto garantiza que el archivo exista!
+    saveSprint(newSprint);
 
-    // 3. Verificar si ya existe en Trello
+    // Verificar si ya existe en Trello
     const cardsRes = await fetch(`https://api.trello.com/1/boards/${boardId}/cards?key=${key}&token=${token}`);
     const existingCards = await cardsRes.json();
-    const sprintAlreadyPlanned = existingCards.some((card: any) => card.name.includes("🚀 Sprint 1: Planificación"));
+    const sprintAlreadyPlanned = existingCards.some((card: any) => card.name.includes(`🚀 Sprint ${sprintNumber}`));
 
     if (sprintAlreadyPlanned) {
       return NextResponse.json({ 
         success: true, 
         alreadyExists: true,
-        message: "El Sprint ya estaba planificado en Trello. Estado local sincronizado correctamente." 
+        message: `El Sprint ${sprintNumber} ya estaba planificado en Trello.` 
       }, { status: 200 });
     }
 
-    // 4. Si no existe en Trello, lo creamos
+    // Crear en Trello
     const listsRes = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${key}&token=${token}&filter=open`);
     const lists = await listsRes.json();
     const sprintList = lists.find((l: any) => /sprint|actual/i.test(l.name)) || lists[0];
@@ -57,8 +69,8 @@ export async function POST(req: NextRequest) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         key, token, idList: sprintList.id,
-        name: "🚀 Sprint 1: Planificación y Revisión Humana",
-        desc: `Este sprint fue generado automáticamente para el proyecto **${brief.projectName}**.\n\nPor favor, revisa las tareas hijas y aprueba la ejecución.`,
+        name: `🚀 Sprint ${sprintNumber}: Planificación`,
+        desc: `Sprint generado automáticamente para el proyecto **${brief.projectName}**.\n\n${lessonsLearned.length > 0 ? `\n📚 Lecciones aprendidas del sprint anterior:\n${lessonsLearned.map(l => `- ${l}`).join('\n')}` : ''}`,
         pos: "top"
       })
     });
@@ -82,7 +94,9 @@ export async function POST(req: NextRequest) {
       alreadyExists: false,
       tasksCount: sprintTasks.length,
       motherCardUrl: motherCard.url,
-      message: `Sprint planificado con éxito.`
+      sprintNumber,
+      lessonsLearnedCount: lessonsLearned.length,
+      message: `Sprint ${sprintNumber} planificado con éxito.`
     }, { status: 200 });
     
   } catch (error: any) {
@@ -91,8 +105,18 @@ export async function POST(req: NextRequest) {
   }
 }
 
-function generateSprintTasks(brief: any, agents: any[]) {
+function generateSprintTasks(brief: any, agents: any[], lessonsLearned: string[], sprintNumber: number) {
   const tasks = [];
+  
+  // Si hay lecciones aprendidas, añadir tarea de revisión
+  if (lessonsLearned.length > 0 && sprintNumber > 1) {
+    tasks.push({
+      title: "📚 [PO] Revisar lecciones aprendidas del sprint anterior",
+      description: `Revisar las lecciones aprendidas del sprint anterior:\n${lessonsLearned.map(l => `- ${l}`).join('\n')}\n\nAsegurar que estas lecciones se apliquen en este sprint.`,
+      agent: "po"
+    });
+  }
+  
   if (brief.type === "new" || brief.type === "legacy") {
     tasks.push({
       title: "🏗️ [DEV] Configurar estructura base y dependencias",

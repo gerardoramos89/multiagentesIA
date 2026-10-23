@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import AgentsScene3DWrapper, { FlightTelemetry } from "./AgentsScene3DWrapper";
 import { useAnalysisJob } from "@/lib/use-analysis-job";
+import LaunchModal from "./LaunchModal";
+import SprintRetrospectiveModal from "./SprintRetrospectiveModal";
 
 const GENERIC_SKILLS: Record<string, string[]> = {
   po: ["User Stories", "Priorización", "Criterios de Aceptación"],
@@ -47,6 +49,48 @@ const AccordionItem = ({ title, icon: Icon, id, isOpen, onToggle, children, badg
   </div>
 );
 
+// ✅ FORMULARIO DE VISIÓN DEL PROYECTO
+function ProjectVisionForm({ vision, setVision, onComplete }: { 
+  vision: any; 
+  setVision: React.Dispatch<React.SetStateAction<any>>; 
+  onComplete: () => void; 
+}) {
+  return (
+    <div className="p-4 bg-gray-900/80 border border-cyan-500/30 rounded-xl space-y-3 mb-3">
+      <div className="flex items-center gap-2 mb-2">
+        <Bot size={16} className="text-cyan-400" />
+        <h3 className="text-sm font-bold text-white">🎯 Visión del Proyecto (Obligatorio)</h3>
+      </div>
+      <p className="text-[9px] text-gray-400">Los agentes necesitan entender el contexto para trabajar correctamente.</p>
+      
+      <div className="space-y-2">
+        <div>
+          <label className="text-[9px] text-gray-400 mb-1 block">Nombre del Proyecto *</label>
+          <input type="text" value={vision.name} onChange={(e) => setVision({...vision, name: e.target.value})} className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[10px] text-white focus:border-cyan-500 outline-none" placeholder="Ej: Sistema de Gestión" />
+        </div>
+        <div>
+          <label className="text-[9px] text-gray-400 mb-1 block">Objetivo General *</label>
+          <textarea value={vision.generalObjective} onChange={(e) => setVision({...vision, generalObjective: e.target.value})} className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[10px] text-white focus:border-cyan-500 outline-none resize-none" rows={2} placeholder="¿Qué problema resuelve?" />
+        </div>
+        <div>
+          <label className="text-[9px] text-gray-400 mb-1 block">Skills/Tecnologías Clave</label>
+          <input type="text" value={vision.targetSkills} onChange={(e) => setVision({...vision, targetSkills: e.target.value})} className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[10px] text-white focus:border-cyan-500 outline-none" placeholder="Ej: Next.js, PostgreSQL" />
+        </div>
+      </div>
+      
+      <button onClick={() => {
+        if (!vision.name || !vision.generalObjective) { alert("⚠️ Nombre y Objetivo General son obligatorios."); return; }
+        const completedVision = {...vision, isCompleted: true};
+        setVision(completedVision);
+        localStorage.setItem('projectVision', JSON.stringify(completedVision));
+        onComplete();
+      }} className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-[10px] font-bold rounded hover:from-cyan-500 hover:to-blue-500 transition-all flex items-center justify-center gap-2">
+        <CheckCircle2 size={14} /> Guardar Visión y Continuar
+      </button>
+    </div>
+  );
+}
+
 function LiveLogs() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [filter, setFilter] = useState<string>("all");
@@ -77,14 +121,17 @@ function LiveLogs() {
       <div className="bg-black/60 border border-gray-800 rounded p-2 h-64 overflow-y-auto font-mono custom-scrollbar">
         {filteredLogs.length === 0 ? <p className="text-[9px] text-gray-500 text-center py-4">Sin logs aún...</p> : (
           <div className="space-y-0.5">
-            {filteredLogs.slice(-50).map((log, i) => (
-              <div key={i} className="text-[8px] leading-tight flex gap-2">
-                <span className="text-gray-600 shrink-0">{new Date(log.ts).toLocaleTimeString("es-ES")}</span>
-                <span className={`shrink-0 font-bold ${levelColors[log.level] || "text-gray-400"}`}>[{log.level}]</span>
-                <span className="text-gray-500 shrink-0">{log.source}:</span>
-                <span className="text-gray-300 break-all">{log.message}</span>
-              </div>
-            ))}
+            {filteredLogs.slice(-50).map((log, i) => {
+              const icon = log.source === "doc" ? "📝" : log.source === "dev" ? "🛠️" : log.source === "arch" ? "🏗️" : log.source === "qa" ? "🧪" : log.source === "po" ? "📋" : "";
+              return (
+                <div key={i} className="text-[8px] leading-tight flex gap-2">
+                  <span className="text-gray-600 shrink-0">{new Date(log.ts).toLocaleTimeString("es-ES")}</span>
+                  <span className={`shrink-0 font-bold ${levelColors[log.level] || "text-gray-400"}`}>[{log.level}]</span>
+                  <span className="text-gray-500 shrink-0 flex items-center gap-1">{icon} {log.source}:</span>
+                  <span className="text-gray-300 break-all">{log.message}</span>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
@@ -135,11 +182,20 @@ export default function DashboardScreen() {
   const [sprintExecuting, setSprintExecuting] = useState(false);
   const [sprintState, setSprintState] = useState<any>(null);
 
+  // ✅ ESTADOS NUEVOS PARA MODALES Y VISIÓN
+  const [projectVision, setProjectVision] = useState({ name: "", generalObjective: "", specificObjectives: "", scope: "", targetSkills: "", isCompleted: false });
+  const [showLaunchModal, setShowLaunchModal] = useState(false);
+  const [showRetrospectiveModal, setShowRetrospectiveModal] = useState(false);
+
+  useEffect(() => {
+    const savedVision = localStorage.getItem('projectVision');
+    if (savedVision) { try { setProjectVision(JSON.parse(savedVision)); } catch {} }
+  }, []);
+
   const configuredCount = modules.filter(m => m.status === "on").length;
-  const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady && sprintPlanned && humanApproved;
+  const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady;
   const [openPanel, setOpenPanel] = useState<string>("");
 
-  // ✅ 1. Cargar estado del sprint periódicamente
   useEffect(() => {
     const fetchSprintState = async () => {
       try {
@@ -152,12 +208,11 @@ export default function DashboardScreen() {
           const newStates: Record<string, ModuleStatus> = {};
           const newTimes: Record<string, string> = {};
           
-           for (const task of data.sprint.tasks) {
+          for (const task of data.sprint.tasks) {
             if (task.status === "working") {
               newStates[task.agent] = "working";
-              // ✅ ACTIVAR ÓRBITAS DE TODAS LAS HERRAMIENTAS DE IA Y GESTIÓN
               newStates["ollama"] = "working";
-              newStates["deepseek"] = "working"; // ¡Aquí estaba el faltante!
+              newStates["deepseek"] = "working";
               newStates["hermes"] = "working";
               newStates["aider"] = "working";
               newStates["github"] = "working";
@@ -211,7 +266,6 @@ export default function DashboardScreen() {
     }
   }, [analysis.status, analysis.result, githubConfig.owner, githubConfig.repo]);
 
-  // ✅ 2. Funciones definidas ANTES de ser usadas
   const fetchRealTrelloCards = async (config: any) => {
     try {
       const res = await fetch(`/api/trello/cards?apiKey=${config.apiKey}&token=${config.token}&boardId=${config.boardId}`);
@@ -305,7 +359,7 @@ export default function DashboardScreen() {
             <span className="text-[10px] text-gray-400">{configuredCount}/{modules.length} módulos</span>
           </div>
           <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden border border-gray-700">
-            <motion.div className={`h-full rounded-full transition-all duration-500 ${canLaunch ? "bg-gradient-to-r from-emerald-500 to-green-500" : "bg-gradient-to-r from-cyan-500 to-blue-500"}`} style={{ width: `${progress}%` }} />
+            <motion.div className={`h-full rounded-full transition-all duration-500 ${canLaunch && projectVision.isCompleted ? "bg-gradient-to-r from-emerald-500 to-green-500" : "bg-gradient-to-r from-cyan-500 to-blue-500"}`} style={{ width: `${progress}%` }} />
           </div>
         </div>
       </div>
@@ -392,13 +446,17 @@ export default function DashboardScreen() {
         </div>
 
         <div className="p-4 border-t border-gray-800 bg-gray-900/50 shrink-0 space-y-3">
+          {!projectVision.isCompleted && canLaunch && (
+            <ProjectVisionForm vision={projectVision} setVision={setProjectVision} onComplete={() => {}} />
+          )}
+
           {!sprintPlanned ? (
-            <button disabled={!projectConfig || !diagnosticsReady} onClick={async () => {
+            <button disabled={!projectConfig || !diagnosticsReady || !projectVision.isCompleted} onClick={async () => {
               const res = await fetch("/api/sprint/plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ agents: agentsConfig.filter(a => a.enabled), brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief) }) });
               const data = await res.json();
               if (data.success) { alert(data.alreadyExists ? "ℹ️ Sprint ya planificado." : `✅ Sprint planificado con ${data.tasksCount} tareas.`); setSprintPlanned(true); } 
               else { alert(`❌ Error: ${data.message}`); }
-            }} className={`w-full py-2 rounded-lg font-bold text-[10px] transition-all flex items-center justify-center gap-2 ${projectConfig && diagnosticsReady ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" : "bg-gray-800 text-gray-500 cursor-not-allowed"}`}>
+            }} className={`w-full py-2 rounded-lg font-bold text-[10px] transition-all flex items-center justify-center gap-2 ${projectConfig && diagnosticsReady && projectVision.isCompleted ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" : "bg-gray-800 text-gray-500 cursor-not-allowed"}`}>
               <LayoutGrid size={14} /> Planificar Primer Sprint
             </button>
           ) : (
@@ -411,49 +469,45 @@ export default function DashboardScreen() {
                   <button onClick={() => setHumanApproved(true)} className="w-full py-1.5 bg-amber-600 hover:bg-amber-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1"><CheckCircle2 size={12} /> Aprobar Ejecución</button>
                 </div>
               ) : humanApproved && !sprintExecuting ? (
-<button 
-  onClick={async () => {
-    try {
-      // ✅ FIX: Leer de localStorage como respaldo infalible
-      const savedVision = typeof window !== 'undefined' ? localStorage.getItem('projectVision') : null;
-      const vision = savedVision ? JSON.parse(savedVision) : (typeof projectVision !== 'undefined' ? projectVision : null);
-      
-      const payload = { vision };
-      console.log("🚀 [FRONTEND] Enviando payload a /api/sprint/execute:", payload);
-      
-      const res = await fetch("/api/sprint/execute", { 
-        method: "POST", 
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      
-      const data = await res.json();
-      console.log("🚀 [FRONTEND] Respuesta del servidor:", data);
-      
-      if (data.success) { 
-        setSprintExecuting(true); 
-        setProjectStatus("building"); 
-        alert("🚀 ¡Sprint iniciado! Los agentes están trabajando."); 
-      } else { 
-        alert(`❌ Error: ${data.message}`); 
-      }
-    } catch (err: any) {
-      console.error("❌ [FRONTEND] Error al iniciar sprint:", err);
-      alert(`❌ Error de conexión: ${err.message}`);
-    }
-  }} 
-  className="w-full py-2 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-bold rounded hover:from-emerald-500 hover:to-green-500 transition-all flex items-center justify-center gap-2 animate-pulse"
->
-  <Play size={14} /> INICIAR EJECUCIÓN DEL SPRINT
-</button>
+                <button onClick={async () => {
+                  try {
+                    const savedVision = typeof window !== 'undefined' ? localStorage.getItem('projectVision') : null;
+                    const vision = savedVision ? JSON.parse(savedVision) : projectVision;
+                    const payload = { vision };
+                    console.log("🚀 [FRONTEND] Enviando payload:", payload);
+                    
+                    const res = await fetch("/api/sprint/execute", { 
+                      method: "POST", 
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+                    
+                    if (data.success) { 
+                      setShowLaunchModal(true); // ✅ Activa el modal futurista
+                      setSprintExecuting(true); 
+                      setProjectStatus("building"); 
+                    } else { 
+                      alert(`❌ Error: ${data.message}`); 
+                    }
+                  } catch (err: any) {
+                    console.error("❌ [FRONTEND] Error:", err);
+                    alert(`❌ Error de conexión: ${err.message}`);
+                  }
+                }} className="w-full py-2 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-bold rounded hover:from-emerald-500 hover:to-green-500 transition-all flex items-center justify-center gap-2 animate-pulse">
+                  <Play size={14} /> INICIAR EJECUCIÓN DEL SPRINT
+                </button>
               ) : sprintExecuting ? (
                 <div className="p-3 bg-purple-950/20 border border-purple-500/40 rounded">
                   <div className="flex items-center gap-2 mb-1"><RefreshCw size={14} className="text-purple-400 animate-spin" /><span className="text-[10px] font-bold text-purple-400">Sprint en Ejecución</span></div>
                   <p className="text-[9px] text-gray-400">{sprintState?.sprint?.tasks?.filter((t: any) => t.status === "done").length || 0} / {sprintState?.sprint?.tasks?.length || 0} tareas completadas</p>
                 </div>
               ) : (
-                <div className="p-3 bg-emerald-950/20 border border-emerald-500/40 rounded">
+                <div className="p-3 bg-emerald-950/20 border border-emerald-500/40 rounded space-y-2">
                   <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-400" /><span className="text-[10px] font-bold text-emerald-400">Sprint Completado</span></div>
+                  <button onClick={() => setShowRetrospectiveModal(true)} className="w-full py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1">
+                    <FileText size={12} /> Ver Retrospectiva
+                  </button>
                 </div>
               )}
             </div>
@@ -475,6 +529,20 @@ export default function DashboardScreen() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ✅ MODALES FINALES */}
+      <LaunchModal 
+        isOpen={showLaunchModal} 
+        onClose={() => setShowLaunchModal(false)} 
+        sprintNumber={sprintState?.sprint?.sprintNumber || 1} 
+      />
+      
+      <SprintRetrospectiveModal 
+        isOpen={showRetrospectiveModal}
+        onClose={() => setShowRetrospectiveModal(false)}
+        retrospective={sprintState?.sprint?.retrospective || null}
+        sprintNumber={sprintState?.sprint?.sprintNumber || 1}
+      />
     </div>
   );
 }
