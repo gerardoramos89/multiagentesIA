@@ -1,53 +1,5 @@
 [
   {
-    "agent": "qa",
-    "message": "✅ Completado en 31.7s",
-    "timestamp": "2026-10-23T23:24:34.753Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Todas las tareas completadas. Generando retrospectiva...",
-    "timestamp": "2026-10-23T23:24:36.757Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Generando retrospectiva del sprint...",
-    "timestamp": "2026-10-23T23:24:36.766Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Retrospectiva generada",
-    "timestamp": "2026-10-23T23:24:50.271Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📋 Creando encuestas en Trello para feedback humano...",
-    "timestamp": "2026-10-23T23:24:50.280Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📋 Creando encuestas en Trello...",
-    "timestamp": "2026-10-23T23:24:50.290Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ 5 encuestas creadas en Trello",
-    "timestamp": "2026-10-23T23:24:53.175Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Encuestas creadas. Esperando respuestas del humano.",
-    "timestamp": "2026-10-23T23:24:53.182Z",
-    "level": "success"
-  },
-  {
     "agent": "po",
     "message": "🔒 Cerrando sprint...",
     "timestamp": "2026-10-23T23:25:09.591Z",
@@ -87,6 +39,54 @@
     "agent": "arch",
     "message": "Preparando commit...",
     "timestamp": "2026-10-23T23:28:39.272Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Push exitoso: 83fe6b3",
+    "timestamp": "2026-10-23T23:28:42.334Z",
+    "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Completado en 75.6s",
+    "timestamp": "2026-10-23T23:28:42.341Z",
+    "level": "success"
+  },
+  {
+    "agent": "doc",
+    "message": "🎯 Trabajando en: 📝 [DOC] Documentación inicial y guía de contribución",
+    "timestamp": "2026-10-23T23:28:44.356Z",
+    "level": "info"
+  },
+  {
+    "agent": "doc",
+    "message": "📝 Creando README como guía viva del proyecto...",
+    "timestamp": "2026-10-23T23:28:44.362Z",
+    "level": "info"
+  },
+  {
+    "agent": "doc",
+    "message": "Iniciando: 📝 [DOC] Documentación inicial y guía de contribución",
+    "timestamp": "2026-10-23T23:28:44.368Z",
+    "level": "info"
+  },
+  {
+    "agent": "doc",
+    "message": "Generando código con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-23T23:28:44.375Z",
+    "level": "info"
+  },
+  {
+    "agent": "doc",
+    "message": "✅ Archivo creado: README.md",
+    "timestamp": "2026-10-23T23:29:41.604Z",
+    "level": "success"
+  },
+  {
+    "agent": "doc",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-23T23:29:41.611Z",
     "level": "info"
   }
 ]
