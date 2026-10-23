@@ -1,60 +1,30 @@
 {
-  "sprintNumber": 1,
-  "startedAt": "2026-10-23T21:59:35.035Z",
+  "sprintNumber": 2,
+  "startedAt": "2026-10-23T23:20:59.833Z",
   "approvedBy": "human",
   "tasks": [
     {
-      "id": "task-1792792775035-0",
+      "id": "task-1792797659833-0",
       "title": "🔍 [ARCH] Auditoría de código y propuesta de refactorización",
       "description": "Revisar el código existente en multiagentesIA.\nAnalizar: Estructura actual, patrones utilizados, deuda técnica (medium).",
       "agent": "arch",
-      "status": "done",
-      "startedAt": "2026-10-23T22:42:45.297Z",
-      "completedAt": "2026-10-23T22:44:14.334Z",
-      "output": "Generado: multiagentesIA.py",
-      "commits": [
-        "f1f5657fa03d076072797ffaaeaca6521fad6317"
-      ],
-      "filesModified": [
-        "multiagentesIA.py"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792792775035-1",
+      "id": "task-1792797659833-1",
       "title": "📝 [DOC] Documentación inicial y guía de contribución",
       "description": "Documentar el proyecto multiagentesIA.\nIncluir: README con instalación y uso, Guía de contribución, Documentación de API (si aplica).",
       "agent": "doc",
-      "status": "done",
-      "startedAt": "2026-10-23T22:44:16.349Z",
-      "completedAt": "2026-10-23T22:45:00.074Z",
-      "output": "Generado: DOCUMENTACION.md",
-      "commits": [
-        "475f1b466dc096342cfde9d5051ec2b2dc5e219c"
-      ],
-      "filesModified": [
-        "DOCUMENTACION.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792792775035-2",
+      "id": "task-1792797659833-2",
       "title": "🧪 [QA] Configurar sistema de tests y primer caso de prueba",
       "description": "Configurar Jest para el proyecto.\nIncluir: Configuración inicial, primer test de ejemplo, script en package.json.",
       "agent": "qa",
-      "status": "working",
-      "startedAt": "2026-10-23T22:45:02.087Z"
+      "status": "pending"
     }
   ],
-  "status": "executing",
-  "vision": {
-    "name": "",
-    "generalObjective": "",
-    "specificObjectives": "",
-    "scope": "",
-    "targetSkills": "",
-    "isCompleted": false
-  },
-  "filesChanged": [
-    "multiagentesIA.py",
-    "DOCUMENTACION.md"
-  ]
+  "status": "planned",
+  "lessonsLearned": []
 }

@@ -1,29 +1,5 @@
 [
   {
-    "agent": "arch",
-    "message": "Preparando commit...",
-    "timestamp": "2026-10-23T22:44:10.702Z",
-    "level": "info"
-  },
-  {
-    "agent": "arch",
-    "message": "✅ Push exitoso: f1f5657",
-    "timestamp": "2026-10-23T22:44:14.333Z",
-    "level": "success"
-  },
-  {
-    "agent": "arch",
-    "message": "✅ Completado en 89.0s",
-    "timestamp": "2026-10-23T22:44:14.343Z",
-    "level": "success"
-  },
-  {
-    "agent": "doc",
-    "message": "🎯 Trabajando en: 📝 [DOC] Documentación inicial y guía de contribución",
-    "timestamp": "2026-10-23T22:44:16.362Z",
-    "level": "info"
-  },
-  {
     "agent": "doc",
     "message": "Iniciando: 📝 [DOC] Documentación inicial y guía de contribución",
     "timestamp": "2026-10-23T22:44:16.371Z",
@@ -88,5 +64,29 @@
     "message": "Preparando commit...",
     "timestamp": "2026-10-23T22:45:25.718Z",
     "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "✅ Push exitoso: 7b451d5",
+    "timestamp": "2026-10-23T22:45:28.689Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "✅ Completado en 26.6s",
+    "timestamp": "2026-10-23T22:45:28.696Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "🔒 Cerrando sprint...",
+    "timestamp": "2026-10-23T22:57:57.086Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "✅ Sprint archivado en historial",
+    "timestamp": "2026-10-23T22:57:57.096Z",
+    "level": "success"
   }
 ]

@@ -48,7 +48,7 @@ export interface SprintState {
   projectContext?: string;
   surveys?: SurveyQuestion[];
   lessonsLearned?: string[];
-  filesChanged?: string[]; // ✅ Memoria de archivos modificados en este sprint
+  filesChanged?: string[];
 }
 
 export interface SprintHistoryEntry {
@@ -69,13 +69,6 @@ export interface AgentLog {
   level: "info" | "warn" | "error" | "success";
 }
 
-const SPRINT_FILE = path.join(process.cwd(), "config", "sprint-active.json");
-const SPRINT_HISTORY_FILE = path.join(process.cwd(), "config", "sprints-history.json");
-const AGENT_LOGS_FILE = path.join(process.cwd(), "config", "agent-logs.json");
-const CHANGE_MEMORY_FILE = path.join(process.cwd(), "config", "change-memory.json");
-const REPO_DIR = process.cwd();
-
-// ✅ MEMORIA DE CAMBIOS: Registro de qué se ha hecho en cada sprint
 export interface ChangeMemory {
   totalCommits: number;
   lastCommitHash?: string;
@@ -83,6 +76,13 @@ export interface ChangeMemory {
   sprintsCompleted: number;
 }
 
+const SPRINT_FILE = path.join(process.cwd(), "config", "sprint-active.json");
+const SPRINT_HISTORY_FILE = path.join(process.cwd(), "config", "sprints-history.json");
+const AGENT_LOGS_FILE = path.join(process.cwd(), "config", "agent-logs.json");
+const CHANGE_MEMORY_FILE = path.join(process.cwd(), "config", "change-memory.json");
+const REPO_DIR = process.cwd();
+
+// ✅ GESTIÓN DE MEMORIA DE CAMBIOS
 export function loadChangeMemory(): ChangeMemory {
   try {
     if (!fs.existsSync(CHANGE_MEMORY_FILE)) {
@@ -109,6 +109,7 @@ export function getTotalCommits(): number {
   return memory.totalCommits;
 }
 
+// ✅ GESTIÓN DE LOGS DE AGENTES
 export function addAgentLog(agent: string, message: string, level: AgentLog["level"] = "info") {
   try {
     let logs: AgentLog[] = [];
@@ -149,6 +150,7 @@ export function getAgentLogs(): Record<string, AgentLog[]> {
   }
 }
 
+// ✅ GESTIÓN DE SPRINTS
 export function loadSprint(): SprintState | null {
   try {
     if (!fs.existsSync(SPRINT_FILE)) return null;
@@ -232,18 +234,17 @@ export function getFilesChangedInHistory(): string[] {
   return Array.from(allFiles);
 }
 
+// ✅ PREPARAR REPOSITORIO
 async function prepareRepository(): Promise<{ success: boolean; message: string }> {
   try {
     await execAsync(`git config user.email "agent@fabricagents.ai"`, { cwd: REPO_DIR });
     await execAsync(`git config user.name "Fabric Agent"`, { cwd: REPO_DIR });
     
-    // ✅ Verificar si hay cambios reales antes de commitear
     const { stdout: statusOutput } = await execAsync(`git status --porcelain`, { cwd: REPO_DIR });
     if (statusOutput.trim()) {
       await execAsync(`git add .`, { cwd: REPO_DIR });
       await execAsync(`git commit -m "🎯 Estado inicial antes del Sprint\n\nAuto-committed by FabricAgents"`, { cwd: REPO_DIR });
       
-      // Actualizar memoria de cambios
       const memory = loadChangeMemory();
       memory.totalCommits++;
       const { stdout: hashOutput } = await execAsync(`git rev-parse HEAD`, { cwd: REPO_DIR });
@@ -256,6 +257,7 @@ async function prepareRepository(): Promise<{ success: boolean; message: string 
   }
 }
 
+// ✅ EJECUTAR TAREA DE AGENTE
 async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; output: string; filesModified?: string[] }> {
   try {
     addAgentLog(task.agent, `Iniciando: ${task.title}`, "info");
@@ -301,6 +303,7 @@ async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; o
   }
 }
 
+// ✅ COMMIT Y PUSH CON ANTI-DUPLICADOS
 async function commitAndPush(task: SprintTask): Promise<{ success: boolean; commitHash?: string }> {
   try {
     addAgentLog(task.agent, `Preparando commit...`, "info");
@@ -313,14 +316,12 @@ async function commitAndPush(task: SprintTask): Promise<{ success: boolean; comm
 
     await execAsync(`git add .`, { cwd: REPO_DIR });
     
-    // ✅ Verificar si hay cambios REALES (no duplicados)
     const { stdout: statusOutput } = await execAsync(`git status --porcelain`, { cwd: REPO_DIR });
     if (!statusOutput.trim()) {
       addAgentLog(task.agent, `⚠️ No hay cambios nuevos (archivo ya existe)`, "warn");
       return { success: true };
     }
 
-    // ✅ Verificar si el último commit ya tiene el mismo mensaje (evitar duplicados)
     try {
       const { stdout: lastCommitMsg } = await execAsync(`git log -1 --pretty=%B`, { cwd: REPO_DIR });
       const commitMessage = `✨ [Sprint ${task.id.split('-')[0]?.replace('task-', '') || '1'}] [${task.agent.toUpperCase()}] ${task.title.replace(/\[.*?\]\s*/, '')}`;
@@ -337,7 +338,6 @@ async function commitAndPush(task: SprintTask): Promise<{ success: boolean; comm
     const { stdout: hashOutput } = await execAsync(`git rev-parse HEAD`, { cwd: REPO_DIR });
     const commitHash = hashOutput.trim();
     
-    // ✅ Actualizar memoria de cambios
     const memory = loadChangeMemory();
     memory.totalCommits++;
     memory.lastCommitHash = commitHash;
@@ -369,6 +369,7 @@ async function commitAndPush(task: SprintTask): Promise<{ success: boolean; comm
   }
 }
 
+// ✅ INICIAR EJECUCIÓN DEL SPRINT
 export async function startSprintExecution(vision?: any, projectContext?: string): Promise<{ success: boolean; message: string }> {
   console.log("[EXECUTOR] startSprintExecution llamado");
   const sprint = loadSprint();
@@ -398,14 +399,14 @@ export async function startSprintExecution(vision?: any, projectContext?: string
   return { success: true, message: "Sprint iniciado" };
 }
 
+// ✅ EJECUCIÓN SECUENCIAL CON CIERRE AUTOMÁTICO
 async function executeTasksSequentially(sprint: SprintState, vision?: any, projectContext?: string) {
   const pendingTasks = sprint.tasks.filter((t) => t.status === "pending");
   log("INFO", "executor", `Tareas pendientes encontradas: ${pendingTasks.length}`);
   
   if (pendingTasks.length === 0) {
-    sprint.status = "review";
-    saveSprint(sprint);
-    log("SPRINT", "system", `📋 Sprint #${sprint.sprintNumber} en revisión`);
+    // ✅ TRANSICIÓN AUTOMÁTICA A RETROSPECTIVA
+    await transitionToRetrospective(sprint);
     return;
   }
 
@@ -422,9 +423,7 @@ async function executeTasksSequentially(sprint: SprintState, vision?: any, proje
     
     let enhancedTask = { ...task };
     if (task.agent === "doc" && vision && vision.isCompleted) {
-      // ✅ README COMO GUÍA VIVA DEL PROGRESO
       const memory = loadChangeMemory();
-      const history = loadSprintHistory();
       
       enhancedTask.description = `CONTEXTO DEL PROYECTO (OBLIGATORIO):
 - Nombre: ${vision.name}
@@ -440,14 +439,7 @@ ESTADO DEL PROYECTO:
 
 TAREA ORIGINAL: ${task.description}
 
-INSTRUCCIÓN: Actualiza el README.md para que sea la GUÍA VIVA del progreso del proyecto. Debe incluir:
-1. Descripción del proyecto
-2. Estado actual del desarrollo
-3. Historial de sprints completados
-4. Próximos pasos
-5. Cómo contribuir
-
-Hazlo profesional y estructurado.`;
+INSTRUCCIÓN: Actualiza el README.md para que sea la GUÍA VIVA del progreso del proyecto.`;
       log("INFO", "doc", "Inyectando contexto completo para README vivo...");
       addAgentLog("doc", "📝 Creando README como guía viva del proyecto...", "info");
     }
@@ -487,11 +479,46 @@ Hazlo profesional y estructurado.`;
     await new Promise((r) => setTimeout(r, 2000));
   }
 
-  sprint.status = "review";
-  saveSprint(sprint);
-  log("SPRINT", "system", `📋 Sprint #${sprint.sprintNumber} completado. En revisión.`);
+  // ✅ TODAS LAS TAREAS TERMINARON → TRANSICIÓN AUTOMÁTICA
+  await transitionToRetrospective(sprint);
 }
 
+// ✅ NUEVA FUNCIÓN: TRANSICIÓN AUTOMÁTICA A RETROSPECTIVA
+async function transitionToRetrospective(sprint: SprintState) {
+  log("SPRINT", "system", `📋 Sprint #${sprint.sprintNumber} completado. Generando retrospectiva...`);
+  addAgentLog("po", "📊 Todas las tareas completadas. Generando retrospectiva...", "info");
+  
+  sprint.status = "retrospective";
+  saveSprint(sprint);
+  
+  // Generar retrospectiva automáticamente
+  const retrospectiveResult = await generateRetrospective();
+  if (retrospectiveResult.success && retrospectiveResult.retrospective) {
+    sprint.retrospective = retrospectiveResult.retrospective;
+    sprint.status = "survey";
+    saveSprint(sprint);
+    
+    log("SPRINT", "system", `✅ Retrospectiva generada. Creando encuestas en Trello...`);
+    addAgentLog("po", "📋 Creando encuestas en Trello para feedback humano...", "info");
+    
+    // Crear encuestas en Trello
+    const surveyResult = await createSurveys();
+    if (surveyResult.success) {
+      log("SPRINT", "system", `✅ Encuestas creadas en Trello. Esperando respuestas del humano...`);
+      addAgentLog("po", "✅ Encuestas creadas. Esperando respuestas del humano.", "success");
+    } else {
+      log("SPRINT", "system", `⚠️ Error creando encuestas. Sprint en estado de revisión manual.`);
+      addAgentLog("po", "⚠️ Error creando encuestas en Trello.", "warn");
+    }
+  } else {
+    log("SPRINT", "system", `⚠️ Error generando retrospectiva. Sprint en estado de revisión.`);
+    addAgentLog("po", "⚠️ Error generando retrospectiva.", "warn");
+    sprint.status = "review";
+    saveSprint(sprint);
+  }
+}
+
+// ✅ GENERAR RETROSPECTIVA
 export async function generateRetrospective(): Promise<{ success: boolean; retrospective?: SprintRetrospective }> {
   const sprint = loadSprint();
   if (!sprint) return { success: false };
@@ -546,10 +573,6 @@ Responde SOLO con el JSON, sin texto adicional.`;
       generatedBy: "Product Owner Agent"
     };
     
-    sprint.retrospective = result;
-    sprint.status = "retrospective";
-    saveSprint(sprint);
-    
     addAgentLog("po", "✅ Retrospectiva generada", "success");
     
     return { success: true, retrospective: result };
@@ -559,6 +582,7 @@ Responde SOLO con el JSON, sin texto adicional.`;
   }
 }
 
+// ✅ CREAR ENCUESTAS EN TRELLO
 export async function createSurveys(): Promise<{ success: boolean; surveys?: SurveyQuestion[] }> {
   const sprint = loadSprint();
   if (!sprint || !sprint.retrospective) return { success: false };
@@ -598,7 +622,7 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
         body: JSON.stringify({
           key, token, idList: retroList.id,
           name: `❓ ${item.substring(0, 100)}`,
-          desc: `**Pregunta abierta para el equipo:**\n\n${item}\n\nPor favor, responde en los comentarios con tu análisis y propuesta de solución.\n\n---\n⏳ Esperando respuesta del humano...`
+          desc: `**Pregunta abierta para el equipo:**\n\n${item}\n\nPor favor, responde en los comentarios con tu análisis.\n\n---\n⏳ Esperando respuesta del humano...`
         })
       });
       const card = await cardRes.json();
@@ -618,7 +642,7 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
         body: JSON.stringify({
           key, token, idList: retroList.id,
           name: `🎯 ${action.substring(0, 100)}`,
-          desc: `**Acción propuesta para el próximo sprint:**\n\n${action}\n\n¿Estás de acuerdo? Responde SÍ/NO y agrega comentarios si es necesario.\n\n---\n⏳ Esperando respuesta del humano...`
+          desc: `**Acción propuesta:**\n\n${action}\n\n¿Estás de acuerdo? Responde en los comentarios.\n\n---\n⏳ Esperando respuesta del humano...`
         })
       });
       const card = await cardRes.json();
@@ -633,7 +657,6 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
     }
 
     sprint.surveys = surveys;
-    sprint.status = "survey";
     saveSprint(sprint);
     
     addAgentLog("po", `✅ ${surveys.length} encuestas creadas en Trello`, "success");
@@ -645,6 +668,7 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
   }
 }
 
+// ✅ VERIFICAR RESPUESTAS DE ENCUESTAS
 export async function checkSurveyResponses(): Promise<{ success: boolean; allAnswered: boolean; responses?: any[] }> {
   const sprint = loadSprint();
   if (!sprint || !sprint.surveys) return { success: false, allAnswered: false };
@@ -690,6 +714,7 @@ export async function checkSurveyResponses(): Promise<{ success: boolean; allAns
   }
 }
 
+// ✅ CERRAR SPRINT
 export async function closeSprint(): Promise<{ success: boolean; message: string }> {
   const sprint = loadSprint();
   if (!sprint) return { success: false, message: "No hay sprint activo" };
@@ -711,7 +736,6 @@ export async function closeSprint(): Promise<{ success: boolean; message: string
   sprint.status = "completed";
   saveSprint(sprint);
   
-  // ✅ Actualizar memoria de cambios
   const memory = loadChangeMemory();
   memory.sprintsCompleted++;
   if (sprint.filesChanged) {
@@ -723,7 +747,6 @@ export async function closeSprint(): Promise<{ success: boolean; message: string
   }
   saveChangeMemory(memory);
   
-  // Guardar en historial
   const history = loadSprintHistory();
   history.push({
     sprintNumber: sprint.sprintNumber,
@@ -737,7 +760,6 @@ export async function closeSprint(): Promise<{ success: boolean; message: string
   });
   saveSprintHistory(history);
   
-  // Borrar sprint activo
   try {
     if (fs.existsSync(SPRINT_FILE)) fs.unlinkSync(SPRINT_FILE);
   } catch (e) {
