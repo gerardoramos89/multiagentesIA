@@ -1119,3 +1119,10 @@
 {"ts":"2026-10-23T21:59:22.391Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvliipxo_oid5zk"}}
 {"ts":"2026-10-23T21:59:22.405Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
 {"ts":"2026-10-23T21:59:22.411Z","level":"INFO","source":"analysis","message":"Job job_mvliipxo_oid5zk completado en 3678ms"}
+{"ts":"2026-10-23T22:10:08.694Z","level":"INFO","source":"executor","message":"Resetando 3 tareas a \"pending\"..."}
+{"ts":"2026-10-23T22:10:08.695Z","level":"SPRINT","source":"system","message":"🚀 Sprint #1 iniciado. 3 tareas en cola."}
+{"ts":"2026-10-23T22:10:08.696Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 3"}
+{"ts":"2026-10-23T22:10:08.704Z","level":"AGENT","source":"arch","message":"Arquitecto empezó: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}
+{"ts":"2026-10-23T22:10:08.705Z","level":"AGENT","source":"arch","message":"Intentando generar código para: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}
+{"ts":"2026-10-23T22:10:08.706Z","level":"AGENT","source":"arch","message":"Generando con Ollama (deepseek-coder-v2:16b)..."}
+{"ts":"2026-10-23T22:11:09.553Z","level":"INFO","source":"arch","message":"✅ Archivo generado: multiagentesIA.py"}

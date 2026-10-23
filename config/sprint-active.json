@@ -8,7 +8,8 @@
       "title": "🔍 [ARCH] Auditoría de código y propuesta de refactorización",
       "description": "Revisar el código existente en multiagentesIA.\nAnalizar: Estructura actual, patrones utilizados, deuda técnica (medium).",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-23T22:10:08.696Z"
     },
     {
       "id": "task-1792792775035-1",
@@ -25,5 +26,5 @@
       "status": "pending"
     }
   ],
-  "status": "planned"
+  "status": "executing"
 }
