@@ -1,30 +1,6 @@
 [
   {
     "agent": "arch",
-    "message": "🎯 Trabajando en: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
-    "timestamp": "2026-10-23T22:42:45.304Z",
-    "level": "info"
-  },
-  {
-    "agent": "arch",
-    "message": "Iniciando: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
-    "timestamp": "2026-10-23T22:42:45.311Z",
-    "level": "info"
-  },
-  {
-    "agent": "arch",
-    "message": "Generando código con deepseek-coder-v2:16b...",
-    "timestamp": "2026-10-23T22:42:45.317Z",
-    "level": "info"
-  },
-  {
-    "agent": "arch",
-    "message": "✅ Archivo creado: multiagentesIA.py",
-    "timestamp": "2026-10-23T22:44:10.694Z",
-    "level": "success"
-  },
-  {
-    "agent": "arch",
     "message": "Preparando commit...",
     "timestamp": "2026-10-23T22:44:10.702Z",
     "level": "info"
@@ -69,6 +45,48 @@
     "agent": "doc",
     "message": "Preparando commit...",
     "timestamp": "2026-10-23T22:44:56.999Z",
+    "level": "info"
+  },
+  {
+    "agent": "doc",
+    "message": "✅ Push exitoso: 475f1b4",
+    "timestamp": "2026-10-23T22:45:00.074Z",
+    "level": "success"
+  },
+  {
+    "agent": "doc",
+    "message": "✅ Completado en 43.7s",
+    "timestamp": "2026-10-23T22:45:00.081Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "🎯 Trabajando en: 🧪 [QA] Configurar sistema de tests y primer caso de prueba",
+    "timestamp": "2026-10-23T22:45:02.089Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Iniciando: 🧪 [QA] Configurar sistema de tests y primer caso de prueba",
+    "timestamp": "2026-10-23T22:45:02.098Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Generando código con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-23T22:45:02.107Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "✅ Archivo creado: jest.config.js",
+    "timestamp": "2026-10-23T22:45:25.711Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-23T22:45:25.718Z",
     "level": "info"
   }
 ]
