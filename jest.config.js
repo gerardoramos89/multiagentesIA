@@ -17,39 +17,31 @@ ARCHIVO: package.json
 {
   "name": "tu-proyecto",
   "version": "1.0.0",
-  "description": "Tu descripción del proyecto",
-  "main": "index.js",
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {
+  "devDependencies": {
     "jest": "^27.0.0",
     "ts-jest": "^27.0.0",
     "babel-jest": "^27.0.0"
-  },
-  "devDependencies": {
-    "@types/jest": "^27.0.0",
-    "jest": "^27.0.0"
   }
 }
 ```
 
-ARCHIVO: primer_test.test.ts
+ARCHIVO: src/primerTest.test.ts
 
 ```typescript
 import { suma } from './suma';
 
-test('Suma de 1 + 2 es igual a 3', () => {
+test('Suma de 1 y 2 es 3', () => {
   expect(suma(1, 2)).toBe(3);
 });
 ```
 
-ARCHIVO: suma.ts
+ARCHIVO: src/suma.ts
 
 ```typescript
 export function suma(a: number, b: number): number {
   return a + b;
 }
 ```
-
-Este contenido configura Jest para un proyecto TypeScript, incluyendo la configuración inicial, un primer caso de prueba y los scripts necesarios en `package.json`.
