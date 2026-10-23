@@ -1,5 +1,4 @@
 import { log } from "./system-log";
-import { sendTelegram, tg } from "./telegram";
 import fs from "node:fs";
 import path from "node:path";
 import { exec } from "node:child_process";
@@ -30,7 +29,6 @@ export interface SprintState {
 
 const SPRINT_FILE = path.join(process.cwd(), "config", "sprint-active.json");
 const REPO_DIR = process.cwd();
-const AIDER_PATH = process.env.AIDER_PATH || "C:/Users/GERARD/Documents/Proyectos/fabric-agents-grtec/venv-aider/Scripts/aider.exe";
 
 export function loadSprint(): SprintState | null {
   try {
@@ -82,41 +80,15 @@ async function prepareRepository(): Promise<{ success: boolean; message: string 
   }
 }
 
-// ✅ FUNCIÓN PRINCIPAL CON FALLBACK
 async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; output: string; filesModified?: string[] }> {
-  // 1. Intentar con Aider
   try {
-    log("AGENT", task.agent, `Intentando con Aider...`);
-    const promptFile = path.join(REPO_DIR, ".aider-prompt.txt");
-    fs.writeFileSync(promptFile, buildAiderPrompt(task), "utf-8");
+    log("AGENT", task.agent, `Intentando generar código para: ${task.title}`);
     
-    // Comando simplificado y más compatible con Windows
-    const command = `"${AIDER_PATH}" --model ollama/deepseek-coder-v2:16b --message-file "${promptFile}" --yes --no-auto-commits`;
-    
-    const { stdout } = await execAsync(command, { 
-      cwd: REPO_DIR, timeout: 180000, maxBuffer: 1024 * 1024 * 50, env: { ...process.env }
-    });
-    
-    if (fs.existsSync(promptFile)) fs.unlinkSync(promptFile);
-    return { success: true, output: stdout || "Aider completó exitosamente" };
-  } catch (aiderError: any) {
-    log("WARN", task.agent, `Aider falló: ${aiderError.message}. Activando modo de generación directa con Ollama...`);
-    if (fs.existsSync(path.join(REPO_DIR, ".aider-prompt.txt"))) {
-      fs.unlinkSync(path.join(REPO_DIR, ".aider-prompt.txt"));
-    }
-    
-    // 2. FALLBACK: Generación directa con Ollama
-    return await fallbackToOllama(task);
-  }
-}
-
-// ✅ FALLBACK: LLAMADA DIRECTA A OLLAMA
-async function fallbackToOllama(task: SprintTask): Promise<{ success: boolean; output: string; filesModified?: string[] }> {
-  try {
+    // Fallback directo a Ollama para evitar los problemas de Aider en Windows
     const model = process.env.DEEPSEEK_MODEL || "deepseek-coder-v2:16b";
-    const prompt = buildAiderPrompt(task) + "\n\nIMPORTANTE: Responde SOLO con el contenido del archivo. En la primera línea pon 'ARCHIVO: nombre_del_archivo.ext' y luego el código.";
+    const prompt = `Tarea: ${task.title}\nDescripción: ${task.description}\n\nPor favor, implementa esta tarea siguiendo las mejores prácticas. Responde SOLO con el contenido del archivo. En la primera línea pon 'ARCHIVO: nombre_del_archivo.ext' y luego el código.`;
     
-    log("AGENT", task.agent, `Generando código directamente con Ollama (${model})...`);
+    log("AGENT", task.agent, `Generando con Ollama (${model})...`);
     
     const response = await fetch("http://127.0.0.1:11434/api/generate", {
       method: "POST",
@@ -128,51 +100,46 @@ async function fallbackToOllama(task: SprintTask): Promise<{ success: boolean; o
     const data = await response.json();
     const generatedText = data.response;
     
-    // Parsear nombre del archivo y contenido
     const lines = generatedText.split('\n');
     let fileName = `agent_generated_${task.agent}_${Date.now()}.md`;
     let content = generatedText;
     
     const fileMatch = lines[0].match(/ARCHIVO:\s*(.+)/i) || lines[0].match(/FILE:\s*(.+)/i);
     if (fileMatch) {
-      fileName = fileMatch[1].trim().replace(/[^a-zA-Z0-9._-]/g, '_'); // Sanitizar nombre
+      fileName = fileMatch[1].trim().replace(/[^a-zA-Z0-9._-]/g, '_');
       content = lines.slice(1).join('\n').trim();
     } else {
       const codeBlockMatch = generatedText.match(/```(?:\w+)?\n([\s\S]*?)```/);
       if (codeBlockMatch) content = codeBlockMatch[1].trim();
     }
     
-    // Escribir el archivo
     const filePath = path.join(REPO_DIR, fileName);
     const dir = path.dirname(filePath);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(filePath, content, "utf-8");
     
-    log("INFO", task.agent, `✅ Archivo generado directamente: ${fileName}`);
-    return { success: true, output: `Generado por Ollama: ${fileName}`, filesModified: [fileName] };
+    log("INFO", task.agent, `✅ Archivo generado: ${fileName}`);
+    return { success: true, output: `Generado: ${fileName}`, filesModified: [fileName] };
   } catch (error: any) {
-    log("ERROR", task.agent, `Fallback a Ollama también falló: ${error.message}`);
+    log("ERROR", task.agent, `Error generando código: ${error.message}`);
     return { success: false, output: error.message };
   }
 }
 
-function buildAiderPrompt(task: SprintTask): string {
-  return `Tarea: ${task.title}\nDescripción: ${task.description}\n\nPor favor, implementa esta tarea siguiendo las mejores prácticas. Si es documentación, crea o actualiza el README.md. Si son tests, crea un archivo de prueba.`;
-}
-
 async function commitAndPush(task: SprintTask): Promise<{ success: boolean; commitHash?: string }> {
   try {
-    const githubToken = process.env.GITHUB_TOKEN;
-    const githubOwner = process.env.GITHUB_OWNER;
-    const githubRepo = process.env.GITHUB_REPO;
-    if (!githubToken || !githubOwner || !githubRepo) throw new Error("Faltan credenciales de GitHub");
+    const githubOwner = process.env.GITHUB_OWNER || "gerardoramos89";
+    const githubRepo = process.env.GITHUB_REPO || "multiagentesIA";
 
     const { stdout: branchOutput } = await execAsync(`git branch --show-current`, { cwd: REPO_DIR });
     const currentBranch = branchOutput.trim() || "master";
 
     await execAsync(`git add .`, { cwd: REPO_DIR });
     const { stdout: statusOutput } = await execAsync(`git status --porcelain`, { cwd: REPO_DIR });
-    if (!statusOutput.trim()) return { success: true };
+    if (!statusOutput.trim()) {
+      log("INFO", task.agent, "No hay cambios nuevos para commitear");
+      return { success: true };
+    }
 
     const commitMessage = `✨ [${task.agent.toUpperCase()}] ${task.title.replace(/\[.*?\]\s*/, '')}\n\nSprint #1 - Tarea: ${task.id}`;
     await execAsync(`git commit -m "${commitMessage.replace(/"/g, '\\"')}"`, { cwd: REPO_DIR });
@@ -180,8 +147,16 @@ async function commitAndPush(task: SprintTask): Promise<{ success: boolean; comm
     const { stdout: hashOutput } = await execAsync(`git rev-parse HEAD`, { cwd: REPO_DIR });
     const commitHash = hashOutput.trim();
     
-    const remoteUrl = `https://${githubToken}@github.com/${githubOwner}/${githubRepo}.git`;
-    await execAsync(`git remote set-url origin ${remoteUrl}`, { cwd: REPO_DIR });
+    // ✅ CONFIGURACIÓN SSH BLINDADA (La que probamos manualmente)
+    const sshUrl = `git@github.com:${githubOwner}/${githubRepo}.git`;
+    const sshKeyPath = `C:/Users/GERARD/.ssh/id_ed25519`;
+    
+    await execAsync(`git remote remove origin`, { cwd: REPO_DIR }).catch(() => {});
+    await execAsync(`git remote add origin ${sshUrl}`, { cwd: REPO_DIR });
+    
+    const sshCommand = `ssh -i ${sshKeyPath} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new`;
+    await execAsync(`git config core.sshCommand "${sshCommand}"`, { cwd: REPO_DIR });
+    
     await execAsync(`git push origin ${currentBranch}`, { cwd: REPO_DIR });
     
     log("AGENT", task.agent, `✅ Commit y push exitoso: ${commitHash.substring(0, 7)}`);
@@ -192,7 +167,8 @@ async function commitAndPush(task: SprintTask): Promise<{ success: boolean; comm
   }
 }
 
-export async function startSprintExecution(): Promise<{ success: boolean; message: string }> {
+export async function startSprintExecution(vision?: any): Promise<{ success: boolean; message: string }> {
+  console.log("[EXECUTOR] startSprintExecution llamado con vision:", vision);
   const sprint = loadSprint();
   if (!sprint) return { success: false, message: "No hay sprint planificado" };
   if (sprint.status === "executing") return { success: false, message: "El sprint ya está en ejecución" };
@@ -211,13 +187,14 @@ export async function startSprintExecution(): Promise<{ success: boolean; messag
   saveSprint(sprint);
 
   log("SPRINT", "system", `🚀 Sprint #${sprint.sprintNumber} iniciado. ${sprint.tasks.length} tareas en cola.`);
-  await sendTelegram(`🚀 ${tg.b("Sprint #" + sprint.sprintNumber + " INICIADO")}\n${sprint.tasks.length} tareas en ejecución.`);
-
-  executeTasksSequentially(sprint).catch((e) => log("ERROR", "executor", `Error en ejecución: ${e?.message}`));
+  
+  // Ejecutar en background sin bloquear la respuesta
+  executeTasksSequentially(sprint, vision).catch((e) => log("ERROR", "executor", `Error en ejecución: ${e?.message}`));
+  
   return { success: true, message: "Sprint iniciado" };
 }
 
-async function executeTasksSequentially(sprint: SprintState) {
+async function executeTasksSequentially(sprint: SprintState, vision?: any) {
   const pendingTasks = sprint.tasks.filter((t) => t.status === "pending");
   log("INFO", "executor", `Tareas pendientes encontradas: ${pendingTasks.length}`);
   
@@ -232,10 +209,16 @@ async function executeTasksSequentially(sprint: SprintState) {
 
     const agentName = task.agent === "po" ? "Product Owner" : task.agent === "arch" ? "Arquitecto" : task.agent === "dev" ? "Developer" : task.agent === "qa" ? "QA Engineer" : "Technical Writer";
     log("AGENT", task.agent, `${agentName} empezó: ${task.title}`);
-    await sendTelegram(`⚙️ ${tg.b(agentName)} empezó:\n${tg.i(task.title)}`);
 
     const startTime = Date.now();
-    const result = await executeAgentTask(task);
+    
+    let enhancedTask = { ...task };
+    if (task.agent === "doc" && vision && vision.isCompleted) {
+      enhancedTask.description = `CONTEXTO DEL PROYECTO (OBLIGATORIO):\n- Nombre: ${vision.name}\n- Objetivo: ${vision.generalObjective}\n- Alcance: ${vision.scope}\n- Skills: ${vision.targetSkills}\n\nTAREA ORIGINAL: ${task.description}\n\nINSTRUCCIÓN: Actualiza o crea el README.md con esta información de manera profesional y estructurada.`;
+      log("INFO", "doc", "Inyectando visión del proyecto en la tarea de documentación...");
+    }
+
+    const result = await executeAgentTask(enhancedTask);
     
     if (!result.success) {
       task.status = "blocked";
@@ -256,7 +239,6 @@ async function executeTasksSequentially(sprint: SprintState) {
 
     const duration = ((Date.now() - startTime) / 1000).toFixed(1);
     log("AGENT", task.agent, `${agentName} completó: ${task.title} en ${duration}s`);
-    await sendTelegram(`✅ ${tg.b(agentName)} completó:\n${tg.i(task.title)}\n⏱️ ${duration}s${commitResult.commitHash ? `\n🔗 Commit: ${commitResult.commitHash.substring(0, 7)}` : ""}`);
     
     await new Promise((r) => setTimeout(r, 2000));
   }
@@ -264,5 +246,4 @@ async function executeTasksSequentially(sprint: SprintState) {
   sprint.status = "completed";
   saveSprint(sprint);
   log("SPRINT", "system", `🎉 Sprint #${sprint.sprintNumber} COMPLETADO`);
-  await sendTelegram(`🎉 ${tg.b("SPRINT #" + sprint.sprintNumber + " COMPLETADO")}`);
 }

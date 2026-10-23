@@ -152,12 +152,16 @@ export default function DashboardScreen() {
           const newStates: Record<string, ModuleStatus> = {};
           const newTimes: Record<string, string> = {};
           
-          for (const task of data.sprint.tasks) {
+           for (const task of data.sprint.tasks) {
             if (task.status === "working") {
               newStates[task.agent] = "working";
-              // ✅ ACTIVAR ÓRBITAS DE HERRAMIENTAS CUANDO EL SPRINT ESTÁ ACTIVO
+              // ✅ ACTIVAR ÓRBITAS DE TODAS LAS HERRAMIENTAS DE IA Y GESTIÓN
               newStates["ollama"] = "working";
+              newStates["deepseek"] = "working"; // ¡Aquí estaba el faltante!
+              newStates["hermes"] = "working";
+              newStates["aider"] = "working";
               newStates["github"] = "working";
+              newStates["trello"] = "working";
             } else if (task.status === "done") {
               newStates[task.agent] = "done";
               if (task.completedAt) {
@@ -407,14 +411,41 @@ export default function DashboardScreen() {
                   <button onClick={() => setHumanApproved(true)} className="w-full py-1.5 bg-amber-600 hover:bg-amber-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1"><CheckCircle2 size={12} /> Aprobar Ejecución</button>
                 </div>
               ) : humanApproved && !sprintExecuting ? (
-                <button onClick={async () => {
-                  const res = await fetch("/api/sprint/execute", { method: "POST" });
-                  const data = await res.json();
-                  if (data.success) { setSprintExecuting(true); setProjectStatus("building"); alert("🚀 ¡Sprint iniciado! Los agentes están trabajando."); } 
-                  else { alert(`❌ Error: ${data.message}`); }
-                }} className="w-full py-2 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-bold rounded hover:from-emerald-500 hover:to-green-500 transition-all flex items-center justify-center gap-2 animate-pulse">
-                  <Play size={14} /> INICIAR EJECUCIÓN DEL SPRINT
-                </button>
+<button 
+  onClick={async () => {
+    try {
+      // ✅ FIX: Leer de localStorage como respaldo infalible
+      const savedVision = typeof window !== 'undefined' ? localStorage.getItem('projectVision') : null;
+      const vision = savedVision ? JSON.parse(savedVision) : (typeof projectVision !== 'undefined' ? projectVision : null);
+      
+      const payload = { vision };
+      console.log("🚀 [FRONTEND] Enviando payload a /api/sprint/execute:", payload);
+      
+      const res = await fetch("/api/sprint/execute", { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      
+      const data = await res.json();
+      console.log("🚀 [FRONTEND] Respuesta del servidor:", data);
+      
+      if (data.success) { 
+        setSprintExecuting(true); 
+        setProjectStatus("building"); 
+        alert("🚀 ¡Sprint iniciado! Los agentes están trabajando."); 
+      } else { 
+        alert(`❌ Error: ${data.message}`); 
+      }
+    } catch (err: any) {
+      console.error("❌ [FRONTEND] Error al iniciar sprint:", err);
+      alert(`❌ Error de conexión: ${err.message}`);
+    }
+  }} 
+  className="w-full py-2 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-bold rounded hover:from-emerald-500 hover:to-green-500 transition-all flex items-center justify-center gap-2 animate-pulse"
+>
+  <Play size={14} /> INICIAR EJECUCIÓN DEL SPRINT
+</button>
               ) : sprintExecuting ? (
                 <div className="p-3 bg-purple-950/20 border border-purple-500/40 rounded">
                   <div className="flex items-center gap-2 mb-1"><RefreshCw size={14} className="text-purple-400 animate-spin" /><span className="text-[10px] font-bold text-purple-400">Sprint en Ejecución</span></div>

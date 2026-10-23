@@ -1,36 +1,29 @@
 {
   "sprintNumber": 1,
-  "startedAt": "2026-10-23T05:26:13.069Z",
+  "startedAt": "2026-10-23T21:59:35.035Z",
   "approvedBy": "human",
   "tasks": [
     {
-      "id": "task-1792733173069-0",
+      "id": "task-1792792775035-0",
       "title": "🔍 [ARCH] Auditoría de código y propuesta de refactorización",
       "description": "Revisar el código existente en multiagentesIA.\nAnalizar: Estructura actual, patrones utilizados, deuda técnica (medium).",
       "agent": "arch",
-      "status": "done",
-      "startedAt": "2026-10-23T05:26:21.835Z",
-      "completedAt": "2026-10-23T05:29:44.224Z",
-      "output": "Generado por Ollama: nombre_del_archivo.ext",
-      "filesModified": [
-        "nombre_del_archivo.ext"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792733173069-1",
+      "id": "task-1792792775035-1",
       "title": "📝 [DOC] Documentación inicial y guía de contribución",
       "description": "Documentar el proyecto multiagentesIA.\nIncluir: README con instalación y uso, Guía de contribución, Documentación de API (si aplica).",
       "agent": "doc",
-      "status": "working",
-      "startedAt": "2026-10-23T05:29:46.234Z"
+      "status": "pending"
     },
     {
-      "id": "task-1792733173069-2",
+      "id": "task-1792792775035-2",
       "title": "🧪 [QA] Configurar sistema de tests y primer caso de prueba",
       "description": "Configurar Jest para el proyecto.\nIncluir: Configuración inicial, primer test de ejemplo, script en package.json.",
       "agent": "qa",
       "status": "pending"
     }
   ],
-  "status": "executing"
+  "status": "planned"
 }
