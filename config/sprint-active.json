@@ -8,15 +8,24 @@
       "title": "🔍 [ARCH] Auditoría de código y propuesta de refactorización",
       "description": "Revisar el código existente en multiagentesIA.\nAnalizar: Estructura actual, patrones utilizados, deuda técnica (medium).",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-23T22:10:08.696Z"
+      "status": "done",
+      "startedAt": "2026-10-23T22:10:08.696Z",
+      "completedAt": "2026-10-23T22:11:12.880Z",
+      "output": "Generado: multiagentesIA.py",
+      "commits": [
+        "a154f1521f6d3fe065c484ea2d75f5bf67a1f2f6"
+      ],
+      "filesModified": [
+        "multiagentesIA.py"
+      ]
     },
     {
       "id": "task-1792792775035-1",
       "title": "📝 [DOC] Documentación inicial y guía de contribución",
       "description": "Documentar el proyecto multiagentesIA.\nIncluir: README con instalación y uso, Guía de contribución, Documentación de API (si aplica).",
       "agent": "doc",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-23T22:11:14.884Z"
     },
     {
       "id": "task-1792792775035-2",
