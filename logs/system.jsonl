@@ -1609,3 +1609,11 @@
 {"ts":"2026-10-23T23:48:39.246Z","level":"SPRINT","source":"system","message":"✅ Retrospectiva generada. Creando encuestas en Trello..."}
 {"ts":"2026-10-23T23:48:41.499Z","level":"SPRINT","source":"system","message":"✅ Encuestas creadas en Trello. Esperando respuestas del humano..."}
 {"ts":"2026-10-23T23:48:44.772Z","level":"SPRINT","source":"system","message":"✅ Sprint #4 cerrado y archivado"}
+{"ts":"2026-10-23T23:51:56.420Z","level":"INFO","source":"executor","message":"Resetando 3 tareas a \"pending\"..."}
+{"ts":"2026-10-23T23:51:56.421Z","level":"SPRINT","source":"system","message":"🚀 Sprint #5 iniciado. 3 tareas en cola."}
+{"ts":"2026-10-23T23:51:56.422Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 3"}
+{"ts":"2026-10-23T23:51:56.424Z","level":"AGENT","source":"arch","message":"Arquitecto empezó: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}
+{"ts":"2026-10-23T23:51:56.504Z","level":"INFO","source":"executor","message":"Resetando 3 tareas a \"pending\"..."}
+{"ts":"2026-10-23T23:51:56.506Z","level":"SPRINT","source":"system","message":"🚀 Sprint #5 iniciado. 3 tareas en cola."}
+{"ts":"2026-10-23T23:51:56.507Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 3"}
+{"ts":"2026-10-23T23:51:56.521Z","level":"AGENT","source":"arch","message":"Arquitecto empezó: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}

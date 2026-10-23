@@ -1,142 +1,162 @@
 ```python
-import random
+class Agent:
+    def __init__(self, name, strategy):
+        self.name = name
+        self.strategy = strategy
 
-class Agente:
-    def __init__(self, nombre):
-        self.nombre = nombre
-        self.estado = "inactivo"
-        self.objetivo = None
+    def act(self, observation):
+        return self.strategy.decide(observation)
 
-    def activar(self):
-        self.estado = "activo"
 
-    def desactivar(self):
-        self.estado = "inactivo"
-
-    def establecer_objetivo(self, objetivo):
-        self.objetivo = objetivo
-
-    def actuar(self):
-        if self.estado == "activo" and self.objetivo:
-            acciones = self.generar_acciones()
-            accion_elegida = random.choice(acciones)
-            print(f"{self.nombre} elige actuar: {accion_elegida}")
-
-    def generar_acciones(self):
-        return ["accion1", "accion2", "accion3"]
-
-class SistemaMultiagentes:
-    def __init__(self):
-        self.agentes = []
-
-    def agregar_agente(self, agente):
-        self.agentes.append(agente)
-
-    def activar_agentes(self):
-        for agente in self.agentes:
-            agente.activar()
-
-    def desactivar_agentes(self):
-        for agente in self.agentes:
-            agente.desactivar()
-
-    def establecer_objetivo_agentes(self, objetivo):
-        for agente in self.agentes:
-            agente.establecer_objetivo(objetivo)
-
-    def actuar_agentes(self):
-        for agente in self.agentes:
-            agente.actuar()
-
-# Ejemplo de uso
-if __name__ == "__main__":
-    sistema = SistemaMultiagentes()
-    agente1 = Agente("Agente1")
-    agente2 = Agente("Agente2")
-    sistema.agregar_agente(agente1)
-    sistema.agregar_agente(agente2)
-    sistema.establecer_objetivo_agentes("explotar")
-    sistema.activar_agentes()
-    sistema.actar_agentes()
-```
-
-Comentarios de la auditoría:
-1. La estructura del código es clara y sencilla.
-2. Se utilizan clases y métodos para encapsular la funcionalidad.
-3. La generación de acciones es bastante básica y podría mejorarse.
-4. El uso de `random.choice` para elegir acciones es adecuado para un ejemplo básico, pero podría mejorarse con una lógica más compleja o inteligencia artificial.
-
-Propuesta de refactorización:
-- Añadir métodos de generación de acciones más sofisticados.
-- Considerar la implementación de una clase abstracta o interfaz para asegurar que todos los agentes tengan un método `generar_acciones`.
-- Refactorizar el método `actuar` para que pueda ser sobreescrito por las subclases si se desea una lógica diferente.
-
-Implementación de la propuesta de refactorización:
-
-```python
-from abc import ABC, abstractmethod
-
-class Agente(ABC):
-    def __init__(self, nombre):
-        self.nombre = nombre
-        self.estado = "inactivo"
-        self.objetivo = None
-
-    def activar(self):
-        self.estado = "activo"
-
-    def desactivar(self):
-        self.estado = "inactivo"
-
-    def establecer_objetivo(self, objetivo):
-        self.objetivo = objetivo
-
-    @abstractmethod
-    def generar_acciones(self):
+class Strategy:
+    def decide(self, observation):
         pass
 
-    def actuar(self):
-        if self.estado == "activo" and self.objetivo:
-            acciones = self.generar_acciones()
-            accion_elegida = self.elegir_accion(acciones)
-            print(f"{self.nombre} elige actuar: {accion_elegida}")
 
-    def elegir_accion(self, acciones):
-        return random.choice(acciones)
+class RandomStrategy(Strategy):
+    def decide(self, observation):
+        import random
+        return random.choice(['move_left', 'move_right', 'move_up', 'move_down'])
 
-class SistemaMultiagentes:
+
+class SimpleStrategy(Strategy):
+    def decide(self, observation):
+        if 'enemy' in observation:
+            return 'attack'
+        else:
+            return 'move_forward'
+
+
+class ComplexStrategy(Strategy):
+    def decide(self, observation):
+        if 'health' in observation and observation['health'] < 0.5:
+            return 'heal'
+        elif 'enemy' in observation:
+            return 'attack'
+        else:
+            return 'move_forward'
+
+
+class AgentManager:
     def __init__(self):
-        self.agentes = []
+        self.agents = []
 
-    def agregar_agente(self, agente):
-        self.agentes.append(agente)
+    def add_agent(self, agent):
+        self.agents.append(agent)
 
-    def activar_agentes(self):
-        for agente in self.agentes:
-            agente.activar()
+    def get_agents(self):
+        return self.agents
 
-    def desactivar_agentes(self):
-        for agente in self.agentes:
-            agente.desactivar()
+    def act_all(self, observation):
+        actions = []
+        for agent in self.agents:
+            actions.append(agent.act(observation))
+        return actions
 
-    def establecer_objetivo_agentes(self, objetivo):
-        for agente in self.agentes:
-            agente.establecer_objetivo(objetivo)
-
-    def actuar_agentes(self):
-        for agente in self.agentes:
-            agente.actuar()
 
 # Ejemplo de uso
 if __name__ == "__main__":
-    sistema = SistemaMultiagentes()
-    agente1 = AgenteConAcciones("Agente1")
-    agente2 = AgenteConAcciones("Agente2")
-    sistema.agregar_agente(agente1)
-    sistema.agregar_agente(agente2)
-    sistema.establecer_objetivo_agentes("explotar")
-    sistema.activar_agentes()
-    sistema.actar_agentes()
+    manager = AgentManager()
+    manager.add_agent(Agent("Agent1", RandomStrategy()))
+    manager.add_agent(Agent("Agent2", SimpleStrategy()))
+    manager.add_agent(Agent("Agent3", ComplexStrategy()))
+
+    observations = [{}, {'enemy': True}, {'health': 0.3}]
+
+    for observation in observations:
+        actions = manager.act_all(observation)
+        print(f"Observation: {observation}")
+        print(f"Actions: {actions}")
 ```
 
-En este refactorización, hemos añadido una clase abstracta `Agente` con un método abstracto `generar_acciones` y hemos creado una subclase `AgenteConAcciones` que implementa este método. Además, hemos refactorizado el método `elegir_accion` para que pueda ser sobreescrito por las subclases si se desea una lógica diferente.
+Propuesta de refactorización:
+
+1. **Separación de Concernes**: Separamos la lógica de decisión de la estrategia en una clase independiente.
+2. **Uso de Named Tuples**: Utilizamos named tuples para representar observaciones y acciones.
+3. **Simplificación de Condicionales**: Simplificamos las condicionales en la estrategia compleja.
+4. **Uso de Enums**: Utilizamos enums para las acciones posibles.
+
+```python
+from collections import namedtuple
+from enum import Enum
+
+class Strategy(Enum):
+    RANDOM = 1
+    SIMPLE = 2
+    COMPLEX = 3
+
+class Agent:
+    def __init__(self, name, strategy):
+        self.name = name
+        self.strategy = strategy
+
+    def act(self, observation):
+        return self.strategy.decide(observation)
+
+
+class Strategy:
+    def decide(self, observation):
+        pass
+
+
+class RandomStrategy(Strategy):
+    def decide(self, observation):
+        import random
+        return random.choice(['move_left', 'move_right', 'move_up', 'move_down'])
+
+
+class SimpleStrategy(Strategy):
+    def decide(self, observation):
+        if 'enemy' in observation:
+            return 'attack'
+        else:
+            return 'move_forward'
+
+
+class ComplexStrategy(Strategy):
+    def decide(self, observation):
+        if 'health' in observation and observation['health'] < 0.5:
+            return 'heal'
+        elif 'enemy' in observation:
+            return 'attack'
+        else:
+            return 'move_forward'
+
+
+class AgentManager:
+    def __init__(self):
+        self.agents = []
+
+    def add_agent(self, agent):
+        self.agents.append(agent)
+
+    def get_agents(self):
+        return self.agents
+
+    def act_all(self, observation):
+        actions = []
+        for agent in self.agents:
+            actions.append(agent.act(observation))
+        return actions
+
+
+# Ejemplo de uso
+if __name__ == "__main__":
+    manager = AgentManager()
+    manager.add_agent(Agent("Agent1", RandomStrategy()))
+    manager.add_agent(Agent("Agent2", SimpleStrategy()))
+    manager.add_agent(Agent("Agent3", ComplexStrategy()))
+
+    observations = [
+        namedtuple('Observation', 'health')(health=None),
+        namedtuple('Observation', 'enemy')(enemy=True),
+        namedtuple('Observation', 'health')(health=0.3)
+    ]
+
+    for observation in observations:
+        actions = manager.act_all(observation)
+        print(f"Observation: {observation}")
+        print(f"Actions: {actions}")
+```
+
+Esta refactorización mejora la legibilidad, mantenibilidad y flexibilidad del código al separar las responsabilidades y simplificar las decisiones.

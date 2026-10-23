@@ -1,53 +1,5 @@
 [
   {
-    "agent": "qa",
-    "message": "Iniciando: 🧪 [QA] Configurar sistema de tests y primer caso de prueba",
-    "timestamp": "2026-10-23T23:47:53.581Z",
-    "level": "info"
-  },
-  {
-    "agent": "qa",
-    "message": "Generando código con deepseek-coder-v2:16b...",
-    "timestamp": "2026-10-23T23:47:53.590Z",
-    "level": "info"
-  },
-  {
-    "agent": "qa",
-    "message": "✅ Archivo creado: jest.config.js",
-    "timestamp": "2026-10-23T23:48:21.222Z",
-    "level": "success"
-  },
-  {
-    "agent": "qa",
-    "message": "Preparando commit...",
-    "timestamp": "2026-10-23T23:48:21.231Z",
-    "level": "info"
-  },
-  {
-    "agent": "qa",
-    "message": "✅ Push exitoso: 4dff08a",
-    "timestamp": "2026-10-23T23:48:24.332Z",
-    "level": "success"
-  },
-  {
-    "agent": "qa",
-    "message": "✅ Completado en 30.8s",
-    "timestamp": "2026-10-23T23:48:24.339Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Todas las tareas completadas. Generando retrospectiva...",
-    "timestamp": "2026-10-23T23:48:26.349Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Generando retrospectiva del sprint...",
-    "timestamp": "2026-10-23T23:48:26.356Z",
-    "level": "info"
-  },
-  {
     "agent": "po",
     "message": "✅ Retrospectiva generada",
     "timestamp": "2026-10-23T23:48:39.245Z",
@@ -88,5 +40,53 @@
     "message": "✅ Sprint archivado en historial",
     "timestamp": "2026-10-23T23:48:44.772Z",
     "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "🎯 Trabajando en: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
+    "timestamp": "2026-10-23T23:51:56.426Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Iniciando: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
+    "timestamp": "2026-10-23T23:51:56.437Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Generando código con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-23T23:51:56.448Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "🎯 Trabajando en: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
+    "timestamp": "2026-10-23T23:51:56.525Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Iniciando: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
+    "timestamp": "2026-10-23T23:51:56.536Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Generando código con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-23T23:51:56.547Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Archivo creado: multiagentesIA.py",
+    "timestamp": "2026-10-23T23:53:08.019Z",
+    "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-23T23:53:08.028Z",
+    "level": "info"
   }
 ]
