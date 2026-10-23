@@ -151,17 +151,26 @@ export default function DashboardScreen() {
           
           const newStates: Record<string, ModuleStatus> = {};
           const newTimes: Record<string, string> = {};
+          
           for (const task of data.sprint.tasks) {
-            if (task.status === "working") newStates[task.agent] = "working";
-            else if (task.status === "done") {
+            if (task.status === "working") {
+              newStates[task.agent] = "working";
+              // ✅ ACTIVAR ÓRBITAS DE HERRAMIENTAS CUANDO EL SPRINT ESTÁ ACTIVO
+              newStates["ollama"] = "working";
+              newStates["github"] = "working";
+            } else if (task.status === "done") {
               newStates[task.agent] = "done";
-              if (task.completedAt) newTimes[task.agent] = new Date(task.completedAt).toLocaleString("es-ES", { hour: '2-digit', minute: '2-digit' });
+              if (task.completedAt) {
+                newTimes[task.agent] = new Date(task.completedAt).toLocaleString("es-ES", { hour: '2-digit', minute: '2-digit' });
+              }
             }
           }
+          
           if (Object.keys(newStates).length > 0) {
             setModuleStates(prev => ({ ...prev, ...newStates }));
             setLastWorkTimes(prev => ({ ...prev, ...newTimes }));
           }
+          
           if (data.sprint.status === "executing") { setSprintExecuting(true); setHumanApproved(true); }
           if (data.sprint.status === "completed") { setSprintExecuting(false); setProjectStatus("deployed"); }
         }
