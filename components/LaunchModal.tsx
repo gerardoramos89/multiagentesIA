@@ -15,13 +15,23 @@ export default function LaunchModal({ isOpen, onClose, sprintNumber }: LaunchMod
   useEffect(() => {
     if (isOpen) {
       setStep(1);
-      const timers = [
-        setTimeout(() => setStep(2), 1500),
-        setTimeout(() => setStep(3), 3500),
-        setTimeout(() => setStep(4), 5500),
-        setTimeout(() => onClose(), 7000), // Se cierra solo después de 7 segundos
-      ];
-      return () => timers.forEach(clearTimeout);
+      
+      // ✅ TEMPORIZADORES PARA LA ANIMACIÓN
+      const timer1 = setTimeout(() => setStep(2), 1500);
+      const timer2 = setTimeout(() => setStep(3), 3500);
+      const timer3 = setTimeout(() => setStep(4), 5500);
+      
+      // ✅ CIERRE AUTOMÁTICO DESPUÉS DE 7 SEGUNDOS
+      const timerClose = setTimeout(() => {
+        onClose();
+      }, 7000);
+      
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+        clearTimeout(timerClose);
+      };
     }
   }, [isOpen, onClose]);
 
@@ -40,7 +50,7 @@ export default function LaunchModal({ isOpen, onClose, sprintNumber }: LaunchMod
         exit={{ scale: 0.8, y: 50 }}
         className="relative w-full max-w-lg p-8 bg-gray-900/90 border border-cyan-500/50 rounded-2xl shadow-[0_0_50px_rgba(6,182,212,0.3)] overflow-hidden"
       >
-        {/* Botón de cierre manual por seguridad */}
+        {/* Botón de cierre manual */}
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-20"

@@ -177,6 +177,11 @@ export default function DashboardScreen() {
   const [sprintExecuting, setSprintExecuting] = useState(false);
   const [sprintState, setSprintState] = useState<any>(null);
 
+  // ✅ ESTADOS INDEPENDIENTES (NO dependen de sprintState)
+  const [lastRetrospective, setLastRetrospective] = useState<any>(null);
+  const [lastSprintNumber, setLastSprintNumber] = useState<number>(0);
+  const [hasCompletedSprints, setHasCompletedSprints] = useState(false);
+
   const [projectVision, setProjectVision] = useState({ name: "", generalObjective: "", specificObjectives: "", scope: "", targetSkills: "", isCompleted: false });
   const [showLaunchModal, setShowLaunchModal] = useState(false);
   const [showRetrospectiveModal, setShowRetrospectiveModal] = useState(false);
@@ -185,6 +190,22 @@ export default function DashboardScreen() {
   useEffect(() => {
     const savedVision = localStorage.getItem('projectVision');
     if (savedVision) { try { setProjectVision(JSON.parse(savedVision)); } catch {} }
+  }, []);
+
+  // ✅ CARGAR HISTORIAL AL INICIO (para saber si hay sprints completados)
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const res = await fetch("/api/sprint/last-retrospective");
+        const data = await res.json();
+        if (data.success && data.retrospective) {
+          setLastRetrospective(data.retrospective);
+          setLastSprintNumber(data.sprintNumber);
+          setHasCompletedSprints(true);
+        }
+      } catch {}
+    };
+    loadHistory();
   }, []);
 
   const configuredCount = modules.filter(m => m.status === "on").length;
@@ -226,10 +247,16 @@ export default function DashboardScreen() {
             setLastWorkTimes(prev => ({ ...prev, ...newTimes }));
           }
           
-          if (data.sprint.status === "executing") { setSprintExecuting(true); }
-          if (data.sprint.status === "completed") { setSprintExecuting(false); setProjectStatus("deployed"); }
+          if (data.sprint.status === "executing") { 
+            setSprintExecuting(true); 
+          }
+          if (data.sprint.status === "completed") { 
+            setSprintExecuting(false); 
+            setProjectStatus("deployed"); 
+            setShowLaunchModal(false);
+          }
         } else {
-          // Si no hay sprint activo, limpiamos el estado
+          // ✅ Solo limpiar sprintState, NO tocar lastRetrospective
           setSprintState(null);
         }
       } catch {}
@@ -256,6 +283,14 @@ export default function DashboardScreen() {
             setSprintPlanned(false);
             setSprintExecuting(false);
             setSprintState(null);
+            // ✅ Recargar historial para actualizar lastRetrospective
+            const histRes = await fetch("/api/sprint/last-retrospective");
+            const histData = await histRes.json();
+            if (histData.success && histData.retrospective) {
+              setLastRetrospective(histData.retrospective);
+              setLastSprintNumber(histData.sprintNumber);
+              setHasCompletedSprints(true);
+            }
             alert("✅ Sprint cerrado automáticamente. Todas las encuestas fueron respondidas.");
           }
         }
@@ -451,7 +486,7 @@ export default function DashboardScreen() {
             <ProjectVisionForm vision={projectVision} setVision={setProjectVision} onComplete={() => {}} />
           )}
 
-          {/* ✅ LÓGICA CORREGIDA: Mostrar botón de planificar cuando NO hay sprint activo o está completado */}
+          {/* ✅ LÓGICA DEFINITIVA: Basada en hasCompletedSprints (no depende de sprintState) */}
           {!sprintState || sprintState?.sprint?.status === "completed" ? (
             <>
               <button 
@@ -485,7 +520,7 @@ export default function DashboardScreen() {
                 }`}
               >
                 <LayoutGrid size={14} /> 
-                {sprintState?.sprint?.status === "completed" ? "Planificar Nuevo Sprint" : "Planificar Primer Sprint"}
+                {hasCompletedSprints ? "Planificar Nuevo Sprint" : "Planificar Primer Sprint"}
               </button>
               
               <button 
@@ -495,13 +530,8 @@ export default function DashboardScreen() {
                     const data = await res.json();
                     
                     if (data.success && data.retrospective) {
-                      setSprintState({
-                        sprint: {
-                          sprintNumber: data.sprintNumber,
-                          retrospective: data.retrospective,
-                          status: "completed"
-                        }
-                      });
+                      setLastRetrospective(data.retrospective);
+                      setLastSprintNumber(data.sprintNumber);
                       setShowRetrospectiveModal(true);
                     } else {
                       alert("ℹ️ No hay sprints completados aún");
@@ -591,13 +621,8 @@ export default function DashboardScreen() {
                         const data = await res.json();
                         
                         if (data.success && data.retrospective) {
-                          setSprintState({
-                            sprint: {
-                              ...sprintState.sprint,
-                              retrospective: data.retrospective,
-                              sprintNumber: data.sprintNumber
-                            }
-                          });
+                          setLastRetrospective(data.retrospective);
+                          setLastSprintNumber(data.sprintNumber);
                           setShowRetrospectiveModal(true);
                         } else {
                           alert("❌ No se encontró la retrospectiva");
@@ -620,6 +645,14 @@ export default function DashboardScreen() {
                         setSprintPlanned(false);
                         setSprintExecuting(false);
                         setSprintState(null);
+                        // ✅ Recargar historial para actualizar hasCompletedSprints
+                        const histRes = await fetch("/api/sprint/last-retrospective");
+                        const histData = await histRes.json();
+                        if (histData.success && histData.retrospective) {
+                          setLastRetrospective(histData.retrospective);
+                          setLastSprintNumber(histData.sprintNumber);
+                          setHasCompletedSprints(true);
+                        }
                       } else {
                         alert(`❌ Error: ${data.message}`);
                       }
@@ -656,11 +689,12 @@ export default function DashboardScreen() {
         sprintNumber={sprintState?.sprint?.sprintNumber || 1} 
       />
       
+      {/* ✅ MODAL DE RETROSPECTIVA: Usa lastRetrospective (estado independiente) */}
       <SprintRetrospectiveModal 
         isOpen={showRetrospectiveModal}
         onClose={() => setShowRetrospectiveModal(false)}
-        retrospective={sprintState?.sprint?.retrospective || null}
-        sprintNumber={sprintState?.sprint?.sprintNumber || 1}
+        retrospective={lastRetrospective}
+        sprintNumber={lastSprintNumber || 1}
       />
     </div>
   );
