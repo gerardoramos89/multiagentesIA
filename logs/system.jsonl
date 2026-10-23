@@ -756,3 +756,5 @@
 {"ts":"2026-10-23T04:06:27.123Z","level":"SPRINT","source":"system","message":"🚀 Sprint #1 iniciado. 3 tareas en cola."}
 {"ts":"2026-10-23T04:06:27.125Z","level":"SPRINT","source":"system","message":"🎉 Sprint #1 COMPLETADO"}
 {"ts":"2026-10-23T04:07:37.706Z","level":"INFO","source":"diagnostics","message":"Diagnóstico completado. Ready: true","meta":{"durationMs":12100}}
+{"ts":"2026-10-23T04:24:54.841Z","level":"INFO","source":"executor","message":"Preparando repositorio..."}
+{"ts":"2026-10-23T04:24:55.187Z","level":"INFO","source":"executor","message":"Hay cambios pendientes. Haciendo commit inicial..."}
