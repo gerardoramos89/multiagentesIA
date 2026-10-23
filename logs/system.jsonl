@@ -1141,3 +1141,10 @@
 {"ts":"2026-10-23T22:12:18.714Z","level":"AGENT","source":"qa","message":"✅ Commit y push exitoso: 604531e"}
 {"ts":"2026-10-23T22:12:18.715Z","level":"AGENT","source":"qa","message":"QA Engineer completó: 🧪 [QA] Configurar sistema de tests y primer caso de prueba en 19.8s"}
 {"ts":"2026-10-23T22:12:20.730Z","level":"SPRINT","source":"system","message":"🎉 Sprint #1 COMPLETADO"}
+{"ts":"2026-10-23T22:13:45.261Z","level":"INFO","source":"executor","message":"Resetando 3 tareas a \"pending\"..."}
+{"ts":"2026-10-23T22:13:45.263Z","level":"SPRINT","source":"system","message":"🚀 Sprint #1 iniciado. 3 tareas en cola."}
+{"ts":"2026-10-23T22:13:45.263Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 3"}
+{"ts":"2026-10-23T22:13:45.264Z","level":"AGENT","source":"arch","message":"Arquitecto empezó: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}
+{"ts":"2026-10-23T22:13:45.264Z","level":"AGENT","source":"arch","message":"Intentando generar código para: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}
+{"ts":"2026-10-23T22:13:45.264Z","level":"AGENT","source":"arch","message":"Generando con Ollama (deepseek-coder-v2:16b)..."}
+{"ts":"2026-10-23T22:14:49.583Z","level":"INFO","source":"arch","message":"✅ Archivo generado: multiagentesIA.py"}

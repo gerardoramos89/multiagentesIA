@@ -1,101 +1,122 @@
 ```python
+# Importaciones
 import random
 
+# Clase Agente
 class Agente:
-    def __init__(self, nombre):
-        self.nombre = nombre
+    def __init__(self, id):
+        self.id = id
         self.estado = "inactivo"
+        self.objetivo = None
 
-    def activar(self):
-        self.estado = "activo"
+    def set_objetivo(self, objetivo):
+        self.objetivo = objetivo
 
-    def desactivar(self):
-        self.estado = "inactivo"
+    def actuar(self):
+        if self.estado == "activo":
+            acciones = ["accion1", "accion2", "accion3"]
+            accion = random.choice(acciones)
+            print(f"Agente {self.id} realiza {accion}")
+        else:
+            print(f"Agente {self.id} está inactivo")
 
-    def esta_activo(self):
-        return self.estado == "activo"
-
+# Clase SistemaMultiagentes
 class SistemaMultiagentes:
     def __init__(self, num_agentes):
-        self.agentes = [Agente(f"Agente_{i}") for i in range(num_agentes)]
+        self.agentes = [Agente(i) for i in range(num_agentes)]
 
-    def activar_todos(self):
+    def activar_agentes(self):
         for agente in self.agentes:
-            agente.activar()
+            agente.estado = "activo"
 
-    def desactivar_todos(self):
+    def desactivar_agentes(self):
         for agente in self.agentes:
-            agente.desactivar()
+            agente.estado = "inactivo"
 
-    def agentes_activos(self):
-        return [agente for agente in self.agentes if agente.esta_activo()]
+    def asignar_objetivos(self, objetivos):
+        if len(objetivos) != len(self.agentes):
+            raise ValueError("Número de objetivos debe ser igual al número de agentes")
+        for i, agente in enumerate(self.agentes):
+            agente.set_objetivo(objetivos[i])
 
-    def simular(self):
-        if random.random() > 0.5:
-            self.activar_todos()
-        else:
-            self.desactivar_todos()
-        return self.agentes_activos()
+    def actuar_agentes(self):
+        for agente in self.agentes:
+            agente.actuar()
 
 # Ejemplo de uso
-sistema = SistemaMultiagentes(10)
-print(sistema.simular())
+if __name__ == "__main__":
+    num_agentes = 5
+    objetivos = ["objetivo1", "objetivo2", "objetivo3", "objetivo4", "objetivo5"]
+
+    sistema = SistemaMultiagentes(num_agentes)
+    sistema.asignar_objetivos(objetivos)
+    sistema.activar_agentes()
+    sistema.actar_agentes()
 ```
-
-Comentarios de la auditoría:
-
-1. **Estructura del código**: El código está bien estructurado, con clases y métodos bien definidos.
-2. **Patrones utilizados**: Se utilizan patrones de diseño orientado a objetos, como la encapsulación y la abstracción.
-3. **Deuda técnica**: No hay una deuda técnica significativa, pero podría mejorarse la legibilidad del código al añadir comentarios o funciones más descriptivas.
 
 Propuesta de refactorización:
 
-1. **Añadir comentarios**: Añadir comentarios para explicar el propósito de las funciones y métodos.
-2. **Mejorar la legibilidad**: Renombrar variables y funciones para que sean más descriptivas.
-3. **Utilizar excepciones**: Añadir manejo de excepciones para casos en los que el estado de los agentes pueda ser inesperado.
+1. **Separación de Responsabilidades**: Cada clase tiene una única responsabilidad.
+2. **Uso de Métodos de Clase**: Utilizar métodos de clase para crear instancias en lugar de hacerlo en el método `__main__`.
+3. **Uso de Constantes**: Utilizar constantes para valores que no cambian, como los estados de los agentes.
+4. **Mejora de la Legibilidad**: Añadir comentarios para explicar el propósito de las funciones y métodos.
 
 ```python
-ARCHIVO: multiagentesIA.py
-
+# Importaciones
 import random
 
+# Constantes
+ESTADO_ACTIVO = "activo"
+ESTADO_INACTIVO = "inactivo"
+
+# Clase Agente
 class Agente:
-    def __init__(self, nombre):
-        self.nombre = nombre  # Nombre del agente
-        self.estado = "inactivo"  # Estado inicial del agente
+    def __init__(self, id):
+        self.id = id
+        self.estado = ESTADO_INACTIVO
+        self.objetivo = None
 
-    def activar(self):
-        self.estado = "activo"  # Cambia el estado a activo
+    def set_objetivo(self, objetivo):
+        self.objetivo = objetivo
 
-    def desactivar(self):
-        self.estado = "inactivo"  # Cambia el estado a inactivo
+    def actuar(self):
+        if self.estado == ESTADO_ACTIVO:
+            acciones = ["accion1", "accion2", "accion3"]
+            accion = random.choice(acciones)
+            print(f"Agente {self.id} realiza {accion}")
+        else:
+            print(f"Agente {self.id} está inactivo")
 
-    def esta_activo(self):
-        return self.estado == "activo"  # Devuelve True si el agente está activo
-
+# Clase SistemaMultiagentes
 class SistemaMultiagentes:
     def __init__(self, num_agentes):
-        self.agentes = [Agente(f"Agente_{i}") for i in range(num_agentes)]  # Crea una lista de agentes
+        self.agentes = [Agente(i) for i in range(num_agentes)]
 
-    def activar_todos(self):
+    def activar_agentes(self):
         for agente in self.agentes:
-            agente.activar()  # Activa todos los agentes
+            agente.estado = ESTADO_ACTIVO
 
-    def desactivar_todos(self):
+    def desactivar_agentes(self):
         for agente in self.agentes:
-            agente.desactivar()  # Desactiva todos los agentes
+            agente.estado = ESTADO_INACTIVO
 
-    def agentes_activos(self):
-        return [agente for agente in self.agentes if agente.esta_activo()]  # Devuelve los agentes activos
+    def asignar_objetivos(self, objetivos):
+        if len(objetivos) != len(self.agentes):
+            raise ValueError("Número de objetivos debe ser igual al número de agentes")
+        for i, agente in enumerate(self.agentes):
+            agente.set_objetivo(objetivos[i])
 
-    def simular(self):
-        if random.random() > 0.5:
-            self.activar_todos()  # Activa todos los agentes con una probabilidad del 50%
-        else:
-            self.desactivar_todos()  # Desactiva todos los agentes con una probabilidad del 50%
-        return self.agentes_activos()  # Devuelve los agentes activos después de la simulación
+    def actuar_agentes(self):
+        for agente in self.agentes:
+            agente.actuar()
 
 # Ejemplo de uso
-sistema = SistemaMultiagentes(10)
-print(sistema.simular())
+if __name__ == "__main__":
+    num_agentes = 5
+    objetivos = ["objetivo1", "objetivo2", "objetivo3", "objetivo4", "objetivo5"]
+
+    sistema = SistemaMultiagentes(num_agentes)
+    sistema.asignar_objetivos(objetivos)
+    sistema.activar_agentes()
+    sistema.actar_agentes()
 ```
