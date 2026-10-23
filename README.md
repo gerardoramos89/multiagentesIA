@@ -4,27 +4,31 @@
 
 ## Objetivo
 
-El objetivo principal de este proyecto es crear una plataforma que permita la gestión de proyectos de Inteligencia Artificial utilizando un equipo de agentes autónomos. Los agentes deberán seguir reglas Scrum para asegurar un desarrollo eficiente y autónomo.
+El objetivo principal de este proyecto es crear una plataforma que permita la gestión de proyectos de Inteligencia Artificial utilizando un equipo de agentes autónomos. Los agentes seguirán reglas Scrum para asegurar un desarrollo eficiente y autónomo.
 
 ## Alcance
 
-- **Skills**: Next.js
-- **Contexto adicional**: No proporcionado
+- Desarrollar una plataforma multiagente.
+- Gestionar proyectos de Inteligencia Artificial.
+- Utilizar reglas Scrum para equipos de agentes autónomos.
+- Crear una interfaz de usuario intuitiva para facilitar la gestión de los proyectos.
 
-## Estructura del Proyecto
+## Skills
 
-El proyecto se compone de los siguientes elementos:
+Este proyecto está desarrollado utilizando las siguientes tecnologías y habilidades:
 
-- **README.md**: Este archivo que estás leyendo, que proporciona una guía general sobre el proyecto.
-- **Guía de Contribución**: Un documento que explica cómo contribuir al proyecto.
-- **Documentación de API**: Si aplica, una documentación detallada sobre la API del proyecto.
+- Next.js
+- React
+- Node.js
+- JavaScript
+- CSS
 
 ## Instalación y Uso
 
 ### Requisitos
 
 - Node.js v14.x o superior
-- npm v6.x o superior (o yarn)
+- npm v6.x o superior
 
 ### Instalación
 
@@ -39,61 +43,62 @@ El proyecto se compone de los siguientes elementos:
 3. Instala las dependencias:
    ```bash
    npm install
-   # o
-   yarn install
+   ```
+4. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
    ```
 
 ### Uso
 
-1. Inicia el servidor de desarrollo:
-   ```bash
-   npm run dev
-   # o
-   yarn dev
-   ```
-2. Abre tu navegador y navega a `http://localhost:3000` para ver la aplicación en funcionamiento.
+Una vez que el servidor esté en funcionamiento, puedes acceder a la aplicación en tu navegador en `http://localhost:3000`.
 
 ## Guía de Contribución
 
-¡Estamos encantados de que quieras contribuir con MultiagentesIA! Aquí tienes una guía para ayudarte a empezar:
+¡Estamos encantados de que quieras contribuir a nuestro proyecto! Aquí tienes una guía para ayudarte a empezar:
 
 ### Cómo Contribuir
 
-1. **Fork del Repositorio**: Primero, haz un fork del repositorio en GitHub.
-2. **Clona tu Fork**: Clona tu fork en tu máquina local.
-3. **Instala Dependencias**: Instala las dependencias necesarias.
-4. **Crea una Rama**: Crea una nueva rama para tu contribución.
+1. Haz un fork del repositorio.
+2. Clona tu fork:
    ```bash
-   git checkout -b mi-nueva-caracteristica
+   git clone https://github.com/tu-usuario/multiagentesIA.git
    ```
-5. **Realiza tus Cambios**: Realiza los cambios necesarios en el código.
-6. **Prueba tus Cambios**: Asegúrate de que tus cambios pasan todas las pruebas.
-7. **Haz Commit de tus Cambios**: Haz commit de tus cambios con un mensaje claro y descriptivo.
+3. Navega al directorio del proyecto:
    ```bash
-   git commit -m "Agrega una nueva característica: mi-nueva-caracteristica"
+   cd multiagentesIA
    ```
-8. **Push a tu Fork**: Push a tu fork en GitHub.
+4. Crea una nueva rama para tu función o corrección de errores:
    ```bash
-   git push origin mi-nueva-caracteristica
+   git checkout -b mi-nueva-funcion
    ```
-9. **Crea un Pull Request**: Ve a tu fork en GitHub y crea un Pull Request hacia el repositorio principal.
+5. Realiza tus cambios y guarda los archivos modificados:
+   ```bash
+   git add .
+   git commit -m "Añadida mi-nueva-funcion"
+   ```
+6. Sube tus cambios a GitHub:
+   ```bash
+   git push origin mi-nueva-funcion
+   ```
+7. Crea una solicitud de pull request en GitHub.
 
 ### Código de Conducta
 
-Este proyecto tiene como objetivo crear una comunidad inclusiva y respetuosa. Por favor, lee y sigue nuestro [Código de Conducta](CODE_OF_CONDUCT.md).
+Este proyecto y su comunidad están regidos por un código de conducta. Por favor, lee el archivo [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) para más información.
 
 ## Documentación de API
 
-La documentación de la API estará disponible en el siguiente enlace una vez esté lista.
+La documentación de la API estará disponible en el siguiente enlace una vez que esté disponible.
 
 ## Estado del Proyecto
 
-- **Total de commits**: 10
-- **Sprints completados**: 2
-- **Archivos modificados históricamente**: 4
+- **Total de commits:** 14
+- **Sprints completados:** 3
+- **Archivos modificados históricamente:** 4
 
-¡Gracias por tu interés en MultiagentesIA!
+¡Gracias por tu interés en el proyecto MultiagentesIA!
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.

@@ -1,5 +1,5 @@
 {
-  "totalCommits": 13,
+  "totalCommits": 14,
   "filesEverChanged": [
     "multiagentesIA.py",
     "DOCUMENTACION.md",
@@ -7,5 +7,5 @@
     "README.md"
   ],
   "sprintsCompleted": 3,
-  "lastCommitHash": "32f2f5f066b622041bc35d38ba229707d97f12f0"
+  "lastCommitHash": "bd1bbb10ec090f8cf64c02f7da61f0050c948cad"
 }
