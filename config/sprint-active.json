@@ -1,61 +1,30 @@
 {
-  "sprintNumber": 4,
-  "startedAt": "2026-10-23T23:44:26.203Z",
+  "sprintNumber": 5,
+  "startedAt": "2026-10-23T23:51:25.173Z",
   "approvedBy": "human",
   "tasks": [
     {
-      "id": "task-1792799066203-0",
+      "id": "task-1792799485173-0",
       "title": "🔍 [ARCH] Auditoría de código y propuesta de refactorización",
       "description": "Revisar el código existente en multiagentesIA.\nAnalizar: Estructura actual, patrones utilizados, deuda técnica (medium).",
       "agent": "arch",
-      "status": "done",
-      "startedAt": "2026-10-23T23:45:04.446Z",
-      "completedAt": "2026-10-23T23:46:46.473Z",
-      "output": "Generado: multiagentesIA.py",
-      "commits": [
-        "bd1bbb10ec090f8cf64c02f7da61f0050c948cad"
-      ],
-      "filesModified": [
-        "multiagentesIA.py"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792799066203-1",
+      "id": "task-1792799485173-1",
       "title": "📝 [DOC] Documentación inicial y guía de contribución",
       "description": "Documentar el proyecto multiagentesIA.\nIncluir: README con instalación y uso, Guía de contribución, Documentación de API (si aplica).",
       "agent": "doc",
-      "status": "done",
-      "startedAt": "2026-10-23T23:46:48.489Z",
-      "completedAt": "2026-10-23T23:47:51.558Z",
-      "output": "Generado: README.md",
-      "commits": [
-        "fa2e1cab8d9f911e33316b77547eee0b1be46cf3"
-      ],
-      "filesModified": [
-        "README.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792799066203-2",
+      "id": "task-1792799485173-2",
       "title": "🧪 [QA] Configurar sistema de tests y primer caso de prueba",
       "description": "Configurar Jest para el proyecto.\nIncluir: Configuración inicial, primer test de ejemplo, script en package.json.",
       "agent": "qa",
-      "status": "working",
-      "startedAt": "2026-10-23T23:47:53.572Z"
+      "status": "pending"
     }
   ],
-  "status": "executing",
-  "lessonsLearned": [],
-  "vision": {
-    "name": "MultiagentesIA",
-    "generalObjective": "Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y con equiupo de agentes con reglas scrumt sean autonomos codificado y creandoo todo lo de un cliclo del software requiera.",
-    "specificObjectives": "",
-    "scope": "",
-    "targetSkills": "Next ",
-    "isCompleted": true
-  },
-  "filesChanged": [
-    "multiagentesIA.py",
-    "README.md"
-  ]
+  "status": "planned",
+  "lessonsLearned": []
 }
