@@ -309,18 +309,49 @@ function buildCommitMessage(task: SprintTask): string {
 }
 
 export async function startSprintExecution(): Promise<{ success: boolean; message: string }> {
+  console.log("[EXECUTOR] startSprintExecution llamado");
+  
   const sprint = loadSprint();
-  if (!sprint) return { success: false, message: "No hay sprint planificado" };
-  if (sprint.status === "executing") return { success: false, message: "El sprint ya está en ejecución" };
+  if (!sprint) {
+    console.log("[EXECUTOR] No hay sprint planificado");
+    return { success: false, message: "No hay sprint planificado" };
+  }
+  if (sprint.status === "executing") {
+    console.log("[EXECUTOR] Sprint ya está en ejecución");
+    return { success: false, message: "El sprint ya está en ejecución" };
+  }
 
-  // ✅ PREPARAR REPOSITORIO ANTES DE EMPEZAR
+  console.log("[EXECUTOR] Sprint cargado:", {
+    status: sprint.status,
+    tasksCount: sprint.tasks.length,
+    tasksStatus: sprint.tasks.map(t => `${t.title}: ${t.status}`)
+  });
+
+  // ✅ PREPARAR REPOSITORIO
   const prepResult = await prepareRepository();
   if (!prepResult.success) {
     return { success: false, message: `Error preparando repositorio: ${prepResult.message}` };
   }
 
+  // ✅ CRÍTICO: RESETEAR TODAS LAS TAREAS A "pending"
+  console.log("[EXECUTOR] Resetando todas las tareas a 'pending'...");
+  for (const task of sprint.tasks) {
+    console.log(`[EXECUTOR]   - ${task.title}: ${task.status} → pending`);
+    task.status = "pending";
+    task.startedAt = undefined;
+    task.completedAt = undefined;
+    task.output = undefined;
+    task.commits = undefined;
+  }
+  saveSprint(sprint);
+
   sprint.status = "executing";
   saveSprint(sprint);
+
+  console.log("[EXECUTOR] Sprint actualizado:", {
+    status: sprint.status,
+    tasksStatus: sprint.tasks.map(t => `${t.title}: ${t.status}`)
+  });
 
   log("SPRINT", "system", `🚀 Sprint #${sprint.sprintNumber} iniciado. ${sprint.tasks.length} tareas en cola.`);
   await sendTelegram(`🚀 ${tg.b("Sprint #" + sprint.sprintNumber + " INICIADO")}\n${sprint.tasks.length} tareas en ejecución.`);
@@ -331,11 +362,27 @@ export async function startSprintExecution(): Promise<{ success: boolean; messag
 
   return { success: true, message: "Sprint iniciado" };
 }
-
 async function executeTasksSequentially(sprint: SprintState) {
+  log("INFO", "executor", `=== INICIANDO EJECUCIÓN SECUENCIAL ===`);
+  log("INFO", "executor", `Total de tareas en sprint: ${sprint.tasks.length}`);
+  
   const pendingTasks = sprint.tasks.filter((t) => t.status === "pending");
+  log("INFO", "executor", `Tareas pendientes encontradas: ${pendingTasks.length}`);
+  
+  if (pendingTasks.length === 0) {
+    log("WARN", "executor", `⚠️ NO HAY TAREAS PENDIENTES. Estados actuales:`);
+    for (const task of sprint.tasks) {
+      log("WARN", "executor", `  - ${task.title}: ${task.status}`);
+    }
+    sprint.status = "completed";
+    saveSprint(sprint);
+    return;
+  }
 
-  for (const task of pendingTasks) {
+  for (let i = 0; i < pendingTasks.length; i++) {
+    const task = pendingTasks[i];
+    log("INFO", "executor", `--- Tarea ${i + 1}/${pendingTasks.length}: ${task.title} ---`);
+    
     task.status = "working";
     task.startedAt = new Date().toISOString();
     saveSprint(sprint);
@@ -346,8 +393,10 @@ async function executeTasksSequentially(sprint: SprintState) {
 
     const startTime = Date.now();
 
-    // Ejecutar Aider
+    // ✅ EJECUTAR AIDER
+    log("INFO", "executor", `Llamando a executeAider para ${task.agent}...`);
     const aiderResult = await executeAider(task);
+    log("INFO", "executor", `executeAider retornó: success=${aiderResult.success}`);
     
     if (!aiderResult.success) {
       task.status = "blocked";
@@ -358,8 +407,10 @@ async function executeTasksSequentially(sprint: SprintState) {
       continue;
     }
 
-    // Commit y push
+    // ✅ COMMIT Y PUSH
+    log("INFO", "executor", `Llamando a commitAndPush para ${task.agent}...`);
     const commitResult = await commitAndPush(task);
+    log("INFO", "executor", `commitAndPush retornó: success=${commitResult.success}`);
     
     if (commitResult.success && commitResult.commitHash) {
       task.commits = [commitResult.commitHash];

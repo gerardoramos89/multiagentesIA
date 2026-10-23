@@ -47,7 +47,6 @@ const AccordionItem = ({ title, icon: Icon, id, isOpen, onToggle, children, badg
   </div>
 );
 
-// ✅ Componente de Logs en Tiempo Real
 function LiveLogs() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [filter, setFilter] = useState<string>("all");
@@ -66,43 +65,22 @@ function LiveLogs() {
   }, []);
 
   const filteredLogs = filter === "all" ? logs : logs.filter(l => l.level === filter || l.source === filter);
-
-  const levelColors: Record<string, string> = {
-    INFO: "text-cyan-400",
-    WARN: "text-amber-400",
-    ERROR: "text-red-400",
-    AGENT: "text-purple-400",
-    SPRINT: "text-emerald-400",
-    SURVEY: "text-blue-400",
-  };
+  const levelColors: Record<string, string> = { INFO: "text-cyan-400", WARN: "text-amber-400", ERROR: "text-red-400", AGENT: "text-purple-400", SPRINT: "text-emerald-400", SURVEY: "text-blue-400" };
 
   return (
     <div className="space-y-2">
       <div className="flex gap-1 flex-wrap">
         {["all", "AGENT", "SPRINT", "INFO", "ERROR"].map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`px-2 py-0.5 rounded text-[8px] font-bold transition-all ${
-              filter === f ? "bg-cyan-600 text-white" : "bg-gray-800 text-gray-400 hover:bg-gray-700"
-            }`}
-          >
-            {f}
-          </button>
+          <button key={f} onClick={() => setFilter(f)} className={`px-2 py-0.5 rounded text-[8px] font-bold transition-all ${filter === f ? "bg-cyan-600 text-white" : "bg-gray-800 text-gray-400 hover:bg-gray-700"}`}>{f}</button>
         ))}
       </div>
-
       <div className="bg-black/60 border border-gray-800 rounded p-2 h-64 overflow-y-auto font-mono custom-scrollbar">
-        {filteredLogs.length === 0 ? (
-          <p className="text-[9px] text-gray-500 text-center py-4">Sin logs aún...</p>
-        ) : (
+        {filteredLogs.length === 0 ? <p className="text-[9px] text-gray-500 text-center py-4">Sin logs aún...</p> : (
           <div className="space-y-0.5">
             {filteredLogs.slice(-50).map((log, i) => (
               <div key={i} className="text-[8px] leading-tight flex gap-2">
                 <span className="text-gray-600 shrink-0">{new Date(log.ts).toLocaleTimeString("es-ES")}</span>
-                <span className={`shrink-0 font-bold ${levelColors[log.level] || "text-gray-400"}`}>
-                  [{log.level}]
-                </span>
+                <span className={`shrink-0 font-bold ${levelColors[log.level] || "text-gray-400"}`}>[{log.level}]</span>
                 <span className="text-gray-500 shrink-0">{log.source}:</span>
                 <span className="text-gray-300 break-all">{log.message}</span>
               </div>
@@ -126,12 +104,12 @@ export default function DashboardScreen() {
 
   const [modules, setModules] = useState<Module[]>([
     { id: "ollama", name: "Ollama (Motor Local)", status: "on", icon: Cpu },
-    { id: "deepseek", name: "DeepSeek V2 (Código)", status: "on", icon: Sparkles }, // ✅ Cambiado a "on"
-    { id: "hermes", name: "Hermes 3 (Chat/Docs)", status: "on", icon: MessageSquare }, // ✅ Cambiado a "on"
-    { id: "aider", name: "Aider (Ejecutor Git)", status: "on", icon: Terminal }, // ✅ Cambiado a "on"
+    { id: "deepseek", name: "DeepSeek V2 (Código)", status: "on", icon: Sparkles },
+    { id: "hermes", name: "Hermes 3 (Chat/Docs)", status: "on", icon: MessageSquare },
+    { id: "aider", name: "Aider (Ejecutor Git)", status: "on", icon: Terminal },
     { id: "github", name: "GitHub (Repositorios)", status: "off", icon: GitBranch },
     { id: "trello", name: "Trello (Gestión)", status: "off", icon: LayoutGrid },
-        ]);
+  ]);
 
   const [activeConfigModal, setActiveConfigModal] = useState<string | null>(null);
   const [githubConfig, setGithubConfig] = useState({ owner: "", repo: "", token: "" });
@@ -161,66 +139,38 @@ export default function DashboardScreen() {
   const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady && sprintPlanned && humanApproved;
   const [openPanel, setOpenPanel] = useState<string>("");
 
-// ✅ Cargar estado del sprint periódicamente
-useEffect(() => {
-  const fetchSprintState = async () => {
-    try {
-      const res = await fetch("/api/sprint/state");
-      const data = await res.json();
-      
-      if (data.success && data.sprint) {
-        setSprintState(data);
-        setSprintPlanned(true);
-        
-        // ✅ Actualizar estados de agentes en la escena 3D
-        const newStates: Record<string, ModuleStatus> = {};
-        const newTimes: Record<string, string> = {};
-        const nowStr = new Date().toLocaleString("es-ES", { hour: '2-digit', minute: '2-digit' });
-        
-        // Marcar agentes que están trabajando
-        for (const [agentId, task] of Object.entries(data.currentTasks || {})) {
-          if (task && (task as any).status === "working") {
-            newStates[agentId] = "working";
-          }
-        }
-        
-        // Marcar agentes que completaron tareas
-        for (const task of data.sprint.tasks) {
-          if (task.status === "done") {
-            newStates[task.agent] = "done";
-            if (task.completedAt) {
-              newTimes[task.agent] = new Date(task.completedAt).toLocaleString("es-ES", { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-              });
+  // ✅ 1. Cargar estado del sprint periódicamente
+  useEffect(() => {
+    const fetchSprintState = async () => {
+      try {
+        const res = await fetch("/api/sprint/state");
+        const data = await res.json();
+        if (data.success && data.sprint) {
+          setSprintState(data);
+          setSprintPlanned(true);
+          
+          const newStates: Record<string, ModuleStatus> = {};
+          const newTimes: Record<string, string> = {};
+          for (const task of data.sprint.tasks) {
+            if (task.status === "working") newStates[task.agent] = "working";
+            else if (task.status === "done") {
+              newStates[task.agent] = "done";
+              if (task.completedAt) newTimes[task.agent] = new Date(task.completedAt).toLocaleString("es-ES", { hour: '2-digit', minute: '2-digit' });
             }
           }
+          if (Object.keys(newStates).length > 0) {
+            setModuleStates(prev => ({ ...prev, ...newStates }));
+            setLastWorkTimes(prev => ({ ...prev, ...newTimes }));
+          }
+          if (data.sprint.status === "executing") { setSprintExecuting(true); setHumanApproved(true); }
+          if (data.sprint.status === "completed") { setSprintExecuting(false); setProjectStatus("deployed"); }
         }
-        
-        // ✅ Solo actualizar si hay cambios
-        if (Object.keys(newStates).length > 0) {
-          setModuleStates(prev => ({ ...prev, ...newStates }));
-          setLastWorkTimes(prev => ({ ...prev, ...newTimes }));
-        }
-        
-        if (data.sprint.status === "executing") {
-          setSprintExecuting(true);
-          setHumanApproved(true);
-        }
-        if (data.sprint.status === "completed") {
-          setSprintExecuting(false);
-          setProjectStatus("deployed");
-        }
-      }
-    } catch (error) {
-      console.error("Error fetching sprint state:", error);
-    }
-  };
-  
-  fetchSprintState();
-  const interval = setInterval(fetchSprintState, 2000);
-  return () => clearInterval(interval);
-}, []);
+      } catch {}
+    };
+    fetchSprintState();
+    const interval = setInterval(fetchSprintState, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const savedTests = localStorage.getItem('systemTest');
@@ -236,44 +186,43 @@ useEffect(() => {
     }
   }, [systemTest, diagnosticsReady]);
 
-  useEffect(() => { loadConfigFromServer(); }, []);
-
   useEffect(() => {
     if (analysis.status === "done" && analysis.result) {
       setProjectConfig({ owner: githubConfig.owner, repo: githubConfig.repo, branch: analysis.result.branch, language: analysis.result.stack.languages[0]?.name ?? "Desconocido", hasReadme: analysis.result.status.hasReadme, totalCommits: analysis.result.status.commits, lastPush: "" });
       setCommitsCount(analysis.result.status.commits);
       setProjectStatus("ready");
       setIsAnalyzingProject(false);
+    } else if (analysis.status === "error") {
+      alert(`Error en análisis: ${analysis.error}`);
+      setIsAnalyzingProject(false);
     }
   }, [analysis.status, analysis.result, githubConfig.owner, githubConfig.repo]);
 
+  // ✅ 2. Funciones definidas ANTES de ser usadas
+  const fetchRealTrelloCards = async (config: any) => {
+    try {
+      const res = await fetch(`/api/trello/cards?apiKey=${config.apiKey}&token=${config.token}&boardId=${config.boardId}`);
+      const data = await res.json();
+      if (data.success) { /* setTrelloCards(Object.values(data.data).flat()); */ }
+    } catch (error) { console.error("Error cargando Trello:", error); }
+  };
+
   const loadConfigFromServer = async () => {
-  try {
-    const res = await fetch('/api/config/status');
-    const config = await res.json();
-    
-    // ✅ Marcar herramientas como "on" si están configuradas
-    if (config.trello?.configured) {
-      setModules(prev => prev.map(m => m.id === "trello" ? { ...m, status: "on" } : m));
-      fetchRealTrelloCards({ apiKey: config.trello.apiKey, token: config.trello.token, boardId: config.trello.boardId });
-    }
-    if (config.github?.configured) {
-      setGithubConfig(prev => ({ ...prev, owner: config.github.owner, repo: config.github.repo, token: config.github.token }));
-      setModules(prev => prev.map(m => m.id === "github" ? { ...m, status: "on" } : m));
-    }
-    
-    // ✅ Forzar que DeepSeek, Hermes y Aider aparezcan como "on"
-    setModules(prev => prev.map(m => {
-      if (["deepseek", "hermes", "aider"].includes(m.id)) {
-        return { ...m, status: "on" };
+    try {
+      const res = await fetch('/api/config/status');
+      const config = await res.json();
+      if (config.trello?.configured) {
+        setModules(prev => prev.map(m => m.id === "trello" ? { ...m, status: "on" } : m));
+        fetchRealTrelloCards({ apiKey: config.trello.apiKey, token: config.trello.token, boardId: config.trello.boardId });
       }
-      return m;
-    }));
-    
-  } catch (error) { 
-    console.error("Error cargando config:", error); 
-  }
-};
+      if (config.github?.configured) {
+        setGithubConfig(prev => ({ ...prev, owner: config.github.owner, repo: config.github.repo, token: config.github.token }));
+        setModules(prev => prev.map(m => m.id === "github" ? { ...m, status: "on" } : m));
+      }
+    } catch (error) { console.error("Error cargando config:", error); }
+  };
+
+  useEffect(() => { loadConfigFromServer(); }, []);
 
   const analyzeProject = async () => {
     if (!githubConfig.owner || !githubConfig.repo || !githubConfig.token) { alert("Configura GitHub primero"); return; }
@@ -424,87 +373,47 @@ useEffect(() => {
             </div>
           </AccordionItem>
 
-          {/* ✅ NUEVO: Panel de Logs en Tiempo Real */}
           <AccordionItem title="Logs del Sistema" icon={ScrollText} id="logs" isOpen={openPanel === "logs"} onToggle={() => setOpenPanel(openPanel === "logs" ? "" : "logs")} badge="En vivo">
             <LiveLogs />
           </AccordionItem>
         </div>
 
-        {/* ✅ PANEL DE CONTROL DE EJECUCIÓN */}
         <div className="p-4 border-t border-gray-800 bg-gray-900/50 shrink-0 space-y-3">
           {!sprintPlanned ? (
-            <button
-              disabled={!projectConfig || !diagnosticsReady}
-              onClick={async () => {
-                const res = await fetch("/api/sprint/plan", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ agents: agentsConfig.filter(a => a.enabled), brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief) })
-                });
-                const data = await res.json();
-                if (data.success) {
-                  alert(data.alreadyExists ? "ℹ️ Sprint ya planificado." : `✅ Sprint planificado con ${data.tasksCount} tareas.`);
-                  setSprintPlanned(true);
-                } else {
-                  alert(`❌ Error: ${data.message}`);
-                }
-              }}
-              className={`w-full py-2 rounded-lg font-bold text-[10px] transition-all flex items-center justify-center gap-2 ${projectConfig && diagnosticsReady ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" : "bg-gray-800 text-gray-500 cursor-not-allowed"}`}
-            >
+            <button disabled={!projectConfig || !diagnosticsReady} onClick={async () => {
+              const res = await fetch("/api/sprint/plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ agents: agentsConfig.filter(a => a.enabled), brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief) }) });
+              const data = await res.json();
+              if (data.success) { alert(data.alreadyExists ? "ℹ️ Sprint ya planificado." : `✅ Sprint planificado con ${data.tasksCount} tareas.`); setSprintPlanned(true); } 
+              else { alert(`❌ Error: ${data.message}`); }
+            }} className={`w-full py-2 rounded-lg font-bold text-[10px] transition-all flex items-center justify-center gap-2 ${projectConfig && diagnosticsReady ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" : "bg-gray-800 text-gray-500 cursor-not-allowed"}`}>
               <LayoutGrid size={14} /> Planificar Primer Sprint
             </button>
           ) : (
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-[10px] text-emerald-400">
-                <CheckCircle2 size={14} />
-                <span className="font-bold">Sprint Planificado</span>
-              </div>
-              
+              <div className="flex items-center gap-2 text-[10px] text-emerald-400"><CheckCircle2 size={14} /><span className="font-bold">Sprint Planificado</span></div>
               {!humanApproved && !sprintExecuting ? (
                 <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Eye size={14} className="text-amber-400 animate-pulse" />
-                    <span className="text-[10px] font-bold text-amber-400">Pendiente de Revisión Humana</span>
-                  </div>
+                  <div className="flex items-center gap-2 mb-2"><Eye size={14} className="text-amber-400 animate-pulse" /><span className="text-[10px] font-bold text-amber-400">Pendiente de Revisión Humana</span></div>
                   <p className="text-[9px] text-gray-400 mb-2">Revisa las tareas en Trello y autoriza la ejecución.</p>
-                  <button onClick={() => setHumanApproved(true)} className="w-full py-1.5 bg-amber-600 hover:bg-amber-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1">
-                    <CheckCircle2 size={12} /> Aprobar Ejecución
-                  </button>
+                  <button onClick={() => setHumanApproved(true)} className="w-full py-1.5 bg-amber-600 hover:bg-amber-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1"><CheckCircle2 size={12} /> Aprobar Ejecución</button>
                 </div>
               ) : humanApproved && !sprintExecuting ? (
-                <button
-                  onClick={async () => {
-                    const res = await fetch("/api/sprint/execute", { method: "POST" });
-                    const data = await res.json();
-                    if (data.success) {
-                      setSprintExecuting(true);
-                      setProjectStatus("building");
-                      alert("🚀 ¡Sprint iniciado! Los agentes están trabajando.");
-                    } else {
-                      alert(`❌ Error: ${data.message}`);
-                    }
-                  }}
-                  className="w-full py-2 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-bold rounded hover:from-emerald-500 hover:to-green-500 transition-all flex items-center justify-center gap-2 animate-pulse"
-                >
+                <button onClick={async () => {
+                  const res = await fetch("/api/sprint/execute", { method: "POST" });
+                  const data = await res.json();
+                  if (data.success) { setSprintExecuting(true); setProjectStatus("building"); alert("🚀 ¡Sprint iniciado! Los agentes están trabajando."); } 
+                  else { alert(`❌ Error: ${data.message}`); }
+                }} className="w-full py-2 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-bold rounded hover:from-emerald-500 hover:to-green-500 transition-all flex items-center justify-center gap-2 animate-pulse">
                   <Play size={14} /> INICIAR EJECUCIÓN DEL SPRINT
                 </button>
               ) : sprintExecuting ? (
                 <div className="p-3 bg-purple-950/20 border border-purple-500/40 rounded">
-                  <div className="flex items-center gap-2 mb-1">
-                    <RefreshCw size={14} className="text-purple-400 animate-spin" />
-                    <span className="text-[10px] font-bold text-purple-400">Sprint en Ejecución</span>
-                  </div>
-                  <p className="text-[9px] text-gray-400">
-                    {sprintState?.sprint?.tasks?.filter((t: any) => t.status === "done").length || 0} / {sprintState?.sprint?.tasks?.length || 0} tareas completadas
-                  </p>
-                  <p className="text-[9px] text-gray-500 mt-1">Observa las estelas y los logs en tiempo real →</p>
+                  <div className="flex items-center gap-2 mb-1"><RefreshCw size={14} className="text-purple-400 animate-spin" /><span className="text-[10px] font-bold text-purple-400">Sprint en Ejecución</span></div>
+                  <p className="text-[9px] text-gray-400">{sprintState?.sprint?.tasks?.filter((t: any) => t.status === "done").length || 0} / {sprintState?.sprint?.tasks?.length || 0} tareas completadas</p>
                 </div>
               ) : (
                 <div className="p-3 bg-emerald-950/20 border border-emerald-500/40 rounded">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 size={14} className="text-emerald-400" />
-                    <span className="text-[10px] font-bold text-emerald-400">Sprint Completado</span>
-                  </div>
+                  <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-400" /><span className="text-[10px] font-bold text-emerald-400">Sprint Completado</span></div>
                 </div>
               )}
             </div>
