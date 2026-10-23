@@ -1,108 +1,82 @@
 # MultiagentesIA
 
-¡Bienvenido al proyecto MultiagentesIA! Este proyecto tiene como objetivo desarrollar una solución multiagente para problemas de IA. Aquí encontrarás toda la información necesaria para instalarte y contribuir al proyecto.
+¡Bienvenido al proyecto MultiagentesIA! Este proyecto tiene como objetivo desarrollar una solución multiagente para problemas de IA. Aquí encontrarás toda la información necesaria para instalar, usar y contribuir al proyecto.
 
-## Contenido
+## Tabla de contenidos
 
-1. **Instalación**
-2. **Uso**
-3. **Guía de Contribución**
-4. **Documentación de API**
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Guía de Contribución](#guía-de-contribución)
+- [Documentación de API](#documentación-de-api)
 
-## 1. Instalación
+## Instalación
 
-### Prerequisitos
+Para instalar el proyecto MultiagentesIA, sigue estos pasos:
 
-- Python 3.7+
-- Pip (para administrar dependencias)
+1. Clona el repositorio:
+   ```sh
+   git clone https://github.com/tu-usuario/multiagentesIA.git
+   cd multiagentesIA
+   ```
 
-### Paso 1: Clonar el repositorio
+2. Instala las dependencias:
+   ```sh
+   pip install -r requirements.txt
+   ```
 
-```bash
-git clone https://github.com/tu-usuario/multiagentesIA.git
-cd multiagentesIA
+3. Configura el entorno:
+   ```sh
+   cp .env.example .env
+   # Edita el archivo .env con tus variables de entorno
+   ```
+
+4. Ejecuta las migraciones de la base de datos:
+   ```sh
+   python manage.py migrate
+   ```
+
+## Uso
+
+Para ejecutar el servidor de desarrollo, utiliza el siguiente comando:
+```sh
+python manage.py runserver
 ```
 
-### Paso 2: Crear un entorno virtual
+Una vez en funcionamiento, puedes acceder a la aplicación en tu navegador web a través de `http://localhost:8000`.
 
-```bash
-python -m venv venv
-source venv/bin/activate  # En Windows usa `venv\Scripts\activate`
-```
+## Guía de Contribución
 
-### Paso 3: Instalar dependencias
+¡Estamos encantados de que quieras contribuir con MultiagentesIA! Aquí tienes una guía para hacerlo:
 
-```bash
-pip install -r requirements.txt
-```
+1. **Fork del repositorio**: Haz un fork del repositorio en GitHub.
 
-## 2. Uso
+2. **Clona tu fork**: Clona tu fork en tu máquina local.
+   ```sh
+   git clone https://github.com/tu-usuario/multiagentesIA.git
+   cd multiagentesIA
+   ```
 
-### Ejecutar el proyecto
+3. **Crea una nueva rama**: Crea una nueva rama para tu contribución.
+   ```sh
+   git checkout -b nueva-caracteristica
+   ```
 
-```bash
-python main.py
-```
+4. **Realiza tus cambios**: Realiza los cambios necesarios y realiza commits.
+   ```sh
+   git add .
+   git commit -m "Añadida nueva característica"
+   ```
 
-### Ejemplo de uso
+5. **Sube tus cambios**: Sube tus cambios a tu fork en GitHub.
+   ```sh
+   git push origin nueva-caracteristica
+   ```
 
-```python
-from agentes import Agente
+6. **Crea un Pull Request**: Ve a tu fork en GitHub y crea un Pull Request hacia el repositorio original.
 
-# Crear un agente
-agente = Agente()
+## Documentación de API
 
-# Ejecutar una tarea
-agente.ejecutar_tarea()
-```
-
-## 3. Guía de Contribución
-
-¡Estamos encantados de que quieras contribuir! Aquí tienes una guía para ayudarte a empezar:
-
-### Paso 1: Clonar el repositorio
-
-```bash
-git clone https://github.com/tu-usuario/multiagentesIA.git
-cd multiagentesIA
-```
-
-### Paso 2: Crear una rama para tu contribución
-
-```bash
-git checkout -b nueva-caracteristica
-```
-
-### Paso 3: Realizar tus cambios
-
-Edita los archivos y añade tus contribuciones.
-
-### Paso 4: Probar tus cambios
-
-Asegúrate de que tus cambios funcionan y añaden pruebas si es necesario.
-
-```bash
-pytest
-```
-
-### Paso 5: Confirmar tus cambios
-
-```bash
-git add .
-git commit -m "Descripción de tus cambios"
-```
-
-### Paso 6: Pushear tus cambios y crear un pull request
-
-```bash
-git push origin nueva-caracteristica
-```
-
-Luego, crea un pull request en GitHub.
-
-## 4. Documentación de API
-
-La documentación de API está disponible en el siguiente enlace: [Documentación de API](https://tu-usuario.github.io/multiagentesIA/)
+La documentación de la API está disponible en el siguiente enlace: [Documentación de API](https://tu-usuario.github.io/multiagentesIA/api)
 
 ---
 
