@@ -1,53 +1,60 @@
 # MultiagentesIA
 
-¡Bienvenido al proyecto MultiagentesIA! Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y los equipos de agentes con reglas Scrum que sean autónomos y codificados.
+## Introducción
+
+Bienvenido al proyecto MultiagentesIA. Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial, con equipos de agentes que sigan reglas Scrum para ser autónomos y codificados, creando todo lo que un ciclo del software requiera.
 
 ## Objetivo
 
-El objetivo principal de este proyecto es crear una plataforma que permita la gestión de proyectos de Inteligencia Artificial utilizando un equipo de agentes autónomos. Los agentes estarán regidos por las reglas Scrum y podrán ser configurados y administrados de manera sencilla.
+El objetivo principal de este proyecto es desarrollar una plataforma multiagente que permita la gestión de proyectos de Inteligencia Artificial de manera eficiente y organizada, utilizando las reglas Scrum para la gestión de equipos de agentes.
 
 ## Alcance
 
 El alcance del proyecto incluye:
 - Desarrollo de una plataforma multiagente.
-- Implementación de reglas Scrum para los agentes.
+- Implementación de reglas Scrum para equipos de agentes.
 - Autonomía y codificación de los agentes.
-- Herramientas y documentación para un ciclo completo de desarrollo del software.
+- Gestión completa de un ciclo del software.
 
-## Skills
+## Tecnologías Utilizadas
 
-Este proyecto está desarrollado utilizando Next.js, una biblioteca de React para aplicaciones del lado del servidor.
+- Next.js
+- React
+- Node.js
+- Express
+- MongoDB
 
 ## Instalación y Uso
 
-### Requisitos
+### Prerequisitos
 
-- Node.js v12.x o superior
-- npm v6.x o superior (o yarn)
+- Node.js v14.x o superior
+- npm v6.x o superior
+- MongoDB instalado y corriendo
 
 ### Instalación
 
 1. Clona el repositorio:
    ```bash
    git clone https://github.com/tu-usuario/multiagentesIA.git
+   ```
+2. Navega al directorio del proyecto:
+   ```bash
    cd multiagentesIA
    ```
-
-2. Instala las dependencias:
+3. Instala las dependencias:
    ```bash
    npm install
-   # o
-   yarn install
    ```
-
-3. Inicia el servidor de desarrollo:
+4. Configura las variables de entorno (crear un archivo `.env` basado en `.env.example`).
+5. Inicia el servidor:
    ```bash
    npm run dev
-   # o
-   yarn dev
    ```
 
-4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
+### Uso
+
+- Accede a la aplicación en tu navegador a `http://localhost:3000`.
 
 ## Guía de Contribución
 
@@ -55,56 +62,47 @@ Este proyecto está desarrollado utilizando Next.js, una biblioteca de React par
 
 ### Cómo Contribuir
 
-1. **Fork del Repositorio**: Primero, haz un fork del repositorio principal.
-
-2. **Clona tu Fork**: Clona tu fork en tu máquina local.
+1. **Fork del repositorio**: Haz un fork del repositorio principal a tu cuenta de GitHub.
+2. **Clona tu fork**: Clona tu fork en tu máquina local.
    ```bash
    git clone https://github.com/tu-usuario/multiagentesIA.git
-   cd multiagentesIA
    ```
-
-3. **Crea una Nueva Rama**: Crea una nueva rama para tu contribución.
+3. **Crea una nueva rama**: Crea una nueva rama para tu contribución.
    ```bash
    git checkout -b mi-nueva-caracteristica
    ```
-
-4. **Realiza tus Cambios**: Realiza los cambios necesarios en el código.
-
-5. **Prueba Tus Cambios**: Asegúrate de que tus cambios pasen todas las pruebas y verificaciones.
+4. **Realiza tus cambios**: Realiza los cambios necesarios en el código.
+5. **Prueba tus cambios**: Asegúrate de que tus cambios pasen todas las pruebas existentes.
+6. **Haz commit de tus cambios**: Haz commit de tus cambios con un mensaje descriptivo.
    ```bash
-   npm test
-   # o
-   yarn test
+   git commit -m "Agregada nueva característica: descripción de la característica"
    ```
-
-6. **Realiza un Commit de tus Cambios**: Realiza un commit con un mensaje descriptivo.
-   ```bash
-   git commit -m "Agrega una nueva característica: mi-nueva-caracteristica"
-   ```
-
-7. **Push de tu Rama**: Haz push de tus cambios a tu fork.
+7. **Sube tus cambios**: Sube tus cambios a tu fork en GitHub.
    ```bash
    git push origin mi-nueva-caracteristica
    ```
-
-8. **Crea un Pull Request**: Ve a tu fork en GitHub y crea un Pull Request hacia el repositorio principal.
+8. **Crea una Pull Request**: Crea una Pull Request desde tu fork al repositorio principal.
 
 ### Código de Conducta
 
-Este proyecto y su comunidad se rigen por el [Código de Conducta](CODE_OF_CONDUCT.md). Al participar, aceptas seguir este código.
+Este proyecto y la comunidad que lo rodea están regidos por el [Código de Conducta](CODE_OF_CONDUCT.md). Por favor, lee el documento para entender nuestras expectativas y responsabilidades.
 
 ## Documentación de API
 
-La documentación de la API estará disponible en el siguiente enlace una vez esté disponible.
+La documentación de la API se encuentra en el siguiente enlace: [Documentación de API](https://documentacion.multiagentesia.com)
 
-## Estado del Proyecto
+## Estados de los Sprints
 
-- **Total de commits:** 18
-- **Sprints completados:** 4
-- **Archivos modificados históricamente:** 4
+- Sprint 1: Implementación de la estructura básica del proyecto.
+- Sprint 2: Adición de la gestión de agentes y reglas Scrum.
+- Sprint 3: Integración de la plataforma con APIs externas.
+- Sprint 4: Optimización y pruebas finales.
 
-¡Gracias por tu interés en el proyecto MultiagentesIA!
+## Contacto
 
-## Licencia
+Si tienes alguna pregunta o necesitas ayuda, no dudes en contactar al equipo de desarrollo en:
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+- Correo electrónico: contacto@multiagentesia.com
+- Sitio web: [multiagentesia.com](https://multiagentesia.com)
+
+¡Gracias por tu interés en MultiagentesIA!
