@@ -40,9 +40,17 @@
       "title": "🧪 [QA] Configurar sistema de tests y primer caso de prueba",
       "description": "Configurar Jest para el proyecto.\nIncluir: Configuración inicial, primer test de ejemplo, script en package.json.",
       "agent": "qa",
-      "status": "working",
-      "startedAt": "2026-10-23T22:11:58.931Z"
+      "status": "done",
+      "startedAt": "2026-10-23T22:11:58.931Z",
+      "completedAt": "2026-10-23T22:12:18.714Z",
+      "output": "Generado: jest.config.js",
+      "commits": [
+        "604531e1386d91b3ade4acfb29591f91e597aa28"
+      ],
+      "filesModified": [
+        "jest.config.js"
+      ]
     }
   ],
-  "status": "executing"
+  "status": "completed"
 }
