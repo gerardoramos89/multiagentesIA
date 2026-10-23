@@ -1,0 +1,60 @@
+{
+  "id": "job_mvkfl8sw_jcwror",
+  "kind": "project-analyze",
+  "status": "done",
+  "phase": "done",
+  "progress": 100,
+  "message": "Análisis completado",
+  "createdAt": 1792727371472,
+  "updatedAt": 1792727375090,
+  "result": {
+    "projectName": "multiagentesIA",
+    "owner": "gerardoramos89",
+    "repo": "multiagentesIA",
+    "analyzedAt": "2026-10-23T03:49:35.084Z",
+    "gitSha": "074fe158540346e87aebc127477b545704424ac2",
+    "type": "existing",
+    "stack": {
+      "languages": [],
+      "frameworks": [],
+      "tools": {
+        "build": null,
+        "test": null,
+        "ci": "GitHub Actions",
+        "packageManager": null
+      }
+    },
+    "status": {
+      "commits": 1,
+      "stars": 0,
+      "forks": 0,
+      "hasTests": false,
+      "coverage": null,
+      "hasReadme": true,
+      "hasCiCd": true,
+      "estimatedDebt": "medium"
+    },
+    "analysis": {
+      "coverage": "full",
+      "filesScanned": 37,
+      "apiRequests": 0,
+      "durationMs": 3611,
+      "warnings": []
+    },
+    "branch": "main",
+    "decisionsPending": [
+      {
+        "id": "target_stack",
+        "question": "¿Qué stack objetivo quieres?",
+        "options": [
+          "Next.js + TS + Tailwind",
+          "React + Vite + TS",
+          "Otro"
+        ],
+        "blocking": true,
+        "reason": "Define la estructura base."
+      }
+    ],
+    "userDecisions": {}
+  }
+}
