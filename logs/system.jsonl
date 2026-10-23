@@ -938,3 +938,11 @@
 {"ts":"2026-10-23T05:26:06.109Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvkj1ck4_0201t0"}}
 {"ts":"2026-10-23T05:26:06.124Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
 {"ts":"2026-10-23T05:26:06.132Z","level":"INFO","source":"analysis","message":"Job job_mvkj1ck4_0201t0 completado en 4446ms"}
+{"ts":"2026-10-23T05:26:21.833Z","level":"INFO","source":"executor","message":"Resetando 3 tareas a \"pending\"..."}
+{"ts":"2026-10-23T05:26:21.834Z","level":"SPRINT","source":"system","message":"🚀 Sprint #1 iniciado. 3 tareas en cola."}
+{"ts":"2026-10-23T05:26:21.834Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 3"}
+{"ts":"2026-10-23T05:26:21.841Z","level":"AGENT","source":"arch","message":"Arquitecto empezó: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}
+{"ts":"2026-10-23T05:26:21.842Z","level":"AGENT","source":"arch","message":"Intentando con Aider..."}
+{"ts":"2026-10-23T05:29:21.861Z","level":"WARN","source":"arch","message":"Aider falló: Command failed: \"C:/Users/GERARD/Documents/Proyectos/fabric-agents-grtec/venv-aider/Scripts/aider.exe\" --model ollama/deepseek-coder-v2:16b --message-file \"C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\.aider-prompt.txt\" --yes --no-auto-commits\n. Activando modo de generación directa con Ollama..."}
+{"ts":"2026-10-23T05:29:21.862Z","level":"AGENT","source":"arch","message":"Generando código directamente con Ollama (deepseek-coder-v2:16b)..."}
+{"ts":"2026-10-23T05:29:42.401Z","level":"INFO","source":"arch","message":"✅ Archivo generado directamente: nombre_del_archivo.ext"}
