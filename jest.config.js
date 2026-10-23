@@ -23,45 +23,35 @@ ARCHIVO: package.json
     "test": "jest"
   },
   "dependencies": {
-    "jest": "^27.0.0"
+    "jest": "^27.0.0",
+    "ts-jest": "^27.0.0",
+    "babel-jest": "^27.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.15.4",
-    "@babel/preset-react": "^7.15.4",
-    "babel-jest": "^27.0.0",
+    "@types/jest": "^27.0.0",
+    "jest": "^27.0.0",
     "ts-jest": "^27.0.0",
-    "typescript": "^4.4.3"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "roots": ["<rootDir>/src"],
-    "testMatch": ["**/?(*.)+(spec|test).[jt]s?(x)"],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest",
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "babel-jest": "^27.0.0"
   }
 }
 ```
 
-ARCHIVO: src/primer-test.test.js
+ARCHIVO: primer_test.test.ts
 
-```javascript
-describe('Primer test de ejemplo', () => {
-  test('Debería sumar 1 + 2 igual a 3', () => {
-    const suma = require('../src/suma');
-    expect(suma(1, 2)).toBe(3);
-  });
+```typescript
+import { suma } from './suma';
+
+test('suma 1 + 2 es igual a 3', () => {
+  expect(suma(1, 2)).toBe(3);
 });
 ```
 
-ARCHIVO: src/suma.js
+ARCHIVO: suma.ts
 
-```javascript
-function suma(a, b) {
+```typescript
+export function suma(a: number, b: number): number {
   return a + b;
 }
-
-module.exports = suma;
 ```
+
+Este contenido configura Jest para un proyecto Node.js, incluyendo la configuración inicial, un primer caso de prueba y los scripts necesarios para ejecutar los tests.

@@ -24,15 +24,24 @@
       "title": "📝 [DOC] Documentación inicial y guía de contribución",
       "description": "Documentar el proyecto multiagentesIA.\nIncluir: README con instalación y uso, Guía de contribución, Documentación de API (si aplica).",
       "agent": "doc",
-      "status": "working",
-      "startedAt": "2026-10-23T23:46:48.489Z"
+      "status": "done",
+      "startedAt": "2026-10-23T23:46:48.489Z",
+      "completedAt": "2026-10-23T23:47:51.558Z",
+      "output": "Generado: README.md",
+      "commits": [
+        "fa2e1cab8d9f911e33316b77547eee0b1be46cf3"
+      ],
+      "filesModified": [
+        "README.md"
+      ]
     },
     {
       "id": "task-1792799066203-2",
       "title": "🧪 [QA] Configurar sistema de tests y primer caso de prueba",
       "description": "Configurar Jest para el proyecto.\nIncluir: Configuración inicial, primer test de ejemplo, script en package.json.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-23T23:47:53.572Z"
     }
   ],
   "status": "executing",
@@ -46,6 +55,7 @@
     "isCompleted": true
   },
   "filesChanged": [
-    "multiagentesIA.py"
+    "multiagentesIA.py",
+    "README.md"
   ]
 }
