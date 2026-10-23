@@ -598,31 +598,33 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
       throw new Error("Faltan credenciales de Trello");
     }
 
+    // Buscar o crear la lista de Review Humano
     const listsRes = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${key}&token=${token}&filter=open`);
     const lists = await listsRes.json();
-    let retroList = lists.find((l: any) => /retrospectiva|survey|encuesta/i.test(l.name));
+    let reviewList = lists.find((l: any) => /review humano|encuesta|retrospectiva/i.test(l.name));
     
-    if (!retroList) {
+    if (!reviewList) {
       const createListRes = await fetch("https://api.trello.com/1/lists", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          key, token, name: "📊 Retrospectiva Sprint", idBoard: boardId, pos: "bottom"
+          key, token, name: "⏳ Review Humano (Encuestas/Aprobación)", idBoard: boardId, pos: "bottom"
         })
       });
-      retroList = await createListRes.json();
+      reviewList = await createListRes.json();
     }
 
     const surveys: SurveyQuestion[] = [];
 
+    // Crear tarjetas de encuesta con formato de ALERTA
     for (const item of sprint.retrospective.whatWentWrong) {
       const cardRes = await fetch("https://api.trello.com/1/cards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          key, token, idList: retroList.id,
-          name: `❓ ${item.substring(0, 100)}`,
-          desc: `**Pregunta abierta para el equipo:**\n\n${item}\n\nPor favor, responde en los comentarios con tu análisis.\n\n---\n⏳ Esperando respuesta del humano...`
+          key, token, idList: reviewList.id,
+          name: `⚠️ [ACCIÓN REQUERIDA] Responder: ${item.substring(0, 80)}`,
+          desc: `**🤖 El sistema está PAUSADO esperando tu respuesta.**\n\n**Pregunta del Product Owner:**\n"${item}"\n\n**Instrucciones:**\nPor favor, escribe un comentario en esta tarjeta con tu análisis, solución o decisión. En cuanto comentes, el sistema detectará tu respuesta y continuará con el siguiente sprint automáticamente.\n\n---\n⏳ *Estado: Esperando respuesta del humano...*`
         })
       });
       const card = await cardRes.json();
@@ -640,9 +642,9 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          key, token, idList: retroList.id,
-          name: `🎯 ${action.substring(0, 100)}`,
-          desc: `**Acción propuesta:**\n\n${action}\n\n¿Estás de acuerdo? Responde en los comentarios.\n\n---\n⏳ Esperando respuesta del humano...`
+          key, token, idList: reviewList.id,
+          name: `🎯 [ACCIÓN REQUERIDA] Aprobar: ${action.substring(0, 80)}`,
+          desc: `**🤖 El sistema está PAUSADO esperando tu aprobación.**\n\n**Acción propuesta para el próximo sprint:**\n"${action}"\n\n**Instrucciones:**\nEscribe un comentario en esta tarjeta diciendo "SÍ", "NO" o "MODIFICAR: [tu sugerencia]". El sistema leerá tu comentario y continuará.\n\n---\n⏳ *Estado: Esperando respuesta del humano...*`
         })
       });
       const card = await cardRes.json();
@@ -657,9 +659,10 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
     }
 
     sprint.surveys = surveys;
+    sprint.status = "survey";
     saveSprint(sprint);
     
-    addAgentLog("po", `✅ ${surveys.length} encuestas creadas en Trello`, "success");
+    addAgentLog("po", `✅ ${surveys.length} encuestas de revisión humana creadas en Trello`, "success");
     
     return { success: true, surveys };
   } catch (error: any) {
