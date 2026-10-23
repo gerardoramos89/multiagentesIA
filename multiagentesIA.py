@@ -4,67 +4,69 @@ import random
 
 # Clase Agente
 class Agente:
-    def __init__(self, nombre):
-        self.nombre = nombre
+    def __init__(self, id):
+        self.id = id
         self.estado = "inactivo"
-        self.acciones = []
+        self.objetivo = None
 
-    def activar(self):
-        self.estado = "activo"
+    def establecer_objetivo(self, objetivo):
+        self.objetivo = objetivo
 
-    def desactivar(self):
-        self.estado = "inactivo"
-
-    def agregar_accion(self, accion):
-        self.acciones.append(accion)
-
-    def ejecutar_accion(self):
-        if self.estado == "activo" and self.acciones:
-            accion = random.choice(self.acciones)
-            print(f"{self.nombre} está realizando la acción: {accion}")
+    def actuar(self):
+        if self.estado == "activo":
+            acciones = ["accion1", "accion2", "accion3"]
+            accion = random.choice(acciones)
+            print(f"Agente {self.id} realiza {accion}")
+        else:
+            print(f"Agente {self.id} está inactivo")
 
 # Clase SistemaMultiagentes
 class SistemaMultiagentes:
-    def __init__(self, agentes):
-        self.agentes = agentes
+    def __init__(self, num_agentes):
+        self.agentes = [Agente(i) for i in range(num_agentes)]
 
     def activar_agentes(self):
         for agente in self.agentes:
-            agente.activar()
+            agente.estado = "activo"
 
     def desactivar_agentes(self):
         for agente in self.agentes:
-            agente.desactivar()
+            agente.estado = "inactivo"
 
-    def agregar_accion_agente(self, nombre_agente, accion):
+    def establecer_objetivos(self, objetivos):
+        for i, objetivo in enumerate(objetivos):
+            self.agentes[i].establecer_objetivo(objetivo)
+
+    def actuar_agentes(self):
         for agente in self.agentes:
-            if agente.nombre == nombre_agente:
-                agente.agregar_accion(accion)
-                break
+            agente.actuar()
 
-# Ejemplo de uso
-if __name__ == "__main__":
-    agente1 = Agente("Agente1")
-    agente2 = Agente("Agente2")
-    agente1.agregar_accion("accion1")
-    agente1.agregar_accion("accion2")
-    agente2.agregar_accion("accion3")
+# Función principal
+def main():
+    num_agentes = 5
+    objetivos = ["objetivo1", "objetivo2", "objetivo3", "objetivo4", "objetivo5"]
 
-    sistema = SistemaMultiagentes([agente1, agente2])
+    sistema = SistemaMultiagentes(num_agentes)
+    sistema.establecer_objetivos(objetivos)
     sistema.activar_agentes()
-    sistema.agregar_accion_agente("Agente1", "accion4")
-    sistema.agregar_accion_agente("Agente2", "accion5")
+    sistema.actar_agentes()
 
-    for _ in range(5):
-        sistema.agentes[0].ejecutar_accion()
-        sistema.agentes[1].ejecutar_accion()
+if __name__ == "__main__":
+    main()
 ```
 
-Propuesta de refactorización:
+Comentarios de la auditoría:
+1. **Estructura y Organización**: El código está bien estructurado, con clases y funciones bien definidas.
+2. **Patrones Utilizados**: Se utiliza el patrón de diseño de Agente para representar a los agentes.
+3. **Deuda Técnica**: Hay una deuda técnica media debido a la utilización de `random` para elegir acciones. Esto limita la capacidad de predecir y depurar el comportamiento del sistema.
 
-1. **Separación de Concernes**: Dividir la clase `Agente` en dos clases más pequeñas, una para las acciones y otra para el estado.
-2. **Uso de Métodos de Clase**: Utilizar métodos de clase para crear agentes y agregar acciones para mantener el código limpio.
-3. **Eliminación de Variables de Instancia Innecesarias**: Eliminar variables de instancia innecesarias como `acciones` en la clase `Agente`.
+Propuesta de refactorización:
+- Reemplazar la elección aleatoria de acciones con una lógica predefinida basada en los objetivos de los agentes.
+
+Refactorizado:
+
+```python
+ARCHIVO: multiagentesIA_refactorizado.py
 
 ```python
 # Importaciones
@@ -72,66 +74,58 @@ import random
 
 # Clase Agente
 class Agente:
-    def __init__(self, nombre):
-        self.nombre = nombre
+    def __init__(self, id):
+        self.id = id
         self.estado = "inactivo"
+        self.objetivo = None
 
-    def activar(self):
-        self.estado = "activo"
+    def establecer_objetivo(self, objetivo):
+        self.objetivo = objetivo
 
-    def desactivar(self):
-        self.estado = "inactivo"
-
-# Clase AccionesAgente
-class AccionesAgente:
-    def __init__(self):
-        self.acciones = []
-
-    def agregar_accion(self, accion):
-        self.acciones.append(accion)
-
-    def ejecutar_accion(self):
-        if self.acciones:
-            accion = random.choice(self.acciones)
-            print(f"{self.nombre} está realizando la acción: {accion}")
+    def actuar(self):
+        if self.estado == "activo":
+            if self.objetivo:
+                print(f"Agente {self.id} realiza acción basada en objetivo: {self.objetivo}")
+            else:
+                print(f"Agente {self.id} no tiene objetivo definido")
+        else:
+            print(f"Agente {self.id} está inactivo")
 
 # Clase SistemaMultiagentes
 class SistemaMultiagentes:
-    def __init__(self, agentes):
-        self.agentes = agentes
+    def __init__(self, num_agentes):
+        self.agentes = [Agente(i) for i in range(num_agentes)]
 
     def activar_agentes(self):
         for agente in self.agentes:
-            agente.activar()
+            agente.estado = "activo"
 
     def desactivar_agentes(self):
         for agente in self.agentes:
-            agente.desactivar()
+            agente.estado = "inactivo"
 
-    def agregar_accion_agente(self, nombre_agente, accion):
+    def establecer_objetivos(self, objetivos):
+        for i, objetivo in enumerate(objetivos):
+            self.agentes[i].establecer_objetivo(objetivo)
+
+    def actuar_agentes(self):
         for agente in self.agentes:
-            if agente.nombre == nombre_agente:
-                if not hasattr(agente, 'acciones'):
-                    agente.acciones = AccionesAgente()
-                agente.acciones.agregar_accion(accion)
-                break
+            agente.actuar()
 
-# Ejemplo de uso
-if __name__ == "__main__":
-    agente1 = Agente("Agente1")
-    agente2 = Agente("Agente2")
-    agente1.acciones = AccionesAgente()
-    agente1.acciones.agregar_accion("accion1")
-    agente1.acciones.agregar_accion("accion2")
-    agente2.acciones = AccionesAgente()
-    agente2.acciones.agregar_accion("accion3")
+# Función principal
+def main():
+    num_agentes = 5
+    objetivos = ["objetivo1", "objetivo2", "objetivo3", "objetivo4", "objetivo5"]
 
-    sistema = SistemaMultiagentes([agente1, agente2])
+    sistema = SistemaMultiagentes(num_agentes)
+    sistema.establecer_objetivos(objetivos)
     sistema.activar_agentes()
-    sistema.agregar_accion_agente("Agente1", "accion4")
-    sistema.agregar_accion_agente("Agente2", "accion5")
+    sistema.actar_agentes()
 
-    for _ in range(5):
-        agente1.acciones.ejecutar_accion()
-        agente2.acciones.ejecutar_accion()
+if __name__ == "__main__":
+    main()
 ```
+
+Cambios realizados:
+- Se ha reemplazado la elección aleatoria de acciones con una lógica basada en los objetivos de los agentes.
+- Se ha añadido una comprobación para asegurar que los agentes actúen solo si tienen un objetivo definido.
