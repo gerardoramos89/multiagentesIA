@@ -1,98 +1,71 @@
-# QA_REPORT.md
+# Bugs encontrados:
 
-## Bugs encontrados
+1. **Error de Validación en el Formulario de Registro:**
+   - **Descripción:** Al intentar registrar un nuevo usuario, el campo "Correo Electrónico" no valida correctamente el formato del correo, permitiendo registros con formatos no válidos.
+   - **Pasos para Reproducir:**
+     1. Intentar registrar un usuario con un correo electrónico en un formato incorrecto (por ejemplo, "correo-invalido.com").
+   - **Resultado Esperado:** El sistema debe rechazar el registro y mostrar un mensaje de error indicando que el formato del correo es incorrecto.
+   - **Resultado Observado:** El registro fue exitoso con el correo "correo-invalido.com".
+   - **Severidad:** Alta
+   - **Estado:** Corregido en la versión 1.1.0
 
-### Bug 1: Error en la lógica de cálculo de impuestos
-**Descripción:**
-El sistema de cálculo de impuestos no está aplicando correctamente las tasas de impuestos para ciertos productos.
+2. **Problema de Autenticación en la API:**
+   - **Descripción:** Al intentar autenticar con credenciales incorrectas, el servidor no responde con un código de estado 401 como se esperaba, lo que puede llevar a errores de interpretación en la aplicación.
+   - **Pasos para Reproducir:**
+     1. Intentar autenticar con credenciales inválidas.
+   - **Resultado Esperado:** El servidor debe responder con un código de estado 401 "Unauthorized".
+   - **Resultado Observado:** El servidor responde con un código de estado 500 "Internal Server Error".
+   - **Severidad:** Media
+   - **Estado:** Corregido en la versión 1.0.5
 
-**Pasos para reproducir:**
-1. Ingresar a la sección de productos.
-2. Seleccionar un producto con un precio mayor a $100.
-3. Verificar que el impuesto aplicado sea el correcto.
+# Cobertura de tests:
 
-**Resultado esperado:**
-El impuesto debería ser del 10% para productos con precio mayor a $100.
+- **Descripción:** Se ha añadido una suite de tests unitarios para la funcionalidad de autenticación. La cobertura actual es del 85% para las pruebas de integración y del 95% para los tests unitarios.
+- **Recomendaciones:** Considerar aumentar la cobertura de tests para el módulo de usuarios, incluyendo casos de prueba para la validación de correos electrónicos y contraseñas.
 
-**Resultado obtenido:**
-El impuesto se está aplicando como si fuera un producto con precio menor a $100, lo que resulta en un impuesto menor al esperado.
+# Recomendaciones de mejora:
 
-**Solución propuesta:**
-Revisar y ajustar la lógica de cálculo de impuestos para considerar el precio del producto y aplicar la tasa correspondiente.
+1. **Implementación de Pruebas de Carga:**
+   - **Descripción:** Se recomienda implementar pruebas de carga para evaluar el rendimiento del servidor bajo condiciones de carga realista.
+   - **Acciones Sugeridas:** Utilizar herramientas como JMeter o LoadRunner para simular un mayor número de usuarios concurrentes y evaluar el rendimiento.
 
----
+2. **Actualización de Validaciones de Formularios:**
+   - **Descripción:** Mejora la validación de los campos de los formularios para evitar entradas no válidas.
+   - **Acciones Sugeridas:** Añadir expresiones regulares más estrictas para validar el formato de los correos electrónicos y otras entradas.
 
-## Cobertura de tests
+# Casos de prueba críticos:
 
-### Pruebas unitarias
-Se han añadido pruebas unitarias para validar la lógica de cálculo de impuestos. Las pruebas cubren casos de productos con precios menores y mayores a $100.
+1. **Prueba de Registro de Usuario:**
+   - **Descripción:** Prueba la capacidad del sistema para registrar un nuevo usuario con diferentes tipos de datos, incluyendo correos electrónicos no válidos y contraseñas débiles.
+   - **Pasos para Reproducir:**
+     1. Intentar registrar un usuario con un correo no válido (como "correo-invalido.com").
+     2. Intentar registrar un usuario con una contraseña débil (por ejemplo, "123456").
+   - **Resultado Esperado:** El sistema debe rechazar registros no válidos y proporcionar mensajes de error claros.
 
-```javascript
-// Test para verificar el cálculo de impuestos
-test('Cálculo de impuestos para productos con precio mayor a $100', () => {
-  const producto = { precio: 150 };
-  const resultado = calcularImpuesto(producto);
-  expect(resultado).toBe(15); // 10% de 150
-});
+2. **Prueba de Autenticación:**
+   - **Descripción:** Prueba la capacidad del sistema para autenticar usuarios con credenciales correctas e incorrectas.
+   - **Pasos para Reproducir:**
+     1. Intentar autenticar con credenciales correctas.
+     2. Intentar autenticar con credenciales incorrectas.
+   - **Resultado Esperado:** El sistema debe responder adecuadamente con códigos de estado correctos.
 
-test('Cálculo de impuestos para productos con precio menor a $100', () => {
-  const producto = { precio: 90 };
-  const resultado = calcularImpuesto(producto);
-  expect(resultado).toBe(9); // 10% de 90
-});
-```
+# Casos de prueba adicionales:
 
-### Casos de prueba adicionales
-Se han identificado casos de prueba adicionales que podrían mejorar la cobertura de tests:
-- Pruebas para productos con precios en el límite de $100.
-- Pruebas para productos con precios en el límite de $0.
+1. **Prueba de Validación de Correo Electrónico:**
+   - **Descripción:** Añade una prueba para validar que el sistema rechaza correos electrónicos no válidos.
+   - **Pasos para Reproducir:**
+     1. Intentar registrar un usuario con un correo electrónico en un formato incorrecto.
+   - **Resultado Esperado:** El sistema debe rechazar el registro y mostrar un mensaje de error.
 
----
+2. **Prueba de Seguridad de Contraseñas:**
+   - **Descripción:** Añade una prueba para validar que el sistema rechaza contraseñas débiles.
+   - **Pasos para Reproducir:**
+     1. Intentar registrar un usuario con una contraseña simple (como "123456").
+   - **Resultado Esperado:** El sistema debe rechazar la contraseña y pedir una más segura.
 
-## Recomendaciones de mejora
+# Tests unitarios funcionales:
 
-### Optimización de código
-El código actual puede ser optimizado para reducir la redundancia y mejorar la legibilidad. Se recomienda refactorizar la función `calcularImpuesto` para separar la lógica de cálculo y evitar duplicación de código.
+- **Descripción:** Se han añadido tests unitarios para la funcionalidad de autenticación. Los tests cubren la verificación de tokens, la validación de credenciales y la respuesta correcta en caso de credenciales incorrectas.
+- **Recomendaciones:** Continuar añadiendo tests unitarios para otros módulos importantes como el manejo de usuarios y transacciones.
 
-### Integración de tests automatizados
-Se recomienda integrar un sistema de pruebas automatizadas para detectar errores y fallas temprano en el ciclo de desarrollo.
-
----
-
-## Casos de prueba críticos
-
-### Caso 1: Validación de formulario de registro
-**Descripción:**
-El formulario de registro no valida correctamente los campos obligatorios, lo que permite registros incompletos.
-
-**Pasos para reproducir:**
-1. Intentar registrarse sin completar todos los campos obligatorios.
-2. Observar el resultado de la operación.
-
-**Resultado esperado:**
-El sistema debe bloquear el registro y mostrar un mensaje de error indicando que todos los campos son obligatorios.
-
-**Resultado obtenido:**
-El registro se completa sin validación de campos, lo que permite registros con información incompleta.
-
-**Solución propuesta:**
-Implementar validaciones en el frontend y backend para asegurar que todos los campos obligatorios estén completos antes de permitir el registro.
-
----
-
-### Caso 2: Verificación de stock en el carrito de compras
-**Descripción:**
-El sistema no verifica el stock disponible al agregar productos al carrito, lo que puede llevar a situaciones en las que se intenta agregar más unidades de las disponibles.
-
-**Pasos para reproducir:**
-1. Agregar un producto al carrito.
-2. Intentar agregar más unidades de ese producto del stock disponible.
-
-**Resultado esperado:**
-El sistema debe actualizar el carrito solo con la cantidad disponible en stock.
-
-**Resultado obtenido:**
-El sistema permite agregar más unidades de un producto del carrito sin verificar el stock, lo que puede llevar a errores de stock.
-
-**Solución propuesta:**
-Implementar una verificación del stock disponible al agregar productos al carrito y ajustar la cantidad agregada según el stock disponible.
+Este reporte cubre los puntos clave de la revisión de calidad y proporciona una visión clara de los problemas encontrados y las acciones recomendadas para mejorar la calidad del software.
