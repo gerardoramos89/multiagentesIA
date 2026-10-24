@@ -1,70 +1,67 @@
 # Arquitectura del Proyecto de Fábrica de Agentes
 
 ## 1. Introducción
-El proyecto de Fábrica de Agentes tiene como objetivo principal desarrollar un sistema autónomo de gestión de sprints con inteligencia artificial (IA). Este sistema estará construido utilizando las siguientes tecnologías:
-- Frontend: Next.js, React, Tailwind CSS
-- Backend: Node.js
-- IA: Ollama
-- Integración: Trello API, GitHub API
+El proyecto de Fábrica de Agentes tiene como objetivo principal desarrollar un sistema autónomo de gestión de sprints con inteligencia artificial (IA). El sistema estará construido utilizando las siguientes tecnologías: Next.js, React, Tailwind, Node.js, Ollama, Trello API, y GitHub API.
 
 ## 2. Estructura de Carpetas
 La estructura de carpetas del proyecto se organizará de la siguiente manera:
 
 ```
-/proyecto-fábrica-de-agentes
-  /src
-    /components
-    /context
-    /hooks
-    /pages
-    /public
-    /services
-    /utils
-  /config
-  /docs
-  /scripts
-  /tests
+/src
+  /components
+    /common
+    /features
+      /home
+      /dashboard
+      /agent
+  /contexts
+  /hooks
+  /services
+    /api
+    /data
+  /styles
+    /tailwind
+  /utils
 ```
 
 ## 3. Patrones de Diseño
-### 3.1. Patrón de Diseño de Contexto (Context API)
-Se utilizará el Patrón de Diseño de Contexto para la gestión de estados globales. Esto permitirá una distribución clara y eficiente de los datos y funciones a través de la aplicación.
+### 3.1. Patrón de Contexto (Context API)
+Se utilizará el Patrón de Contexto para la gestión de estados globales. Esto permitirá una gestión centralizada de datos como el estado de autenticación, configuraciones del sistema, etc.
 
-### 3.2. Patrón de Diseño de Hooks (Custom Hooks)
-Se implementarán custom hooks para abstraer la lógica de negocio y reutilización de código.
+### 3.2. Patrón de Hooks
+Se implementarán hooks personalizados para abstraer la lógica de negocio y reutilización de código. Estos hooks se ubicarán en la carpeta `/hooks`.
 
-## 4. Decisiones Técnicas
-### 4.1. Administración de Estado
-El estado global de la aplicación se gestionará mediante el Context API de React. Esto asegurará una gestión eficiente y predecible del estado de la aplicación.
+## 4. Tecnologías y Herramientas
+### 4.1. Frontend
+- **Next.js**: Para el renderizado del lado del servidor y la gestión de rutas.
+- **React**: Biblioteca para la construcción de interfaces de usuario.
+- **Tailwind CSS**: Para estilos y diseño atómico.
 
-### 4.2. Autenticación y Seguridad
-La autenticación de usuarios se realizará mediante OAuth con GitHub API. Todas las comunicaciones entre el frontend y el backend serán seguras utilizando HTTPS.
+### 4.2. Backend
+- **Node.js**: Entorno de ejecución para el servidor.
+- **Ollama**: API de inteligencia artificial para la integración con la IA del sistema.
+- **Trello API**: Para la integración con la API de Trello para la gestión de sprints.
+- **GitHub API**: Para la integración con la API de GitHub para gestión de repositorios y colaboraciones.
 
-### 4.3. Escalabilidad
-La arquitectura de microservicios se implementará utilizando Node.js y Express para el backend. Esto permitirá una escalabilidad horizontal y una gestión más eficiente de los componentes del sistema.
+## 5. Decisiones Técnicas
+### 5.1. Gestión de Estados
+Se utilizará el Context API para la gestión de estados globales. Esto permitirá una fácil sincronización y acceso a los datos en toda la aplicación.
 
-## 5. Integración con APIs
-### 5.1. Integración con Trello API
-La integración con Trello API permitirá la gestión de sprints y tareas. Se utilizarán queries y mutations para interactuar con la API de Trello.
+### 5.2. Optimización de Datos
+Se refactorizará la estructura de datos para reducir la redundancia y optimizar el rendimiento. Esto incluye la implementación de cachés y la gestión eficiente de solicitudes a la API.
 
-### 5.2. Integración con GitHub API
-La integración con GitHub API permitirá la gestión de repositorios y colaboradores. Se utilizarán queries y mutations para interactuar con la API de GitHub.
+### 5.3. Seguridad
+Se implementarán medidas de seguridad estándar como la autenticación de usuarios, validación de entradas y protección contra ataques comunes.
 
-## 6. Herramientas y Tecnologías
-- **Next.js**: Para el frontend, proporcionando SSR y generación de sitios estáticos.
-- **React**: Para la construcción de interfaces de usuario.
-- **Tailwind CSS**: Para estilos y componentes de diseño.
-- **Node.js**: Para el backend y la gestión de servicios.
-- **Ollama**: Para la inteligencia artificial en el sistema.
+### 5.4. Escalabilidad
+Se diseñará la arquitectura para permitir escalabilidad tanto vertical como horizontal. Esto incluye la implementación de un sistema de mensajería asíncrona y la distribución de la carga de trabajo entre múltiples instancias.
 
-## 7. Seguridad
-- **Autenticación OAuth con GitHub API**: Para la autenticación de usuarios.
-- **HTTPS**: Para todas las comunicaciones entre el frontend y el backend.
-- **Validaciones**: Implementación de validaciones en el frontend y backend para proteger la integridad de los datos.
+## 6. Implementación de Patrones y Estándares
+### 6.1. Estilos de Código
+Se seguirán las directrices de estilo definidas en ESLint para mantener un código consistente y de alta calidad.
 
-## 8. Reducción de Deuda Técnica
-- **Pruebas Unitarias y de Integración**: Implementación de pruebas automatizadas para reducir riesgos y mejorar la calidad del código.
-- **Revisión Continua**: Implementación de sistemas de revisión continua para detectar y corregir problemas temprano en el ciclo de desarrollo.
+### 6.2. Pruebas
+Se implementarán pruebas unitarias y de integración utilizando Jest y React Testing Library para garantizar la robustez del código.
 
-## 9. Conclusiones
-Este documento ha detallado la arquitectura del Proyecto de Fábrica de Agentes, incluyendo la estructura de carpetas, patrones de diseño, decisiones técnicas, escalabilidad, seguridad y reducción de deuda técnica. Esta arquitectura asegura una implementación eficiente y escalable del sistema de gestión de sprints con IA.
+## 7. Conclusiones
+Este documento resume las decisiones arquitectónicas y técnicas tomadas para el proyecto de Fábrica de Agentes. Las tecnologías y patrones de diseño seleccionados están orientados a proporcionar una solución escalable, segura y eficiente.
