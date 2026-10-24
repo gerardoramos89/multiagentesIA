@@ -72,15 +72,24 @@
       "title": "Implementar tests unitarios adicionales para capturar errores de validación",
       "description": "[DEV/QA] Implementar tests unitarios adicionales para capturar errores de validación",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T17:13:58.209Z"
+      "status": "done",
+      "startedAt": "2026-10-24T17:13:58.209Z",
+      "completedAt": "2026-10-24T17:15:32.475Z",
+      "output": "Generado: tests_validacion.js",
+      "commits": [
+        "5af10e8a1fcccff9b2d4aef7ac2e986d519835d2"
+      ],
+      "filesModified": [
+        "tests_validacion.js"
+      ]
     },
     {
       "id": "task-1792861692408-5",
       "title": "Actualizar el manual de operaciones con detalles de la nueva estructura de datos",
       "description": "[DEV/QA] Actualizar el manual de operaciones con detalles de la nueva estructura de datos",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T17:15:34.494Z"
     },
     {
       "id": "task-1792861692408-6",
@@ -118,6 +127,7 @@
     "STRATEGY.md",
     "arquitectura_proyectofabricaagentes.md",
     "ARCHITECTURE.md",
-    "nombre_del_archivo.ext"
+    "nombre_del_archivo.ext",
+    "tests_validacion.js"
   ]
 }
