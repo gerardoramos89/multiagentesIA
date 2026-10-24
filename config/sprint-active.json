@@ -104,15 +104,24 @@
       "title": "Implementar un plan detallado para la migración de tarjetas de Trello hacia la columna 'Done' en el backend, incluyendo pruebas exhaustivas",
       "description": "[DEV/QA] Implementar un plan detallado para la migración de tarjetas de Trello hacia la columna 'Done' en el backend, incluyendo pruebas exhaustivas",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T06:19:55.395Z"
+      "status": "done",
+      "startedAt": "2026-10-24T06:19:55.395Z",
+      "completedAt": "2026-10-24T06:20:54.547Z",
+      "output": "Generado: migration_plan.py",
+      "commits": [
+        "107fd8f10f9200f8ed027ee0cdd809705ece01df"
+      ],
+      "filesModified": [
+        "migration_plan.py"
+      ]
     },
     {
       "id": "task-1792822478685-7",
       "title": "🧪 [QA] Revisión de calidad y pruebas",
       "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T06:20:56.556Z"
     },
     {
       "id": "task-1792822478685-8",
@@ -145,6 +154,7 @@
     "RolesResponsabilidadesEquipo.md",
     "ProyectoRevisado.md",
     "plan_de_accion_sugerido.py",
-    "revision_ajuste_planificacion.py"
+    "revision_ajuste_planificacion.py",
+    "migration_plan.py"
   ]
 }

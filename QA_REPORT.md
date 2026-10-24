@@ -1,61 +1,36 @@
 # Bugs encontrados:
-1. **Error de Tipo de Datos en la Función `calcularPromedio`**:
-   - **Descripción**: La función `calcularPromedio` espera recibir parámetros numéricos, pero recibió una cadena de texto.
-   - **Impacto**: Esto causó un error de ejecución y devolvió `NaN` en lugar del promedio esperado.
-   - **Solución**: Verificar y asegurar que los parámetros de entrada sean numéricos antes de realizar el cálculo.
+1. **Error en la validación de formulario**: Al intentar enviar un formulario con datos inválidos, el sistema no mostró mensajes claros de error. Esto llevó a una experiencia de usuario frustrante.
+   - **Pasos para reproducir**: Intentar enviar un formulario sin completar todos los campos obligatorios.
+   - **Resultado esperado**: Un mensaje de error claro que indique qué campos están incompletos.
+   - **Resultado obtenido**: El formulario se envió sin ningún aviso.
+   - **Solución**: Implementar validaciones en el frontend y backend para asegurar que todos los campos obligatorios estén completos antes de permitir el envío.
 
-2. **Falta de Validación en el Campo de Correo Electrónico**:
-   - **Descripción**: El formulario de registro no valida el formato del correo electrónico.
-   - **Impacto**: Permite registros con formatos de correo no válidos, lo cual puede ser problemático en el futuro.
-   - **Solución**: Implementar una validación del campo de correo electrónico utilizando una expresión regular.
+2. **Problema de seguridad**: Se detectó una vulnerabilidad de cross-site scripting (XSS) en el área de comentarios.
+   - **Pasos para reproducir**: Comentar con código HTML/JavaScript.
+   - **Resultado esperado**: Que el comentario se muestre correctamente sin ejecutar el código JavaScript.
+   - **Resultado obtenido**: El código JavaScript se ejecutó en el contexto del sitio, afectando la seguridad.
+   - **Solución**: Implementar sanitización de entradas en el backend para evitar la inserción de código HTML/JavaScript no deseado.
 
 # Cobertura de tests:
-- **Pruebas Unitarias**: Se han añadido pruebas unitarias para la función `calcularPromedio` y el método de validación de correo electrónico.
-- **Pruebas de Integración**: Se han planeado pruebas de integración para verificar la interacción entre módulos del sistema.
-- **Pruebas Funcionales**: Se han creado casos de prueba funcionales para validar el flujo de registro y autenticación.
+- **Pruebas unitarias**: Se han añadido pruebas unitarias para la mayoría de las funciones principales. Sin embargo, algunas funciones no cubiertas necesitan ser revisadas.
+- **Pruebas de integración**: Falta implementar pruebas de integración para asegurar que diferentes componentes funcionen juntos sin problemas.
+- **Pruebas de aceptación**: Se recomienda realizar pruebas de aceptación automatizadas para validar la funcionalidad desde la perspectiva del usuario final.
 
 # Recomendaciones de mejora:
-1. **Automatización de Pruebas**: Se recomienda implementar un framework de automatización de pruebas para reducir tiempos de ejecución y aumentar la cobertura de pruebas.
-2. **Módulos de Logging**: Añadir módulos de logging detallados para facilitar la depuración y seguimiento de errores.
-3. **Actualización de Dependencias**: Revisar y actualizar las dependencias del proyecto para asegurar la compatibilidad y la seguridad.
+1. **Automatización de pruebas**: Implementar pruebas automatizadas para un mayor rendimiento y consistencia.
+2. **Revisión de código**: Añadir estándares de codificación y realizar revisiones de código regulares para garantizar la calidad del software.
+3. **Seguridad**: Realizar un análisis de seguridad más exhaustivo, incluyendo pruebas de penetración, para identificar y resolver vulnerabilidades.
 
 # Casos de prueba críticos:
-1. **Prueba de Registro con Correo Electrónico no Válido**:
-   - **Descripción**: Intentar registrarse con un correo electrónico no válido.
-   - **Pasos**:
-     1. Intentar registrarse con un correo electrónico como "invalid-email".
-     2. Observar el mensaje de error.
-   - **Resultado Esperado**: El sistema debe rechazar el registro y mostrar un mensaje de error indicando que el correo electrónico no es válido.
-
-2. **Prueba de Cálculo de Promedio con Valores No Numéricos**:
-   - **Descripción**: Intentar calcular el promedio con valores no numéricos.
-   - **Pasos**:
-     1. Llamar a la función `calcularPromedio` con parámetros "1", "2", "tres".
-     2. Observar el resultado y el tipo de dato devuelto.
-   - **Resultado Esperado**: La función debe devolver un error o un valor que indique que los parámetros no son numéricos.
+1. **Prueba de carga**: Se debe realizar una prueba de carga para asegurar que el sistema puede manejar un número mayor de usuarios simultáneos sin colapsar.
+2. **Prueba de compatibilidad**: Validar que el sistema funcione correctamente en diferentes navegadores y dispositivos.
 
 # Casos de prueba adicionales:
-1. **Prueba de Login con Credenciales Incorrectas**:
-   - **Descripción**: Intentar iniciar sesión con credenciales incorrectas.
-   - **Pasos**:
-     1. Intentar iniciar sesión con un correo electrónico y contraseña incorrectos.
-     2. Observar el mensaje de error.
-   - **Resultado Esperado**: El sistema debe rechazar el inicio de sesión y mostrar un mensaje de error indicando que las credenciales son incorrectas.
-
-2. **Prueba de Actualización de Perfil**:
-   - **Descripción**: Intentar actualizar la información de perfil con datos válidos.
-   - **Pasos**:
-     1. Iniciar sesión con una cuenta válida.
-     2. Intentar actualizar el perfil con información correcta.
-     3. Observar el resultado y la actualización en la base de datos.
-   - **Resultado Esperado**: La información de perfil debe actualizarse correctamente en la base de datos.
+1. **Prueba de autenticación**: Añadir casos para asegurar que la autenticación de usuarios sea robusta y segura.
+2. **Prueba de recuperación de contraseña**: Implementar un caso para probar el proceso de recuperación de contraseña y asegurar que sea seguro y efectivo.
 
 # Tests unitarios funcionales:
-- Se han añadido tests unitarios para las funciones `calcularPromedio` y `validarCorreo`.
-- Los tests cubren casos de éxito y errores para ambas funciones.
+- Se han añadido tests unitarios para la función de login, que verifican la autenticación y manejo de errores.
+- Falta agregar tests para otras funcionalidades clave como el manejo de usuarios y transacciones.
 
-# Recomendaciones adicionales:
-1. **Implementar Métricas de Desempeño**: Añadir métricas de desempeño como tiempos de respuesta y uso de recursos para monitorear el rendimiento del sistema.
-2. **Revisión de Políticas de Seguridad**: Revisar y actualizar las políticas de seguridad para asegurar que todas las áreas del sistema cumplen con los estándares de seguridad.
-
-Este reporte cubre los puntos clave para una revisión de calidad y pruebas efectivas.
+Esta revisión y recomendaciones están diseñadas para mejorar la calidad del software y asegurar una experiencia de usuario satisfactoria.
