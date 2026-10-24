@@ -4,7 +4,7 @@
 
 **Nombre:** MultiagentesIA
 
-**Objetivo:** Desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas de gestión de sprints autónomas, codificadas y creando todo lo necesario para un ciclo del software desde un cliclo.
+**Objetivo:** Desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas de gestión de sprints autónomas.
 
 ## Estado del Desarrollo
 
@@ -15,7 +15,7 @@ El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales m�
 - **Tailwind** para el diseño.
 - **Node.js** para el backend.
 - **Ollama** para la inteligencia artificial.
-- **Trello API** para la gestión de tareas.
+- **Trello API** para la gestión de proyectos.
 - **GitHub API** para integración y gestión de repositorios.
 
 ## Historial de Sprints
@@ -23,9 +23,8 @@ El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales m�
 - **Sprint 1:** Configuración del entorno de desarrollo y base de datos.
 - **Sprint 2:** Implementación de la autenticación y gestión básica de usuarios.
 - **Sprint 3:** Integración de la API de Trello para la gestión de sprints.
-- **Sprint 4:** Desarrollo de módulos de agentes autónomos.
-- **Sprint 5:** Implementación de la inteligencia artificial con Ollama.
-- **Sprint 6:** Pruebas y ajustes finales.
+- **Sprint 4:** Desarrollo del módulo de inteligencia artificial con Ollama.
+- **Sprint 5:** Implementación de la interfaz de usuario y pruebas finales.
 
 ## Guía de Instalación y Uso
 
@@ -33,50 +32,54 @@ El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales m�
 
 - Node.js v14.x o superior
 - npm v6.x o superior
-- Una cuenta en Trello y GitHub.
-- Ollama API key.
+- Git
 
-### Instalación
+### Pasos de Instalación
 
-1. Clona el repositorio:
+1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/tu-usuario/MultiagentesIA.git
    cd MultiagentesIA
    ```
 
-2. Instala las dependencias:
+2. **Instalar dependencias:**
    ```bash
    npm install
    ```
 
-3. Configura las variables de entorno:
-   - Crea un archivo `.env` en la raíz del proyecto.
-   - Añade las siguientes variables:
-     ```
-     TRELLO_API_KEY=tu_api_key_de_trello
-     TRELLO_TOKEN=tu_token_de_trello
-     GITHUB_TOKEN=tu_token_de_github
-     OLLAMA_API_KEY=tu_api_key_de_ollama
-     ```
+3. **Configurar variables de entorno:**
+   - Crear un archivo `.env` en la raíz del proyecto.
+   - Agregar las variables de entorno necesarias (API keys, URLs, etc.).
 
-4. Inicia el servidor:
+4. **Ejecutar la aplicación:**
    ```bash
    npm run dev
    ```
 
-### Uso
+### Ejemplos de Uso
 
-1. Una vez el servidor esté en funcionamiento, abre tu navegador y navega a `http://localhost:3000`.
-2. Regístrate o inicia sesión para acceder a la plataforma.
-3. Utiliza la interfaz para gestionar tus sprints y agentes.
+1. **Iniciar sesión:**
+   ```bash
+   POST /api/auth/login
+   ```
+
+2. **Gestionar un sprint en Trello:**
+   ```bash
+   POST /api/sprint
+   ```
+
+3. **Consultar información de un sprint:**
+   ```bash
+   GET /api/sprint/:id
+   ```
 
 ## Próximos Pasos
 
-- Implementar métricas y dashboards para la visualización de datos.
-- Mejorar la interfaz de usuario para una experiencia de usuario más intuitiva.
-- Integrar más APIs para una gestión de datos más robusta.
+- **Sprint 6:** Mejora de la interfaz de usuario y optimización del rendimiento.
+- **Sprint 7:** Integración con GitHub para gestión de repositorios y colaboración.
+- **Sprint 8:** Implementación de métricas y monitoreo de la inteligencia artificial.
 
-## Arquitectura del Proyecto
+## Diseño de Arquitectura
 
 ### Diagrama de Componentes
 
@@ -107,4 +110,4 @@ El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales m�
 - **Inyección de Dependencias:** Se utilizará un contenedor de inversión de control (IoC) para manejar las dependencias entre módulos, lo que facilitará las pruebas y la sustitución de implementaciones.
 - **CQRS (Command Query Responsibility Segregation):** Se recomienda separar las operaciones de comando (para cambios) y consulta (para lecturas) para mejorar la eficiencia y la escalabilidad.
 
-Este README.md proporciona una visión general del proyecto, su estado actual, instrucciones para su instalación y uso, y una descripción de la arquitectura y patrones de diseño utilizados.
+Este README.md proporciona una visión general del proyecto, incluyendo su propósito, estado actual, guía de instalación y uso, y detalles sobre la arquitectura y los patrones de diseño utilizados.
