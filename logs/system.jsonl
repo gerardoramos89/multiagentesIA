@@ -2641,3 +2641,7 @@
 {"ts":"2026-10-24T05:40:28.781Z","level":"SPRINT","source":"system","message":"✅ Retrospectiva generada. Creando encuestas en Trello..."}
 {"ts":"2026-10-24T05:40:30.639Z","level":"SPRINT","source":"system","message":"✅ Encuestas creadas en Trello. Esperando respuestas del humano..."}
 {"ts":"2026-10-24T05:40:31.460Z","level":"SPRINT","source":"system","message":"✅ Sprint #16 cerrado y archivado"}
+{"ts":"2026-10-24T05:45:18.999Z","level":"INFO","source":"executor","message":"Resetando 7 tareas a \"pending\"..."}
+{"ts":"2026-10-24T05:45:19.000Z","level":"SPRINT","source":"system","message":"🚀 Sprint #17 iniciado. 7 tareas en cola."}
+{"ts":"2026-10-24T05:45:19.000Z","level":"INFO","source":"executor","message":"Tareas pendientes: 7"}
+{"ts":"2026-10-24T05:45:19.008Z","level":"AGENT","source":"po","message":"Product Owner empezó: 📋 [PO] Análisis estratégico y planificación de MultiagentesIA"}
