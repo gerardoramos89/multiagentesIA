@@ -28,20 +28,20 @@ ARCHIVO: package.json
 }
 ```
 
-ARCHIVO: src/primerTest.test.ts
+ARCHIVO: src/primer-test.test.ts
 
 ```typescript
-import { suma } from './suma';
+import { suma } from './primer-test';
 
-test('Suma de 1 + 2 es igual a 3', () => {
+test('suma de 1 + 2 es igual a 3', () => {
   expect(suma(1, 2)).toBe(3);
 });
 ```
 
-ARCHIVO: src/suma.ts
+ARCHIVO: src/primer-test.ts
 
 ```typescript
-export const suma = (a: number, b: number): number => {
+export function suma(a: number, b: number): number {
   return a + b;
-};
+}
 ```
