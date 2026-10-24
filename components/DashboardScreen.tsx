@@ -188,7 +188,7 @@ export default function DashboardScreen() {
   const [hasCompletedSprints, setHasCompletedSprints] = useState(false);
   const [lastRetrospective, setLastRetrospective] = useState<any>(null);
   const [lastSprintNumber, setLastSprintNumber] = useState<number>(0);
-  
+  const [agentLogs, setAgentLogs] = useState<Record<string, any[]>>({});
   // ✅ NUEVO: Estado para tareas personalizadas del sprint
   const [customTasks, setCustomTasks] = useState("");
 
@@ -266,13 +266,20 @@ export default function DashboardScreen() {
         } else {
           setSprintState(null);
         }
+
+        // ✅ OBTENER LOGS DE AGENTES EN TIEMPO REAL
+        const logsRes = await fetch("/api/agent-logs");
+        const logsData = await logsRes.json();
+        if (logsData.success) {
+          setAgentLogs(logsData.logs);
+        }
+
       } catch {}
     };
     fetchSprintState();
     const interval = setInterval(fetchSprintState, 2000);
     return () => clearInterval(interval);
   }, []);
-
   useEffect(() => {
     if (!autoCheckSurveys || sprintState?.sprint?.status !== "survey") return;
     const checkSurveys = async () => {

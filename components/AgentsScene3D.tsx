@@ -78,10 +78,12 @@ function HolographicRocket({
   status,
   commitsCount,
   telemetry,
+  agentLogs = {}
 }: {
   status: ProjectStatus;
   commitsCount: number;
   telemetry?: FlightTelemetry;
+  agentLogs?: Record<string, any[]>;
 }) {
   const rocketRef = useRef<THREE.Group>(null);
   const flameRef = useRef<THREE.Mesh>(null);
@@ -130,13 +132,12 @@ function HolographicRocket({
     return positions;
   }, [commitsCount]);
 
-  // ✅ ESTABILIZAR DATOS DEL HUD CON useMemo
   const hudData = useMemo(() => {
     const t = telemetry;
     return {
       repoLabel: t?.repo ? `${t.repo.owner}/${t.repo.name}` : "—",
       starsLabel: t?.stars != null ? `★ ${t.stars}` : "★ —",
-      commitsLabel: `⚡ ${commitsCount} COMMITS`,
+      commitsLabel: `⚡ ${commitsCount} COMMITS TOTALES`,
       sprintLabel: t?.sprint.number != null ? `SPRINT ${String(t.sprint.number).padStart(2, "0")}` : "SPRINT —",
       statusLabel: STATUS_LABELS[status],
     };
@@ -173,33 +174,54 @@ function HolographicRocket({
         <pointsMaterial size={0.06} color={color} transparent opacity={0.7} />
       </points>
 
-      {/* ✅ FIX DEFINITIVO: Sin key dinámico, con suppressHydrationWarning */}
+      {/* ✅ HUD MEJORADO CON CONTADOR Y LOGS DE AGENTES */}
       <Html position={[0, 2.8, 0]} center>
-        <div style={{ display: 'block', pointerEvents: 'none' }}>
-          <div className="flex flex-col items-center">
-            <div className="bg-black/85 border-2 rounded-lg px-4 py-3 backdrop-blur-md shadow-[0_0_30px_rgba(6,182,212,0.5)] min-w-[240px]" style={{ borderColor: color }}>
-              <div className="text-[9px] uppercase tracking-widest text-gray-400 mb-1 text-center">
-                GRTEC / Flight Telemetry
+        <div className="flex flex-col items-center pointer-events-none">
+          <div className="bg-black/90 border-2 rounded-lg px-4 py-3 backdrop-blur-md shadow-[0_0_30px_rgba(6,182,212,0.5)] min-w-[280px]" style={{ borderColor: color }}>
+            <div className="text-[9px] uppercase tracking-widest text-gray-400 mb-1 text-center">
+              GRTEC / Flight Telemetry
+            </div>
+            <div className="text-[11px] font-bold text-white truncate max-w-[220px] text-center mb-2" title={hudData.repoLabel}>
+              {hudData.repoLabel}
+            </div>
+            
+            {/* ✅ CONTADOR DE COMMITS LLAMATIVO */}
+            <div className="bg-gradient-to-r from-cyan-900/50 to-purple-900/50 border border-cyan-500/50 rounded px-3 py-2 mb-3">
+              <div className="text-[16px] font-bold text-cyan-400 text-center animate-pulse">
+                {hudData.commitsLabel}
               </div>
-              <div className="text-[11px] font-bold text-white truncate max-w-[220px] text-center mb-2" title={hudData.repoLabel}>
-                {hudData.repoLabel}
-              </div>
-              
-              <div className="bg-gradient-to-r from-cyan-900/50 to-purple-900/50 border border-cyan-500/50 rounded px-3 py-2 mb-2">
-                <div className="text-[14px] font-bold text-cyan-400 text-center animate-pulse">
-                  {hudData.commitsLabel}
-                </div>
-              </div>
-              
-              <div className="flex items-center justify-between text-[10px] text-gray-300 gap-3">
-                <span className="font-mono">{hudData.starsLabel}</span>
-                <span className="text-[10px] font-bold text-cyan-300 font-mono">{hudData.sprintLabel}</span>
-              </div>
-              <div className="mt-2 text-center">
-                <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ color, backgroundColor: `${color}22` }}>
-                  {hudData.statusLabel}
-                </span>
-              </div>
+            </div>
+            
+            <div className="flex items-center justify-between text-[10px] text-gray-300 gap-3 mb-2">
+              <span className="font-mono">{hudData.starsLabel}</span>
+              <span className="text-[10px] font-bold text-cyan-300 font-mono">{hudData.sprintLabel}</span>
+            </div>
+
+            {/* ✅ ÚLTIMOS 2 LOGS DE CADA AGENTE */}
+            <div className="text-[8px] text-left space-y-1 border-t border-gray-700 pt-2 max-h-24 overflow-y-auto custom-scrollbar">
+              <div className="text-[9px] font-bold text-gray-400 mb-1 uppercase tracking-wider sticky top-0 bg-black/90">Actividad Reciente:</div>
+              {Object.entries(agentLogs).map(([agent, logs]) => {
+                if (!logs || logs.length === 0) return null;
+                const icon = agent === "doc" ? "📝" : agent === "dev" ? "🛠️" : agent === "arch" ? "🏗️" : agent === "qa" ? "🧪" : "📋";
+                return (
+                  <div key={agent} className="flex flex-col gap-0.5">
+                    {logs.slice(-2).map((log: any, i: number) => (
+                      <div key={i} className="flex items-start gap-1">
+                        <span className="shrink-0">{icon}</span>
+                        <span className={`truncate max-w-[200px] ${log.level === 'error' ? 'text-red-400' : log.level === 'success' ? 'text-emerald-400' : 'text-gray-300'}`}>
+                          {log.message}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-2 text-center">
+              <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ color, backgroundColor: `${color}22` }}>
+                {hudData.statusLabel}
+              </span>
             </div>
           </div>
         </div>

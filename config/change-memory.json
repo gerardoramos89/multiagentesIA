@@ -1,12 +1,13 @@
 {
-  "totalCommits": 33,
+  "totalCommits": 34,
   "filesEverChanged": [
     "multiagentesIA.py",
     "DOCUMENTACION.md",
     "jest.config.js",
     "README.md",
-    "jest-config.js"
+    "jest-config.js",
+    "landing_page_futurista.html"
   ],
-  "sprintsCompleted": 9,
-  "lastCommitHash": "f872450490034d76ffedce2677aad81c602010a3"
+  "sprintsCompleted": 10,
+  "lastCommitHash": "9c24633af348cd03f2fc8da427146f9451b4843e"
 }

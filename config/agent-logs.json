@@ -1,71 +1,5 @@
 [
   {
-    "agent": "qa",
-    "message": "✅ Completado en 24.2s",
-    "timestamp": "2026-10-24T03:00:55.656Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Todas las tareas completadas. Generando retrospectiva...",
-    "timestamp": "2026-10-24T03:00:57.660Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Generando retrospectiva del sprint...",
-    "timestamp": "2026-10-24T03:00:57.667Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Retrospectiva generada",
-    "timestamp": "2026-10-24T03:01:11.753Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📋 Creando encuestas en Trello para feedback humano...",
-    "timestamp": "2026-10-24T03:01:11.764Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📋 Creando encuestas en Trello...",
-    "timestamp": "2026-10-24T03:01:11.772Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ 5 encuestas de revisión humana creadas en Trello",
-    "timestamp": "2026-10-24T03:01:14.292Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Encuestas creadas. Esperando respuestas del humano.",
-    "timestamp": "2026-10-24T03:01:14.300Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "🔒 Cerrando sprint...",
-    "timestamp": "2026-10-24T03:01:29.892Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Sprint archivado en historial",
-    "timestamp": "2026-10-24T03:01:29.900Z",
-    "level": "success"
-  },
-  {
-    "agent": "dev",
-    "message": "🎯 Trabajando en: 🛠️ [DEV] quienro una ladingpage d euna pagina muy futurista",
-    "timestamp": "2026-10-24T03:19:29.229Z",
-    "level": "info"
-  },
-  {
     "agent": "dev",
     "message": "Iniciando: 🛠️ [DEV] quienro una ladingpage d euna pagina muy futurista",
     "timestamp": "2026-10-24T03:19:29.238Z",
@@ -88,5 +22,71 @@
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T03:20:25.617Z",
     "level": "info"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Push exitoso: 9c24633",
+    "timestamp": "2026-10-24T03:20:28.915Z",
+    "level": "success"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Completado en 59.7s",
+    "timestamp": "2026-10-24T03:20:28.923Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "📊 Todas las tareas completadas. Generando retrospectiva...",
+    "timestamp": "2026-10-24T03:20:30.933Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "📊 Generando retrospectiva del sprint...",
+    "timestamp": "2026-10-24T03:20:30.943Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "✅ Retrospectiva completa generada",
+    "timestamp": "2026-10-24T03:20:45.546Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "📋 Creando encuestas en Trello para feedback humano...",
+    "timestamp": "2026-10-24T03:20:45.556Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "📋 Creando encuestas en Trello...",
+    "timestamp": "2026-10-24T03:20:45.566Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "✅ 5 encuestas de revisión humana creadas en Trello",
+    "timestamp": "2026-10-24T03:20:47.664Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "✅ Encuestas creadas. Esperando respuestas del humano.",
+    "timestamp": "2026-10-24T03:20:47.672Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "🔒 Cerrando sprint...",
+    "timestamp": "2026-10-24T03:21:03.621Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "✅ Sprint archivado en historial",
+    "timestamp": "2026-10-24T03:21:03.629Z",
+    "level": "success"
   }
 ]
