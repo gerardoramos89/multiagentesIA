@@ -56,15 +56,24 @@
       "title": "🧪 [QA] Revisión de calidad y pruebas",
       "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
       "agent": "qa",
-      "status": "working",
-      "startedAt": "2026-10-24T05:37:17.736Z"
+      "status": "done",
+      "startedAt": "2026-10-24T05:37:17.736Z",
+      "completedAt": "2026-10-24T05:38:29.837Z",
+      "output": "Generado: QA_REPORT.md",
+      "commits": [
+        "37b6d9a27a741902f13f0347fffa72cfe86f081d"
+      ],
+      "filesModified": [
+        "QA_REPORT.md"
+      ]
     },
     {
       "id": "task-1792820037272-4",
       "title": "📝 [DOC] Documentación completa del sprint",
       "description": "Como Technical Writer, actualiza el README.md de MultiagentesIA para que sea la GUÍA VIVA del proyecto. Debe incluir: 1) Descripción actualizada, 2) Estado del desarrollo, 3) Historial de sprints, 4) Guía de instalación y uso, 5) Próximos pasos. Hazlo profesional y estructurado.",
       "agent": "doc",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T05:38:31.850Z"
     },
     {
       "id": "task-1792820037272-5",
@@ -87,6 +96,7 @@
   "filesChanged": [
     "Strategy.md",
     "ARCHITECTURE.md",
-    "main.py"
+    "main.py",
+    "QA_REPORT.md"
   ]
 }
