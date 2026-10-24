@@ -1,47 +1,5 @@
 [
   {
-    "agent": "po",
-    "message": "🔒 Cerrando sprint...",
-    "timestamp": "2026-10-23T23:58:08.048Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Sprint archivado en historial",
-    "timestamp": "2026-10-23T23:58:08.056Z",
-    "level": "success"
-  },
-  {
-    "agent": "arch",
-    "message": "🎯 Trabajando en: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
-    "timestamp": "2026-10-24T01:34:37.106Z",
-    "level": "info"
-  },
-  {
-    "agent": "arch",
-    "message": "Iniciando: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
-    "timestamp": "2026-10-24T01:34:37.111Z",
-    "level": "info"
-  },
-  {
-    "agent": "arch",
-    "message": "Generando código con deepseek-coder-v2:16b...",
-    "timestamp": "2026-10-24T01:34:37.118Z",
-    "level": "info"
-  },
-  {
-    "agent": "arch",
-    "message": "✅ Archivo creado: multiagentesIA.py",
-    "timestamp": "2026-10-24T01:35:43.898Z",
-    "level": "success"
-  },
-  {
-    "agent": "arch",
-    "message": "Preparando commit...",
-    "timestamp": "2026-10-24T01:35:43.909Z",
-    "level": "info"
-  },
-  {
     "agent": "arch",
     "message": "✅ Push exitoso: b3e2dc0",
     "timestamp": "2026-10-24T01:35:47.891Z",
@@ -87,6 +45,48 @@
     "agent": "doc",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T01:36:59.486Z",
+    "level": "info"
+  },
+  {
+    "agent": "doc",
+    "message": "✅ Push exitoso: aef2b61",
+    "timestamp": "2026-10-24T01:37:02.813Z",
+    "level": "success"
+  },
+  {
+    "agent": "doc",
+    "message": "✅ Completado en 72.9s",
+    "timestamp": "2026-10-24T01:37:02.820Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "🎯 Trabajando en: 🧪 [QA] Configurar sistema de tests y primer caso de prueba",
+    "timestamp": "2026-10-24T01:37:04.825Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Iniciando: 🧪 [QA] Configurar sistema de tests y primer caso de prueba",
+    "timestamp": "2026-10-24T01:37:04.832Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Generando código con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-24T01:37:04.839Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "✅ Archivo creado: jest-config.js",
+    "timestamp": "2026-10-24T01:37:32.812Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-24T01:37:32.820Z",
     "level": "info"
   }
 ]
