@@ -1,78 +1,67 @@
-# Arquitectura de MultiagentesIA
+# 🏗️ [ARCH] Diseño de arquitectura para MultiagentesIA
 
-## 1. Diagrama de Componentes
+## 1. Diagrama de componentes
 
 ```plaintext
 +-----------------------------+
 | MultiagentesIA               |
 |-----------------------------|
-| +-- agentes/                 |
-| | +-- agente1.py            |
-| | +-- agente2.py            |
-| | +-- ...                   |
-| +-- infraestructura/        |
-| | +-- repositorio.py        |
-| | +-- servicio_inteligencia.py |
-| | +-- ...                   |
-| +-- interfaces/             |
-| | +-- agente_interface.py   |
-| | +-- servicio_interface.py |
-| | +-- ...                   |
-| +-- configuracion/           |
-| | +-- configuracion.py      |
-| | +-- constantes.py         |
-| | +-- ...                   |
-| +-- main.py                 |
-| +-- tests/                  |
-| | +-- test_agente1.py      |
-| | +-- test_servicio.py      |
-| | +-- ...                   |
-| +-----------------------------+
+| +-- src/                   |
+| | +-- agents/              |
+| | | +-- agent1.js          |
+| | | +-- agent2.js          |
+| | | +-- ...                |
+| | +-- strategies/          |
+| | | +-- strategy1.js       |
+| | | +-- strategy2.js       |
+| | | +-- ...                |
+| | +-- utils/               |
+| | | +-- utils.js           |
+| | | +-- logger.js          |
+| | +-- main.js              |
+| +-- tests/                 |
+| | +-- agent1.test.js      |
+| | +-- agent2.test.js      |
+| | +-- ...                  |
+| +-- package.json           |
+| +-- .gitignore             |
++-----------------------------+
 ```
 
-## 2. Patrones de Diseño Recomendados
+## 2. Patrones de diseño recomendados
 
-### 2.1. Patrón de Diseño Hexagonal (Ports and Adapters)
-- **Descripción**: Permite una separación clara entre la lógica de negocio y la infraestructura, facilitando la inserción de diferentes adaptadores (por ejemplo, para bases de datos o APIs).
-- **Implementación**:
-  - **Puertos (Ports)**: Definen las interfaces que deben ser implementadas por los adaptadores.
-  - **Adaptadores (Adapters)**: Implementan las interfaces de los puertos para interactuar con la infraestructura específica.
+### 2.1. Patrón de Estrategia
+- **Descripción**: El patrón de estrategia permite definir una familia de algoritmos, encapsular cada uno como un objeto separado y hacerlos intercambiables.
+- **Implementación**: Se recomienda implementar estrategias para diferentes agentes y estrategias para la selección de estrategias.
 
-### 2.2. Patrón de Diseño Singleton
-- **Descripción**: Garantiza que una clase tenga una única instancia y proporciona un punto de acceso global a ella.
-- **Implementación**: Se recomienda aplicar este patrón en clases que gestionan configuraciones o recursos compartidos.
+### 2.2. Patrón de Inyección de Dependencias
+- **Descripción**: El patrón de inyección de dependencias es un patrón de diseño de software en el que una clase recibe sus dependencias a través de constructores, métodos setters o parámetros.
+- **Implementación**: Se recomienda inyectar dependencias como estrategias en los agentes.
 
-## 3. Estructura de Carpetas
+## 3. Estructura de carpetas óptima
 
-- **agentes/**: Contiene las implementaciones de los agentes.
-- **infraestructura/**: Contiene la lógica de acceso a datos y servicios externos.
-- **interfaces/**: Define las interfaces y contratos para la comunicación entre componentes.
-- **configuracion/**: Contiene la configuración y constantes del sistema.
-- **main.py**: Punto de entrada principal de la aplicación.
-- **tests/**: Contiene los casos de prueba.
+La estructura de carpetas propuesta se muestra en el diagrama de componentes. Esta estructura facilita la organización y mantenimiento del código, permitiendo una clara separación de responsabilidades.
 
-## 4. Decisiones Técnicas Clave (ADR)
+## 4. Decisiones técnicas clave (ADR)
 
-### 4.1. ADR 001: Uso de SQLAlchemy para ORM
-- **Contexto**: Se necesita un ORM para facilitar la manipulación de datos en bases de datos relacionales.
-- **Decisión**: Implementar SQLAlchemy para manejar las operaciones de base de datos.
-- **Consecuencias**: Facilita la manipulación de datos con un enfoque declarativo y reduce el riesgo de inyecciones SQL.
+### 4.1. ADR-001 - Uso de JavaScript ES6+
+- **Contexto**: Se busca modernizar el código utilizando las últimas características de JavaScript.
+- **Decisión**: Adoptar ES6+ para escribir el código de los agentes y estrategias.
+- **Consecuencias**: Mejora la legibilidad y mantenimiento del código, facilitando la incorporación de nuevas características de ES6+.
 
-### 4.2. ADR 002: Uso de Flask para API REST
-- **Contexto**: Se requiere una API REST para interactuar con el sistema.
-- **Decisión**: Utilizar Flask para crear la API REST.
-- **Consecuencias**: Permite una rápida implementación de endpoints y facilita la integración con otros servicios.
+### 4.2. ADR-002 - Uso de Jest para Testing
+- **Contexto**: Se requiere mejorar la cobertura de pruebas unitarias.
+- **Decisión**: Utilizar Jest como framework de pruebas unitarias.
+- **Consecuencias**: Aumenta la confianza en el código y facilita la detección de errores y regresiones.
 
-## 5. Deuda Técnica Identificada y Cómo Resolverla
+## 5. Deuda técnica identificada y cómo resolverla
 
-### 5.1. Deuda Técnica: Falta de Desacoplamiento
-- **Descripción**: Los módulos están muy acoplados, lo que dificulta las pruebas y futuras modificaciones.
-- **Solución**: Implementar el patrón de diseño Hexagonal para desacoplar la lógica de negocio de la infraestructura.
-- **Resultado**: Mejora la testabilidad y mantenibilidad del código.
+### 5.1. Deuda técnica: Dependencias desactualizadas
+- **Descripción**: Algunas dependencias del proyecto están desactualizadas, lo que puede llevar a incompatibilidades y vulnerabilidades.
+- **Solución**: Actualizar las dependencias a las versiones más recientes y realizar un análisis de compatibilidad.
 
-### 5.2. Deuda Técnica: Falta de Uso de Patrones de Diseño
-- **Descripción**: El código actual no utiliza patrones de diseño avanzados, lo que puede llevar a soluciones poco flexibles y poco escalables.
-- **Solución**: Implementar los patrones de diseño Singleton y Hexagonal en las partes críticas del sistema.
-- **Resultado**: Incrementa la eficiencia y la capacidad de adaptación al cambiar requisitos.
+### 5.2. Deuda técnica: Falta de documentación
+- **Descripción**: El código actual carece de comentarios y documentación suficiente, lo que dificulta la comprensión del propósito y funcionamiento de las partes del sistema.
+- **Solución**: Implementar un sistema de documentación mediante JSDoc y agregar comentarios claros y concisos en el código.
 
-Este documento proporciona una visión clara de cómo mejorar la arquitectura de MultiagentesIA, asegurando una mayor eficiencia, mantenibilidad y escalabilidad del sistema.
+Este archivo proporciona una visión clara y estructurada de las mejoras de arquitectura propuestas para el proyecto MultiagentesIA, asegurando una mayor eficiencia y mantenimiento a largo plazo.
