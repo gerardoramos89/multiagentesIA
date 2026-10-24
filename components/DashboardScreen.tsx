@@ -382,15 +382,54 @@ export default function DashboardScreen() {
 
   const progress = (configuredCount / modules.length) * 100;
   
-  const telemetry: FlightTelemetry = useMemo(() => ({
+// ✅ ESTADO PARA CONTADOR REAL DE COMMITS
+const [realCommitsCount, setRealCommitsCount] = useState(0);
+const [sprintsCompleted, setSprintsCompleted] = useState(0);
+
+// ✅ POLLING PARA OBTENER ESTADÍSTICAS REALES
+useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      const res = await fetch("/api/commits/stats");
+      const data = await res.json();
+      if (data.success) {
+        setRealCommitsCount(data.totalCommits || 0);
+        setSprintsCompleted(data.sprintsCompleted || 0);
+      }
+    } catch {}
+  };
+  fetchStats();
+  const interval = setInterval(fetchStats, 5000);
+  return () => clearInterval(interval);
+}, []);
+
+// ✅ TELEMETRÍA CORREGIDA
+const telemetry: FlightTelemetry = useMemo(() => {
+  // ✅ Determinar el número real del sprint
+  const currentSprintNumber = sprintState?.sprint?.sprintNumber || (sprintPlanned ? 1 : null);
+  
+  // ✅ Determinar el estado real del proyecto
+  let realStatus: "config" | "ready" | "building" | "testing" | "deployed" = "config";
+  if (sprintState?.sprint?.status === "executing") {
+    realStatus = "building";
+  } else if (sprintState?.sprint?.status === "survey" || sprintState?.sprint?.status === "review") {
+    realStatus = "testing";
+  } else if (sprintState?.sprint?.status === "completed" || hasCompletedSprints) {
+    realStatus = "deployed";
+  } else if (projectConfig) {
+    realStatus = "ready";
+  }
+  
+  return {
     repo: githubConfig.owner && githubConfig.repo ? { owner: githubConfig.owner, name: githubConfig.repo } : null,
     stars: null,
-    commits: sprintExecuting ? (commitsCount + (sprintState?.sprint?.tasks?.filter((t: any) => t.status === "done").length || 0)) : commitsCount,
-    sprint: { number: sprintPlanned ? 1 : null, source: "default" },
-    status: sprintExecuting ? "building" : projectStatus,
+    commits: realCommitsCount, // ✅ Usar contador real de commits
+    sprint: { number: currentSprintNumber, source: "active" },
+    status: realStatus,
     progress,
     lastActivity: null,
-  }), [githubConfig, commitsCount, projectStatus, progress, sprintPlanned, sprintExecuting, sprintState]);
+  };
+}, [githubConfig, realCommitsCount, projectStatus, progress, sprintPlanned, sprintExecuting, sprintState, hasCompletedSprints, projectConfig]);
 
   return (
     <div className="h-screen w-full bg-black flex overflow-hidden">

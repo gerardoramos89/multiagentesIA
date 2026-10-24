@@ -369,34 +369,53 @@ async function commitAndPush(task: SprintTask): Promise<{ success: boolean; comm
   }
 }
 
-// ✅ INICIAR EJECUCIÓN DEL SPRINT
+let isExecuting = false; // ✅ LOCK para evitar ejecuciones concurrentes
+
 export async function startSprintExecution(vision?: any, projectContext?: string): Promise<{ success: boolean; message: string }> {
+  // ✅ VERIFICAR LOCK
+  if (isExecuting) {
+    return { success: false, message: "El sprint ya se está iniciando, espera un momento..." };
+  }
+  
   console.log("[EXECUTOR] startSprintExecution llamado");
   const sprint = loadSprint();
   if (!sprint) return { success: false, message: "No hay sprint planificado" };
   if (sprint.status === "executing") return { success: false, message: "El sprint ya está en ejecución" };
 
-  const prepResult = await prepareRepository();
-  if (!prepResult.success) return { success: false, message: `Error preparando repo: ${prepResult.message}` };
+  // ✅ ACTIVAR LOCK
+  isExecuting = true;
 
-  log("INFO", "executor", `Resetando ${sprint.tasks.length} tareas a "pending"...`);
-  for (const task of sprint.tasks) {
-    task.status = "pending";
-    task.startedAt = undefined; task.completedAt = undefined;
-    task.output = undefined; task.commits = undefined; task.filesModified = undefined;
+  try {
+    const prepResult = await prepareRepository();
+    if (!prepResult.success) {
+      isExecuting = false;
+      return { success: false, message: `Error preparando repo: ${prepResult.message}` };
+    }
+
+    log("INFO", "executor", `Resetando ${sprint.tasks.length} tareas a "pending"...`);
+    for (const task of sprint.tasks) {
+      task.status = "pending";
+      task.startedAt = undefined; task.completedAt = undefined;
+      task.output = undefined; task.commits = undefined; task.filesModified = undefined;
+    }
+    
+    sprint.status = "executing";
+    sprint.vision = vision;
+    sprint.projectContext = projectContext;
+    sprint.filesChanged = [];
+    saveSprint(sprint);
+
+    log("SPRINT", "system", `🚀 Sprint #${sprint.sprintNumber} iniciado. ${sprint.tasks.length} tareas en cola.`);
+    
+    executeTasksSequentially(sprint, vision, projectContext).catch((e) => log("ERROR", "executor", `Error en ejecución: ${e?.message}`));
+    
+    return { success: true, message: "Sprint iniciado" };
+  } finally {
+    // ✅ LIBERAR LOCK después de 5 segundos (tiempo suficiente para que el estado cambie a "executing")
+    setTimeout(() => {
+      isExecuting = false;
+    }, 5000);
   }
-  
-  sprint.status = "executing";
-  sprint.vision = vision;
-  sprint.projectContext = projectContext;
-  sprint.filesChanged = [];
-  saveSprint(sprint);
-
-  log("SPRINT", "system", `🚀 Sprint #${sprint.sprintNumber} iniciado. ${sprint.tasks.length} tareas en cola.`);
-  
-  executeTasksSequentially(sprint, vision, projectContext).catch((e) => log("ERROR", "executor", `Error en ejecución: ${e?.message}`));
-  
-  return { success: true, message: "Sprint iniciado" };
 }
 
 // ✅ EJECUCIÓN SECUENCIAL CON CIERRE AUTOMÁTICO

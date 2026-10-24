@@ -99,65 +99,65 @@ export default function TrelloBoard({ apiKey, token, boardId }: TrelloBoardProps
       </div>
 
       <div className="space-y-2 max-h-96 overflow-y-auto custom-scrollbar">
-        {lists.slice(0, 5).map((list) => {
-          const listCards = cards[list.name] || [];
-          if (listCards.length === 0) return null;
+  {lists.map((list) => { // ✅ QUITAR .slice(0, 5) para mostrar TODAS las listas
+    const listCards = cards[list.name] || [];
+    if (listCards.length === 0) return null;
 
-          return (
-            <div key={list.id} className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden">
-              <div className={`bg-gradient-to-r ${getListColor(list.name)} px-3 py-1.5`}>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-white">{list.name}</span>
-                  <span className="text-[9px] text-white/80 bg-black/20 px-1.5 py-0.5 rounded-full">
-                    {listCards.length}
-                  </span>
+    return (
+      <div key={list.id} className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden">
+        <div className={`bg-gradient-to-r ${getListColor(list.name)} px-3 py-1.5`}>
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold text-white">{list.name}</span>
+            <span className="text-[9px] text-white/80 bg-black/20 px-1.5 py-0.5 rounded-full">
+              {listCards.length}
+            </span>
+          </div>
+        </div>
+        <div className="p-2 space-y-1.5">
+          {listCards.slice(0, 10).map((card: any) => ( // ✅ Mostrar hasta 10 tarjetas por lista
+            <motion.a
+              key={card.id}
+              href={card.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="block p-2 bg-gray-800/50 border border-gray-700 rounded hover:border-cyan-500/50 hover:bg-gray-800 transition-all group"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <span className="text-[9px] text-gray-300 group-hover:text-white transition-colors line-clamp-2">
+                  {card.name}
+                </span>
+                <ExternalLink size={10} className="text-gray-500 group-hover:text-cyan-400 transition-colors shrink-0 mt-0.5" />
+              </div>
+              {card.labels && card.labels.length > 0 && (
+                <div className="flex gap-1 mt-1 flex-wrap">
+                  {card.labels.slice(0, 3).map((label: any) => (
+                    <span
+                      key={label.id}
+                      className="text-[7px] px-1 py-0.5 rounded-full font-bold"
+                      style={{ 
+                        backgroundColor: label.color ? `${label.color}33` : "#66666633",
+                        color: label.color || "#999"
+                      }}
+                    >
+                      {label.name}
+                    </span>
+                  ))}
                 </div>
-              </div>
-              <div className="p-2 space-y-1.5">
-                {listCards.slice(0, 5).map((card: any) => (
-                  <motion.a
-                    key={card.id}
-                    href={card.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="block p-2 bg-gray-800/50 border border-gray-700 rounded hover:border-cyan-500/50 hover:bg-gray-800 transition-all group"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-[9px] text-gray-300 group-hover:text-white transition-colors line-clamp-2">
-                        {card.name}
-                      </span>
-                      <ExternalLink size={10} className="text-gray-500 group-hover:text-cyan-400 transition-colors shrink-0 mt-0.5" />
-                    </div>
-                    {card.labels && card.labels.length > 0 && (
-                      <div className="flex gap-1 mt-1 flex-wrap">
-                        {card.labels.slice(0, 3).map((label: any) => (
-                          <span
-                            key={label.id}
-                            className="text-[7px] px-1 py-0.5 rounded-full font-bold"
-                            style={{ 
-                              backgroundColor: label.color ? `${label.color}33` : "#66666633",
-                              color: label.color || "#999"
-                            }}
-                          >
-                            {label.name}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </motion.a>
-                ))}
-                {listCards.length > 5 && (
-                  <div className="text-center text-[8px] text-gray-500 pt-1">
-                    +{listCards.length - 5} tarjetas más
-                  </div>
-                )}
-              </div>
+              )}
+            </motion.a>
+          ))}
+          {listCards.length > 10 && (
+            <div className="text-center text-[8px] text-gray-500 pt-1">
+              +{listCards.length - 10} tarjetas más
             </div>
-          );
-        })}
+          )}
+        </div>
       </div>
+    );
+  })}
+</div>
     </div>
   );
 }

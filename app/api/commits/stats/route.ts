@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getTotalCommits, loadChangeMemory } from "@/lib/agent-executor";
+import { loadChangeMemory } from "@/lib/agent-executor";
 
 export async function GET() {
   try {
