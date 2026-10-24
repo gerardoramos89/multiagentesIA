@@ -1,5 +1,5 @@
 {
-  "totalCommits": 152,
+  "totalCommits": 153,
   "filesEverChanged": [
     "multiagentesIA.py",
     "DOCUMENTACION.md",
@@ -52,8 +52,9 @@
     "roles_del_equipo.js",
     "MultiagentesIA.js",
     "MultiagentesIA_agents_specific_agent1_agent_service.js",
-    "MultiagentesIA_Arquitectura.md"
+    "MultiagentesIA_Arquitectura.md",
+    "arquitectura_proyectofabricaagentes_alertas.md"
   ],
-  "sprintsCompleted": 22,
-  "lastCommitHash": "04e0bcbdcc48fa48691f54a203bdea542f9008fd"
+  "sprintsCompleted": 23,
+  "lastCommitHash": "c4b5a60752763e52a5ae8f518647be418e69d806"
 }
