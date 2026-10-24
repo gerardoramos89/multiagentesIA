@@ -1,66 +1,66 @@
-```markdown
-# MultiagentesIA
+# Proyecto de Plataforma Multiagente para Inteligencia Artificial
 
 ## Descripción del Proyecto
-Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial. El equipo de desarrollo ha trabajado en la implementación de un conjunto de agentes autónomos, cada uno con reglas y responsabilidades específicas.
+Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial. La plataforma está diseñada para facilitar la gestión de equipos de agentes autónomos, utilizando reglas y metodologías ágiles como Scrum.
 
-## Objetivo del Proyecto
-La plataforma multiagente tiene como objetivo facilitar la gestión y la colaboración de equipos de desarrollo de Inteligencia Artificial, permitiendo que cada agente trabaje de manera autónoma y cumpla con las reglas y responsabilidades definidas.
-
-## Alcance del Proyecto
-El proyecto se centra en la implementación de una arquitectura multiagente que permita la creación de agentes con reglas y responsabilidades definidas. Los agentes están codificados y pueden ser gestionados desde una interfaz de usuario intuitiva.
-
-## Habilidades Utilizadas
-- **Next**: Tecnología utilizada para el desarrollo de la aplicación.
+## Características Principales
+- **Multiagente**: La plataforma soporta múltiples agentes interconectados para una gestión eficiente de la Inteligencia Artificial.
+- **Autonomía**: Los agentes son autónomos y pueden operar bajo sus propias reglas y lógica de decisión.
+- **Metodología Ágil**: Se implementa la metodología Scrum para un desarrollo ágil y controlado.
+- **Integración de Todo en Un Cliclo del Software**: Todo el ciclo de desarrollo del software se realiza de manera automatizada y con una interfaz amigable para el usuario.
 
 ## Estructura del Proyecto
-El proyecto se estructura de la siguiente manera:
-- **src/**: Contiene el código fuente de la aplicación.
-- **docs/**: Contiene la documentación del proyecto.
-- **README.md**: Este archivo que usted está leyendo, proporciona una guía de uso y avances del proyecto.
+El proyecto se divide en varios módulos principales:
+- **Módulo de Agentes**: Implementación de agentes autónomos con capacidades específicas para la gestión de IA.
+- **Módulo de Reglas Scrum**: Implementación de reglas y procesos ágiles para el desarrollo del software.
+- **Módulo de Interfaz de Usuario**: Una interfaz web que permite la gestión y visualización de los agentes y su desempeño.
 
-## Estados del Proyecto
-- **Total de commits**: 37
-- **Sprints completados**: 10
-- **Archivos modificados históricamente**: 6
+## Requisitos del Sistema
+- Python 3.8 o superior
+- Bases de datos relacionales (MySQL, PostgreSQL, etc.)
+- Node.js y npm para el frontend
 
-## Avances del Sprint
-Durante este sprint, se han realizado los siguientes avances:
-- **Implementación de agentes autónomos**: Se han añadido nuevos agentes con reglas y responsabilidades definidas.
-- **Interfaz de usuario**: Se ha mejorado la interfaz de usuario para facilitar la gestión y la interacción con los agentes.
-- **Documentación**: Se ha actualizado la documentación del proyecto para reflejar los cambios y avances realizados.
-
-## Guía de Uso
-### Requisitos Previos
-- Node.js v14.x o superior
-- npm v6.x o superior
-
-### Instalación
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/tu-usuario/MultiagentesIA.git
-   ```
-2. Navega al directorio del proyecto:
-   ```bash
-   cd MultiagentesIA
-   ```
-3. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-
-### Ejecución
-1. Inicia la aplicación:
-   ```bash
-   npm start
-   ```
-2. Accede a la interfaz de usuario en tu navegador web.
-
-### Documentación
-Para obtener más detalles sobre la implementación y la arquitectura del proyecto, consulta la documentación en el directorio `docs/`.
-
-## Conclusiones
-Este sprint ha sido productivo y ha llevado al proyecto hacia un avance significativo en la implementación de agentes autónomos y la mejora de la interfaz de usuario. La documentación ha sido actualizada para proporcionar una guía clara y actualizada sobre el uso y la implementación del proyecto.
-
-¡Gracias por su contribución y esfuerzo en el desarrollo de MultiagentesIA!
+## Instalación
+### Paso 1: Clonar el repositorio
+```bash
+git clone https://github.com/tu-usuario/tu-repositorio.git
+cd tu-repositorio
 ```
+
+### Paso 2: Instalar dependencias
+```bash
+# Para el backend
+pip install -r requirements.txt
+
+# Para el frontend
+cd frontend
+npm install
+```
+
+### Paso 3: Configurar la base de datos
+Configurar las variables de entorno y la base de datos en el archivo `.env`.
+
+### Paso 4: Ejecutar la aplicación
+```bash
+# Para el backend
+python manage.py runserver
+
+# Para el frontend
+npm start
+```
+
+## Contribución
+Las contribuciones son bienvenidas. Para contribuir, por favor seguir estos pasos:
+1. Hacer un fork del repositorio.
+2. Crear una nueva rama para la característica o corrección de errores.
+3. Hacer los cambios y hacer un pull request.
+
+## Licencia
+Este proyecto está bajo la licencia MIT.
+
+## Contacto
+Para cualquier consulta, puede contactar al correo electrónico: contacto@tu-correo.com
+
+---
+
+¡Gracias por leer el README! Esperamos que encuentres esta información útil para entender mejor el proyecto.
