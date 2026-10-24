@@ -197,6 +197,9 @@ export default function DashboardScreen() {
   const [activeTab, setActiveTab] = useState<"agents" | "models" | "logs">("agents");
   const [showAutoCloseModal, setShowAutoCloseModal] = useState(false);
   const [showReadmePreview, setShowReadmePreview] = useState(false);
+  
+  // ✅ NUEVO: Checkbox para auto-ejecutar el sprint al planificarlo
+  const [autoExecuteNextSprint, setAutoExecuteNextSprint] = useState(false);
 
   const configuredCount = modules.filter(m => m.status === "on").length;
   const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady;
@@ -222,17 +225,27 @@ export default function DashboardScreen() {
     loadHistory();
   }, []);
 
+  // ✅ MEJORA: Limpieza y formateo de las sugerencias técnicas
   useEffect(() => {
     if (lastRetrospective && (!sprintState || sprintState.sprint?.status === "completed") && customTasks.trim() === "") {
       const suggestions: string[] = [];
+      
       if (lastRetrospective.whatNeedsDefinition?.length > 0) {
-        suggestions.push("📌 Tareas sugeridas (Qué falta por definir):");
-        lastRetrospective.whatNeedsDefinition.forEach((item: string) => suggestions.push(`[ARCH/DEV] ${item}`));
+        suggestions.push("🔍 DEFINICIONES TÉCNICAS PENDIENTES:");
+        lastRetrospective.whatNeedsDefinition.forEach((item: string) => {
+          const cleanItem = item.replace(/^\[.*?\]\s*/, "");
+          suggestions.push(`[ARCH/DEV] ${cleanItem}`);
+        });
       }
+      
       if (lastRetrospective.actionItems?.length > 0) {
-        suggestions.push("\n🎯 Plan de acción sugerido:");
-        lastRetrospective.actionItems.forEach((item: string) => suggestions.push(`[DEV/QA] ${item}`));
+        suggestions.push("\n🛠️ ACCIONES TÉCNICAS PARA EL PRÓXIMO SPRINT:");
+        lastRetrospective.actionItems.forEach((item: string) => {
+          const cleanItem = item.replace(/^\[.*?\]\s*/, "");
+          suggestions.push(`[DEV/QA] ${cleanItem}`);
+        });
       }
+      
       if (suggestions.length > 0) {
         setCustomTasks(suggestions.join("\n"));
       }
@@ -587,6 +600,20 @@ export default function DashboardScreen() {
                 />
               </div>
 
+              {/* ✅ CHECKBOX DE AUTO-EJECUCIÓN */}
+              <div className="flex items-center gap-2 mb-3 p-2 bg-cyan-950/20 border border-cyan-500/30 rounded-lg">
+                <input 
+                  type="checkbox" 
+                  id="autoExecute"
+                  checked={autoExecuteNextSprint}
+                  onChange={(e) => setAutoExecuteNextSprint(e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-600 text-cyan-600 focus:ring-cyan-500 bg-gray-800 cursor-pointer"
+                />
+                <label htmlFor="autoExecute" className="text-[10px] text-cyan-300 font-medium cursor-pointer select-none flex items-center gap-1">
+                  🚀 Ejecutar este sprint automáticamente al planificarlo
+                </label>
+              </div>
+
               <button 
                 disabled={!projectConfig || !diagnosticsReady || !projectVision.isCompleted}
                 onClick={async () => {
@@ -595,10 +622,10 @@ export default function DashboardScreen() {
                       .map(t => t.trim())
                       .filter(t => 
                         t.length > 0 && 
-                        !t.includes('Tareas sugeridas') && 
-                        !t.includes('Plan de acción') &&
-                        !t.startsWith('📌') &&
-                        !t.startsWith('🎯')
+                        !t.includes('DEFINICIONES TÉCNICAS') && 
+                        !t.includes('ACCIONES TÉCNICAS') &&
+                        !t.startsWith('🔍') &&
+                        !t.startsWith('🛠️')
                       );
 
                     const res = await fetch("/api/sprint/plan", { 
@@ -613,10 +640,33 @@ export default function DashboardScreen() {
                     });
                     const data = await res.json();
                     if (data.success) { 
-                      alert(`✅ Sprint #${data.sprintNumber || 1} planificado con ${data.tasksCount} tareas.`); 
                       setSprintPlanned(true); 
-                      setSprintState(null);
                       setCustomTasks("");
+                      
+                      // ✅ LÓGICA DE AUTO-EJECUCIÓN
+                      if (autoExecuteNextSprint) {
+                        setTimeout(async () => {
+                          try {
+                            const savedVision = typeof window !== 'undefined' ? localStorage.getItem('projectVision') : null;
+                            const vision = savedVision ? JSON.parse(savedVision) : projectVision;
+                            const execRes = await fetch("/api/sprint/execute", { 
+                              method: "POST", 
+                              headers: { "Content-Type": "application/json" }, 
+                              body: JSON.stringify({ vision }) 
+                            });
+                            const execData = await execRes.json();
+                            if (execData.success) {
+                              setShowLaunchModal(true);
+                              setSprintExecuting(true);
+                              setProjectStatus("building");
+                            } else {
+                              alert(`❌ Error al ejecutar automáticamente: ${execData.message}`);
+                            }
+                          } catch (err: any) {
+                            alert(`❌ Error de conexión al ejecutar: ${err.message}`);
+                          }
+                        }, 1500);
+                      }
                     } else { 
                       alert(`❌ Error: ${data.message}`); 
                     }

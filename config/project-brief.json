@@ -2,7 +2,7 @@
   "projectName": "multiagentesIA",
   "owner": "gerardoramos89",
   "repo": "multiagentesIA",
-  "analyzedAt": "2026-10-24T06:14:34.214Z",
+  "analyzedAt": "2026-10-24T07:01:12.286Z",
   "gitSha": "074fe158540346e87aebc127477b545704424ac2",
   "type": "existing",
   "stack": {
@@ -29,7 +29,7 @@
     "coverage": "full",
     "filesScanned": 37,
     "apiRequests": 0,
-    "durationMs": 4018,
+    "durationMs": 4071,
     "warnings": []
   },
   "branch": "main",

@@ -98,7 +98,6 @@ const AGENT_WORK_LOGS_FILE = path.join(process.cwd(), "config", "agent-work-logs
 const CHANGE_MEMORY_FILE = path.join(process.cwd(), "config", "change-memory.json");
 const REPO_DIR = process.cwd();
 
-// ✅ GESTIÓN DE MEMORIA DE CAMBIOS
 export function loadChangeMemory(): ChangeMemory {
   try {
     if (!fs.existsSync(CHANGE_MEMORY_FILE)) return { totalCommits: 0, filesEverChanged: [], sprintsCompleted: 0 };
@@ -114,7 +113,6 @@ export function saveChangeMemory(memory: ChangeMemory) {
   } catch (e) { console.error("[EXECUTOR] Error guardando memoria:", e); }
 }
 
-// ✅ GESTIÓN DE LOGS DE AGENTES
 export function addAgentLog(agent: string, message: string, level: AgentLog["level"] = "info") {
   try {
     let logs: AgentLog[] = [];
@@ -137,7 +135,6 @@ export function getAgentLogs(): Record<string, AgentLog[]> {
   } catch { return {}; }
 }
 
-// ✅ GESTIÓN DE LOGS DE TRABAJO (PROMPTS Y RESPUESTAS)
 export function saveAgentWorkLog(workLog: AgentWorkLog) {
   try {
     let logs: AgentWorkLog[] = [];
@@ -157,7 +154,6 @@ export function getAgentWorkLogs(): AgentWorkLog[] {
   } catch { return []; }
 }
 
-// ✅ GESTIÓN DE SPRINTS
 export function loadSprint(): SprintState | null {
   try {
     if (!fs.existsSync(SPRINT_FILE)) return null;
@@ -222,7 +218,6 @@ export function getLessonsLearned(): string[] {
   return history[history.length - 1].lessonsLearned || [];
 }
 
-// ✅ PREPARAR REPOSITORIO
 async function prepareRepository(): Promise<{ success: boolean; message: string }> {
   try {
     await execAsync(`git config user.email "agent@fabricagents.ai"`, { cwd: REPO_DIR });
@@ -243,33 +238,24 @@ async function prepareRepository(): Promise<{ success: boolean; message: string 
   }
 }
 
-// ✅ FUNCIÓN AUXILIAR: Recolectar contexto de otros agentes (INTELIGENCIA DE EQUIPO)
 async function gatherAgentContext(taskAgent: string): Promise<string> {
   let context = "";
-  
-  // 1. Si es el Developer o QA, necesitan saber qué diseñó el Arquitecto
   if (taskAgent === "dev" || taskAgent === "qa") {
     try {
       const archPath = path.join(REPO_DIR, "ARCHITECTURE.md");
       if (fs.existsSync(archPath)) {
-        const content = fs.readFileSync(archPath, "utf-8");
-        context += `\n🏗️ CONTEXTO DEL ARQUITECTO (OBLIGATORIO SEGUIR):\n${content.substring(0, 2000)}\n`;
+        context += `\n🏗️ CONTEXTO DEL ARQUITECTO (OBLIGATORIO SEGUIR):\n${fs.readFileSync(archPath, "utf-8").substring(0, 2000)}\n`;
       }
     } catch {}
   }
-  
-  // 2. Si es el Developer, necesita saber la estrategia del PO
   if (taskAgent === "dev") {
     try {
       const stratPath = path.join(REPO_DIR, "STRATEGY.md");
       if (fs.existsSync(stratPath)) {
-        const content = fs.readFileSync(stratPath, "utf-8");
-        context += `\n📋 CONTEXTO DEL PRODUCT OWNER (ESTRATEGIA):\n${content.substring(0, 1500)}\n`;
+        context += `\n📋 CONTEXTO DEL PRODUCT OWNER (ESTRATEGIA):\n${fs.readFileSync(stratPath, "utf-8").substring(0, 1500)}\n`;
       }
     } catch {}
   }
-
-  // 3. Si es el Documentador, necesita ver la arquitectura
   if (taskAgent === "doc") {
     try {
       const archPath = path.join(REPO_DIR, "ARCHITECTURE.md");
@@ -278,17 +264,14 @@ async function gatherAgentContext(taskAgent: string): Promise<string> {
       }
     } catch {}
   }
-
   return context || "No hay contexto previo de otros agentes. Usa las mejores prácticas estándar.";
 }
 
-// ✅ EJECUTAR TAREA DE AGENTE
 async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; output: string; filesModified?: string[] }> {
   try {
     addAgentLog(task.agent, `Iniciando: ${task.title}`, "info");
     const model = process.env.DEEPSEEK_MODEL || "deepseek-coder-v2:16b";
     
-    // ✅ PROMPTS DE ÉLITE (10x Engineer level)
     const rolePrompts: Record<string, string> = {
       po: `Eres un Product Owner y Estratega de Producto de élite. No generes código. Genera documentos estratégicos (STRATEGY.md). Enfócate en: objetivos de negocio medibles, criterios de aceptación claros (Given-When-Then), análisis de riesgos y roadmap.`,
       arch: `Eres un Arquitecto de Software Principal (Staff Engineer). Tu trabajo es DISEÑAR. Genera ARCHITECTURE.md. Enfócate en: patrones de diseño específicos, estructura de carpetas exacta, decisiones técnicas (ADR), escalabilidad, seguridad y cómo reducir la deuda técnica. Sé muy específico con las tecnologías.`,
@@ -384,7 +367,6 @@ Primera línea OBLIGATORIA: 'ARCHIVO: nombre_del_archivo.ext'`;
   }
 }
 
-// ✅ COMMIT Y PUSH
 async function commitAndPush(task: SprintTask): Promise<{ success: boolean; commitHash?: string }> {
   try {
     addAgentLog(task.agent, `Preparando commit...`, "info");
@@ -430,7 +412,6 @@ async function commitAndPush(task: SprintTask): Promise<{ success: boolean; comm
   }
 }
 
-// ✅ INICIAR EJECUCIÓN
 let isExecuting = false;
 export async function startSprintExecution(vision?: any, projectContext?: string): Promise<{ success: boolean; message: string }> {
   if (isExecuting) return { success: false, message: "El sprint ya se está iniciando..." };
@@ -520,15 +501,15 @@ async function transitionToRetrospective(sprint: SprintState) {
   if (retrospectiveResult.success && retrospectiveResult.retrospective) {
     sprint.retrospective = retrospectiveResult.retrospective;
     sprint.status = "survey"; saveSprint(sprint);
-    log("SPRINT", "system", `✅ Retrospectiva generada. Creando encuestas en Trello...`);
-    addAgentLog("po", "📋 Creando encuestas en Trello...", "info");
+    log("SPRINT", "system", `✅ Retrospectiva generada. Creando tarjetas de revisión...`);
+    addAgentLog("po", "📋 Creando tarjetas de revisión...", "info");
     const surveyResult = await createSurveys();
     if (surveyResult.success) {
-      log("SPRINT", "system", `✅ Encuestas creadas en Trello. Esperando respuestas del humano...`);
-      addAgentLog("po", "✅ Encuestas creadas. Esperando respuestas.", "success");
+      log("SPRINT", "system", `✅ Tarjetas creadas. Esperando respuestas del humano...`);
+      addAgentLog("po", "✅ Tarjetas creadas. Esperando respuestas.", "success");
     } else {
-      log("SPRINT", "system", `⚠️ Error creando encuestas.`);
-      addAgentLog("po", "⚠️ Error creando encuestas.", "warn");
+      log("SPRINT", "system", `⚠️ Error creando tarjetas.`);
+      addAgentLog("po", "⚠️ Error creando tarjetas.", "warn");
     }
   } else {
     log("SPRINT", "system", `⚠️ Error generando retrospectiva.`);
@@ -536,31 +517,40 @@ async function transitionToRetrospective(sprint: SprintState) {
   }
 }
 
+// ✅ RETROSPECTIVA DE NIVEL TECH LEAD (Sin frases genéricas)
 export async function generateRetrospective(): Promise<{ success: boolean; retrospective?: SprintRetrospective }> {
   const sprint = loadSprint();
   if (!sprint) return { success: false };
   try {
-    addAgentLog("po", "📊 Generando retrospectiva...", "info");
+    addAgentLog("po", "📊 Generando retrospectiva técnica...", "info");
     const model = process.env.DEEPSEEK_MODEL || "deepseek-coder-v2:16b";
     const completedTasks = sprint.tasks.filter(t => t.status === "done");
     const blockedTasks = sprint.tasks.filter(t => t.status === "blocked");
     
-    const prompt = `Eres un Product Owner experto. Acabas de completar el Sprint #${sprint.sprintNumber}.
+    const prompt = `Eres un Tech Lead y Product Owner de élite. Acabas de completar el Sprint #${sprint.sprintNumber}.
 Tareas completadas: ${completedTasks.map(t => `- ${t.title} (${t.agent})`).join('\n') || 'Ninguna'}
 Tareas bloqueadas: ${blockedTasks.map(t => `- ${t.title}: ${t.output}`).join('\n') || 'Ninguna'}
-Genera una retrospectiva Scrum REALISTA en formato JSON:
+
+Genera una retrospectiva técnica y REALISTA en formato JSON. 
+REGLA CRÍTICA ABSOLUTA: PROHIBIDO usar frases genéricas de gestión como "mejorar comunicación", "estimaciones de tiempo", "claridad en roles". Debes ser EXTREMADAMENTE específico y técnico, basado en el código y la arquitectura. 
+Ejemplos CORRECTOS: 
+- "[DEV] Refactorizar el módulo de autenticación para aplicar patrón Repository"
+- "[QA] Añadir tests de integración para el endpoint de usuarios"
+- "[DOC] Actualizar el diagrama de arquitectura en README.md"
+
+Estructura JSON EXACTA:
 {
-  "whatWasAchieved": ["logro1", "logro2"],
-  "whatWentWell": ["punto1", "punto2"],
-  "whatWentWrong": ["punto1", "punto2"],
-  "whatNeedsDefinition": ["aspecto1", "aspecto2"],
-  "actionItems": ["acción1", "acción2"]
+  "whatWasAchieved": ["logro técnico concreto 1", "logro técnico concreto 2"],
+  "whatWentWell": ["punto técnico positivo 1", "punto técnico positivo 2"],
+  "whatWentWrong": ["problema de código o arquitectura 1", "problema de código o arquitectura 2"],
+  "whatNeedsDefinition": ["[ARCH/DEV] Especificación técnica concreta que falta", "[DEV/QA] Caso de uso no cubierto por tests"],
+  "actionItems": ["[DEV] Tarea técnica accionable 1", "[QA] Tarea de calidad accionable 2", "[DOC] Tarea de documentación accionable 3"]
 }
-Responde SOLO con el JSON.`;
+Responde SOLO con el JSON válido, sin texto adicional.`;
 
     const response = await fetch("http://127.0.0.1:11434/api/generate", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.4, num_predict: 1500 } })
+      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.3, num_predict: 1500 } })
     });
     if (!response.ok) throw new Error(`Ollama API error: ${response.status}`);
     const data = await response.json();
@@ -569,15 +559,15 @@ Responde SOLO con el JSON.`;
     const retrospective = JSON.parse(jsonMatch[0]);
     
     const result: SprintRetrospective = {
-      whatWasAchieved: retrospective.whatWasAchieved || ["Tareas completadas según lo planificado"],
-      whatWentWell: retrospective.whatWentWell || ["Ejecución fluida"],
-      whatWentWrong: retrospective.whatWentWrong || ["Se requiere mayor definición"],
+      whatWasAchieved: retrospective.whatWasAchieved || ["Tareas técnicas completadas según lo planificado"],
+      whatWentWell: retrospective.whatWentWell || ["Ejecución fluida del pipeline"],
+      whatWentWrong: retrospective.whatWentWrong || ["Se requiere mayor definición técnica en algunos módulos"],
       whatNeedsDefinition: retrospective.whatNeedsDefinition || ["Próximos pasos de la arquitectura"],
-      actionItems: retrospective.actionItems || ["Revisar código generado"],
+      actionItems: retrospective.actionItems || ["Revisar código generado y añadir tests"],
       generatedAt: new Date().toISOString(),
-      generatedBy: "Product Owner Agent"
+      generatedBy: "Tech Lead Agent"
     };
-    addAgentLog("po", "✅ Retrospectiva completa generada", "success");
+    addAgentLog("po", "✅ Retrospectiva técnica generada", "success");
     return { success: true, retrospective: result };
   } catch (error: any) {
     addAgentLog("po", `❌ Error: ${error.message}`, "error");
@@ -602,7 +592,7 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
     if (!reviewList) {
       const createListRes = await fetch("https://api.trello.com/1/lists", {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key, token, name: "⏳ Review Humano (Encuestas)", idBoard: boardId, pos: "bottom" })
+        body: JSON.stringify({ key, token, name: "⏳ Review Humano (Tareas)", idBoard: boardId, pos: "bottom" })
       });
       if (!createListRes.ok) throw new Error(`Error creando lista: ${createListRes.status}`);
       reviewList = await createListRes.json();
@@ -633,10 +623,10 @@ export async function createSurveys(): Promise<{ success: boolean; surveys?: Sur
     }
 
     sprint.surveys = surveys; sprint.status = "survey"; saveSprint(sprint);
-    addAgentLog("po", `✅ ${surveys.length} encuestas creadas en Trello`, "success");
+    addAgentLog("po", `✅ ${surveys.length} tarjetas creadas en Trello`, "success");
     return { success: true, surveys };
   } catch (error: any) {
-    addAgentLog("po", `❌ Error creando encuestas: ${error.message}`, "error");
+    addAgentLog("po", `❌ Error creando tarjetas: ${error.message}`, "error");
     return { success: false };
   }
 }
