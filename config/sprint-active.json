@@ -104,15 +104,24 @@
       "title": "Technical",
       "description": "Technical",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T14:57:17.561Z"
+      "status": "done",
+      "startedAt": "2026-10-24T14:57:17.561Z",
+      "completedAt": "2026-10-24T14:57:38.432Z",
+      "output": "Generado: MultiagentesIA.js",
+      "commits": [
+        "58cd70c92c9450e51fff4643c004830cff63fda5"
+      ],
+      "filesModified": [
+        "MultiagentesIA.js"
+      ]
     },
     {
       "id": "task-1792853523834-7",
       "title": "Scrum master",
       "description": "Scrum master",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T14:57:40.447Z"
     },
     {
       "id": "task-1792853523834-8",
