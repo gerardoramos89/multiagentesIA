@@ -56,15 +56,24 @@
       "title": "Arquitecto",
       "description": "Arquitecto",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T14:55:33.615Z"
+      "status": "done",
+      "startedAt": "2026-10-24T14:55:33.615Z",
+      "completedAt": "2026-10-24T14:55:54.457Z",
+      "output": "Generado: MultiagentesIA.js",
+      "commits": [
+        "fb24be48f62e5b98f63682d0c890b83ee594eeb4"
+      ],
+      "filesModified": [
+        "MultiagentesIA.js"
+      ]
     },
     {
       "id": "task-1792853523834-4",
       "title": "Developer",
       "description": "Developer",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T14:55:56.474Z"
     },
     {
       "id": "task-1792853523834-5",
@@ -129,6 +138,7 @@
   "filesChanged": [
     "STRATEGY.md",
     "roles_del_equipo.js",
-    "nombre_del_archivo.ext"
+    "nombre_del_archivo.ext",
+    "MultiagentesIA.js"
   ]
 }
