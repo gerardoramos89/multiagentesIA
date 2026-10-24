@@ -1,130 +1,94 @@
 {
-  "sprintNumber": 20,
-  "startedAt": "2026-10-24T07:01:14.243Z",
+  "sprintNumber": 21,
+  "startedAt": "2026-10-24T14:52:03.834Z",
   "approvedBy": "human",
   "tasks": [
     {
-      "id": "task-1792825274243-0",
+      "id": "task-1792853523834-0",
       "title": "📋 [PO] Análisis estratégico y planificación de MultiagentesIA",
       "description": "Como Product Owner, analiza el estado actual de MultiagentesIA. Revisa las lecciones aprendidas del sprint anterior (sin lecciones previas) y define los criterios de éxito para este sprint. Genera un documento STRATEGY.md con: 1) Objetivos del sprint, 2) Criterios de aceptación, 3) Riesgos identificados, 4) Métricas de éxito.",
       "agent": "po",
-      "status": "done",
-      "startedAt": "2026-10-24T07:01:17.268Z",
-      "completedAt": "2026-10-24T07:02:16.064Z",
-      "output": "Generado: STRATEGY.md",
-      "commits": [
-        "5dc01bd8bf9ae340be535dd08b478f73df4cbca2"
-      ],
-      "filesModified": [
-        "STRATEGY.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792825274243-1",
-      "title": "Claridad en los roles y responsabilidades del equipo",
-      "description": "[ARCH/DEV] Claridad en los roles y responsabilidades del equipo",
-      "agent": "arch",
-      "status": "done",
-      "startedAt": "2026-10-24T07:02:18.073Z",
-      "completedAt": "2026-10-24T07:03:27.427Z",
-      "output": "Generado: arquitectura_proyecto_f_brica_de_agentes.md",
-      "commits": [
-        "a56f8ee04576495ccced1ce961b27cd7d2805ee6"
-      ],
-      "filesModified": [
-        "arquitectura_proyecto_f_brica_de_agentes.md"
-      ]
-    },
-    {
-      "id": "task-1792825274243-2",
-      "title": "Métodos más efectivos para la estimación de tiempo y esfuerzo",
-      "description": "[ARCH/DEV] Métodos más efectivos para la estimación de tiempo y esfuerzo",
-      "agent": "arch",
-      "status": "done",
-      "startedAt": "2026-10-24T07:03:29.444Z",
-      "completedAt": "2026-10-24T07:04:42.386Z",
-      "output": "Generado: arquitectura_proyectofabricaagentes.md",
-      "commits": [
-        "e6c2b924910a581aca76441f4e03a44830440ef4"
-      ],
-      "filesModified": [
-        "arquitectura_proyectofabricaagentes.md"
-      ]
-    },
-    {
-      "id": "task-1792825274243-3",
-      "title": "Revisar y ajustar la documentación de roles y responsabilidades",
-      "description": "[DEV/QA] Revisar y ajustar la documentación de roles y responsabilidades",
+      "id": "task-1792853523834-1",
+      "title": "roles del equipo",
+      "description": "roles del equipo",
       "agent": "dev",
-      "status": "done",
-      "startedAt": "2026-10-24T07:04:44.409Z",
-      "completedAt": "2026-10-24T07:05:40.567Z",
-      "output": "Generado: nombre_del_archivo.ext",
-      "commits": [
-        "dc19f648c8780dfea119b2b97c315ee80d5ccc00"
-      ],
-      "filesModified": [
-        "nombre_del_archivo.ext"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792825274243-4",
-      "title": "Entrenar al equipo en técnicas más precisas para la estimación de tiempo",
-      "description": "[DEV/QA] Entrenar al equipo en técnicas más precisas para la estimación de tiempo",
+      "id": "task-1792853523834-2",
+      "title": "Product",
+      "description": "Product",
       "agent": "dev",
-      "status": "done",
-      "startedAt": "2026-10-24T07:05:42.579Z",
-      "completedAt": "2026-10-24T07:09:28.179Z",
-      "output": "Generado: nombre_del_archivo.ext",
-      "commits": [
-        "83db809fb6bfb0100936217584e0cdff2fcb1875"
-      ],
-      "filesModified": [
-        "nombre_del_archivo.ext"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792825274243-5",
+      "id": "task-1792853523834-3",
+      "title": "Arquitecto",
+      "description": "Arquitecto",
+      "agent": "dev",
+      "status": "pending"
+    },
+    {
+      "id": "task-1792853523834-4",
+      "title": "Developer",
+      "description": "Developer",
+      "agent": "dev",
+      "status": "pending"
+    },
+    {
+      "id": "task-1792853523834-5",
+      "title": "QA",
+      "description": "QA",
+      "agent": "dev",
+      "status": "pending"
+    },
+    {
+      "id": "task-1792853523834-6",
+      "title": "Technical",
+      "description": "Technical",
+      "agent": "dev",
+      "status": "pending"
+    },
+    {
+      "id": "task-1792853523834-7",
+      "title": "Scrum master",
+      "description": "Scrum master",
+      "agent": "dev",
+      "status": "pending"
+    },
+    {
+      "id": "task-1792853523834-8",
+      "title": "🏗️ [ARCH] Diseño de arquitectura para MultiagentesIA",
+      "description": "Como Arquitecto, revisa el código actual de MultiagentesIA y propón mejoras de arquitectura. Genera un archivo ARCHITECTURE.md con: 1) Diagrama de componentes (en texto), 2) Patrones de diseño recomendados, 3) Estructura de carpetas óptima, 4) Decisiones técnicas clave (ADR), 5) Deuda técnica identificada y cómo resolverla.",
+      "agent": "arch",
+      "status": "pending"
+    },
+    {
+      "id": "task-1792853523834-9",
       "title": "🧪 [QA] Revisión de calidad y pruebas",
       "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
       "agent": "qa",
-      "status": "done",
-      "startedAt": "2026-10-24T07:09:30.200Z",
-      "completedAt": "2026-10-24T07:10:52.614Z",
-      "output": "Generado: QA_REPORT.md",
-      "commits": [
-        "fa83d36c0a966284f634776257fc54738fc8465f"
-      ],
-      "filesModified": [
-        "QA_REPORT.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792825274243-6",
+      "id": "task-1792853523834-10",
       "title": "📝 [DOC] Documentación completa del sprint",
       "description": "Como Technical Writer, actualiza el README.md de MultiagentesIA para que sea la GUÍA VIVA del proyecto. Debe incluir: 1) Descripción actualizada, 2) Estado del desarrollo, 3) Historial de sprints, 4) Guía de instalación y uso, 5) Próximos pasos. Hazlo profesional y estructurado.",
       "agent": "doc",
-      "status": "done",
-      "startedAt": "2026-10-24T07:10:54.627Z",
-      "completedAt": "2026-10-24T07:12:16.879Z",
-      "output": "Generado: README.md",
-      "commits": [
-        "f77a1c7e7f7900cd5d67603b7be1ddf422a57f1e"
-      ],
-      "filesModified": [
-        "README.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792825274243-7",
+      "id": "task-1792853523834-11",
       "title": "📊 [PO] Retrospectiva y propuesta de mejora para el próximo sprint",
       "description": "Como Product Owner, al finalizar este sprint: 1) Analiza qué se logró vs lo planeado, 2) Identifica patrones de éxito y fracaso, 3) Propón 3-5 mejoras concretas para el próximo sprint, 4) Genera un archivo RETROSPECTIVE_SUGGESTIONS.md con recomendaciones estratégicas basadas en el rendimiento del equipo.",
       "agent": "po",
-      "status": "working",
-      "startedAt": "2026-10-24T07:12:18.898Z"
+      "status": "pending"
     }
   ],
-  "status": "executing",
+  "status": "planned",
   "lessonsLearned": [],
   "vision": {
     "name": "MultiagentesIA",
@@ -133,13 +97,5 @@
     "scope": "",
     "targetSkills": "Next ",
     "isCompleted": true
-  },
-  "filesChanged": [
-    "STRATEGY.md",
-    "arquitectura_proyecto_f_brica_de_agentes.md",
-    "arquitectura_proyectofabricaagentes.md",
-    "nombre_del_archivo.ext",
-    "QA_REPORT.md",
-    "README.md"
-  ]
+  }
 }
