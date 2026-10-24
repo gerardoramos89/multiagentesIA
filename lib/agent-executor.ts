@@ -243,43 +243,99 @@ async function prepareRepository(): Promise<{ success: boolean; message: string 
   }
 }
 
+// ✅ FUNCIÓN AUXILIAR: Recolectar contexto de otros agentes (INTELIGENCIA DE EQUIPO)
+async function gatherAgentContext(taskAgent: string): Promise<string> {
+  let context = "";
+  
+  // 1. Si es el Developer o QA, necesitan saber qué diseñó el Arquitecto
+  if (taskAgent === "dev" || taskAgent === "qa") {
+    try {
+      const archPath = path.join(REPO_DIR, "ARCHITECTURE.md");
+      if (fs.existsSync(archPath)) {
+        const content = fs.readFileSync(archPath, "utf-8");
+        context += `\n🏗️ CONTEXTO DEL ARQUITECTO (OBLIGATORIO SEGUIR):\n${content.substring(0, 2000)}\n`;
+      }
+    } catch {}
+  }
+  
+  // 2. Si es el Developer, necesita saber la estrategia del PO
+  if (taskAgent === "dev") {
+    try {
+      const stratPath = path.join(REPO_DIR, "STRATEGY.md");
+      if (fs.existsSync(stratPath)) {
+        const content = fs.readFileSync(stratPath, "utf-8");
+        context += `\n📋 CONTEXTO DEL PRODUCT OWNER (ESTRATEGIA):\n${content.substring(0, 1500)}\n`;
+      }
+    } catch {}
+  }
+
+  // 3. Si es el Documentador, necesita ver la arquitectura
+  if (taskAgent === "doc") {
+    try {
+      const archPath = path.join(REPO_DIR, "ARCHITECTURE.md");
+      if (fs.existsSync(archPath)) {
+        context += `\n🏗️ ARQUITECTURA PARA DOCUMENTAR:\n${fs.readFileSync(archPath, "utf-8").substring(0, 1000)}\n`;
+      }
+    } catch {}
+  }
+
+  return context || "No hay contexto previo de otros agentes. Usa las mejores prácticas estándar.";
+}
+
 // ✅ EJECUTAR TAREA DE AGENTE
 async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; output: string; filesModified?: string[] }> {
   try {
     addAgentLog(task.agent, `Iniciando: ${task.title}`, "info");
     const model = process.env.DEEPSEEK_MODEL || "deepseek-coder-v2:16b";
     
+    // ✅ PROMPTS DE ÉLITE (10x Engineer level)
     const rolePrompts: Record<string, string> = {
-      po: `Eres un Product Owner experto. Tu trabajo es ESTRATÉGICO. No generes código. Genera documentos de planificación. Enfócate en: objetivos claros, criterios de aceptación, riesgos y propuestas de mejora.`,
-      arch: `Eres un Arquitecto de Software senior. Tu trabajo es DISEÑAR y ESTRUCTURAR. Enfócate en: patrones de diseño, estructura de carpetas, decisiones técnicas (ADR), escalabilidad y reducción de deuda técnica.`,
-      dev: `Eres un Developer senior experto en código limpio. Tu trabajo es IMPLEMENTAR. Genera código funcional, modular y bien comentado. Enfócate en: principios SOLID, manejo de errores y código testeable.`,
-      qa: `Eres un QA Engineer experto. Tu trabajo es VALIDAR y MEJORAR. Genera reportes de calidad y tests funcionales. Enfócate en: encontrar bugs reales, cobertura de tests y recomendaciones accionables.`,
-      doc: `Eres un Technical Writer experto. Tu trabajo es DOCUMENTAR. Genera documentación clara y profesional. Enfócate en: README actualizado, guías de instalación y documentación que sea la FUENTE DE VERDAD.`
+      po: `Eres un Product Owner y Estratega de Producto de élite. No generes código. Genera documentos estratégicos (STRATEGY.md). Enfócate en: objetivos de negocio medibles, criterios de aceptación claros (Given-When-Then), análisis de riesgos y roadmap.`,
+      arch: `Eres un Arquitecto de Software Principal (Staff Engineer). Tu trabajo es DISEÑAR. Genera ARCHITECTURE.md. Enfócate en: patrones de diseño específicos, estructura de carpetas exacta, decisiones técnicas (ADR), escalabilidad, seguridad y cómo reducir la deuda técnica. Sé muy específico con las tecnologías.`,
+      dev: `Eres un Developer Senior (10x Engineer) experto en Clean Code. Tu trabajo es IMPLEMENTAR. 
+REGLAS OBLIGATORIAS:
+1. Usa principios SOLID y patrones de diseño mencionados por el Arquitecto.
+2. Maneja TODOS los errores posibles (try/catch, validaciones de input).
+3. El código debe ser modular, testeable y estar profusamente comentado.
+4. Si el contexto del Arquitecto menciona tecnologías específicas, ÚSALAS estrictamente.
+5. Responde SOLO con el contenido del archivo. Primera línea: 'ARCHIVO: ruta/nombre.ext'`,
+      qa: `Eres un QA Lead Engineer. Tu trabajo es VALIDAR y ROMPER. Genera QA_REPORT.md y archivos de test. Enfócate en: encontrar edge cases, validar que el código cumple con la arquitectura del Arquitecto, y crear tests unitarios funcionales que cubran los criterios del PO.`,
+      doc: `Eres un Technical Writer Senior. Tu trabajo es DOCUMENTAR. Genera un README.md que sea la FUENTE DE VERDAD. Enfócate en: descripción clara, guía de instalación paso a paso, ejemplos de uso, y cómo la arquitectura diseñada resuelve el problema.`
     };
 
     const rolePrompt = rolePrompts[task.agent] || rolePrompts.dev;
-    const prompt = `${rolePrompt}\n\nCONTEXTO DEL PROYECTO:\n- Nombre: ${task.title}\n- Descripción: ${task.description}\n\nINSTRUCCIÓN: Genera UN SOLO archivo importante. Responde SOLO con el contenido. Primera línea: 'ARCHIVO: nombre.ext' y luego el código.`;
+    const crossAgentContext = await gatherAgentContext(task.agent);
 
-    // ✅ GUARDAR TIMESTAMP DE INICIO
+    const prompt = `${rolePrompt}
+
+📂 CONTEXTO GLOBAL DEL PROYECTO:
+- Nombre: ${task.title.includes('MultiagentesIA') ? 'MultiagentesIA' : 'Proyecto de Fábrica de Agentes'}
+- Objetivo General: Desarrollar un sistema autónomo de gestión de sprints con IA.
+- Stack/Tecnologías: Next.js, React, Tailwind, Node.js, Ollama, Trello API, GitHub API.
+
+📋 TU TAREA ESPECÍFICA:
+- Título: ${task.title}
+- Descripción Detallada: ${task.description}
+
+🧠 CONTEXTO DE OTROS AGENTES (Úsalo como guía absoluta para tu trabajo):
+${crossAgentContext}
+
+INSTRUCCIÓN FINAL: Genera el código o documento completo, funcional y listo para producción. No pongas explicaciones conversacionales, solo el contenido del archivo. 
+Primera línea OBLIGATORIA: 'ARCHIVO: nombre_del_archivo.ext'`;
+
     const startedAt = new Date().toISOString();
     const startTime = Date.now();
 
     saveAgentWorkLog({ 
-      agent: task.agent, 
-      taskId: task.id, 
-      taskTitle: task.title, 
-      prompt: prompt.substring(0, 500) + "...", 
-      response: "", 
-      status: "working", 
-      startedAt 
+      agent: task.agent, taskId: task.id, taskTitle: task.title, 
+      prompt: prompt.substring(0, 800) + "...", response: "", status: "working", startedAt 
     });
 
-    addAgentLog(task.agent, `Generando con ${model}...`, "info");
+    addAgentLog(task.agent, `Generando con ${model} (con contexto cruzado)...`, "info");
     
     const response = await fetch("http://127.0.0.1:11434/api/generate", {
-      method: "POST", 
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.3, num_predict: 2500 } })
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.2, num_predict: 3000 } })
     });
     
     if (!response.ok) throw new Error(`Ollama API error: ${response.status}`);
@@ -304,41 +360,25 @@ async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; o
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(filePath, content, "utf-8");
     
-    // ✅ CALCULAR DURACIÓN REAL
     const completedAt = new Date().toISOString();
     const duration = Math.round((Date.now() - startTime) / 1000);
     
     saveAgentWorkLog({ 
-      agent: task.agent, 
-      taskId: task.id, 
-      taskTitle: task.title, 
-      prompt: prompt.substring(0, 500) + "...", 
-      response: content.substring(0, 800) + (content.length > 800 ? "..." : ""), 
-      status: "done", 
-      startedAt,
-      completedAt,
-      fileName,
-      duration // ✅ AHORA SÍ TIENE LA DURACIÓN REAL
+      agent: task.agent, taskId: task.id, taskTitle: task.title, 
+      prompt: prompt.substring(0, 800) + "...", 
+      response: content.substring(0, 1000) + (content.length > 1000 ? "..." : ""), 
+      status: "done", startedAt, completedAt, fileName, duration 
     });
     
     addAgentLog(task.agent, `✅ Archivo creado: ${fileName} en ${duration}s`, "success");
     return { success: true, output: `Generado: ${fileName}`, filesModified: [fileName] };
   } catch (error: any) {
     const completedAt = new Date().toISOString();
-    const duration = Math.round((Date.now() - startTime) / 1000);
-    
     saveAgentWorkLog({ 
-      agent: task.agent, 
-      taskId: task.id, 
-      taskTitle: task.title, 
-      prompt: "", 
-      response: `Error: ${error.message}`, 
-      status: "error", 
-      startedAt: new Date().toISOString(),
-      completedAt,
-      duration
+      agent: task.agent, taskId: task.id, taskTitle: task.title, prompt: "", 
+      response: `Error: ${error.message}`, status: "error", 
+      startedAt: new Date().toISOString(), completedAt 
     });
-    
     addAgentLog(task.agent, `❌ Error: ${error.message}`, "error");
     return { success: false, output: error.message };
   }

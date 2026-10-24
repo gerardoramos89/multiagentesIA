@@ -15,7 +15,7 @@ import SprintRetrospectiveModal from "./SprintRetrospectiveModal";
 import TrelloBoard from "./TrelloBoard";
 import ModelsLogPanel from "./ModelsLogPanel";
 import AutoCloseModal from "./AutoCloseModal";
-import ReadmePreview from "./ReadmePreview"; // ✅ AÑADIDO PARA PREVIEW
+import ReadmePreview from "./ReadmePreview";
 
 const GENERIC_SKILLS: Record<string, string[]> = {
   po: ["User Stories", "Priorización", "Criterios de Aceptación"],
@@ -194,10 +194,9 @@ export default function DashboardScreen() {
   const [agentWorkLogs, setAgentWorkLogs] = useState<any[]>([]);
   const [customTasks, setCustomTasks] = useState("");
   
-  // ✅ SISTEMA DE PESTAÑAS Y MODALES
   const [activeTab, setActiveTab] = useState<"agents" | "models" | "logs">("agents");
-  const [showAutoCloseModal, setShowAutoCloseModal] = useState(false); // ✅ CORREGIDO: DENTRO DEL COMPONENTE
-  const [showReadmePreview, setShowReadmePreview] = useState(false); // ✅ AÑADIDO PARA PREVIEW
+  const [showAutoCloseModal, setShowAutoCloseModal] = useState(false);
+  const [showReadmePreview, setShowReadmePreview] = useState(false);
 
   const configuredCount = modules.filter(m => m.status === "on").length;
   const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady;
@@ -322,7 +321,6 @@ export default function DashboardScreen() {
               setLastSprintNumber(histData.sprintNumber);
               setHasCompletedSprints(true);
             }
-            // ✅ CAMBIADO: Mostrar modal bonito en lugar de alert
             setShowAutoCloseModal(true);
           }
         }
@@ -439,7 +437,6 @@ export default function DashboardScreen() {
   return (
     <div className="h-screen w-full bg-black flex overflow-hidden">
       <div className="w-full md:w-[70%] h-full relative">
-        {/* ✅ BOTÓN FLOTANTE PARA PREVIEW DE README / INDEX.HTML */}
         <button 
           onClick={() => setShowReadmePreview(!showReadmePreview)}
           className="absolute top-4 right-4 p-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-full shadow-lg hover:from-cyan-500 hover:to-blue-500 transition-all z-40"
@@ -481,7 +478,6 @@ export default function DashboardScreen() {
           <button onClick={loadConfigFromServer} className="text-[10px] flex items-center gap-1 text-cyan-400 hover:text-cyan-300 underline"><RefreshCw size={10} /> Sync</button>
         </div>
 
-        {/* ✅ SISTEMA DE PESTAÑAS */}
         <div className="border-b border-gray-800 bg-gray-900/50 shrink-0">
           <div className="flex">
             <button onClick={() => setActiveTab("agents")} className={`flex-1 px-4 py-2 text-[10px] font-bold transition-all ${activeTab === "agents" ? "text-cyan-400 border-b-2 border-cyan-400 bg-cyan-950/20" : "text-gray-500 hover:text-gray-300"}`}>
@@ -496,7 +492,6 @@ export default function DashboardScreen() {
           </div>
         </div>
 
-        {/* ✅ CONTENIDO DE PESTAÑAS */}
         <div className="flex-1 overflow-hidden">
           {activeTab === "agents" && (
             <div className="h-full overflow-y-auto p-3 custom-scrollbar">
@@ -611,7 +606,17 @@ export default function DashboardScreen() {
                 disabled={!projectConfig || !diagnosticsReady || !projectVision.isCompleted}
                 onClick={async () => {
                   try {
-                    const tasksArray = customTasks.split('\n').filter(t => t.trim() !== "");
+                    // ✅ FILTRADO INTELIGENTE: Elimina líneas vacías y títulos de sección
+                    const tasksArray = customTasks.split('\n')
+                      .map(t => t.trim())
+                      .filter(t => 
+                        t.length > 0 && 
+                        !t.includes('Tareas sugeridas') && 
+                        !t.includes('Plan de acción') &&
+                        !t.startsWith('📌') &&
+                        !t.startsWith('🎯')
+                      );
+
                     const res = await fetch("/api/sprint/plan", { 
                       method: "POST", 
                       headers: { "Content-Type": "application/json" }, 
@@ -762,8 +767,6 @@ export default function DashboardScreen() {
 
       <LaunchModal isOpen={showLaunchModal} onClose={() => setShowLaunchModal(false)} sprintNumber={sprintState?.sprint?.sprintNumber || 1} />
       <SprintRetrospectiveModal isOpen={showRetrospectiveModal} onClose={() => setShowRetrospectiveModal(false)} retrospective={lastRetrospective} sprintNumber={lastSprintNumber || 1} />
-      
-      {/* ✅ MODALES AÑADIDOS AL FINAL */}
       <AutoCloseModal isOpen={showAutoCloseModal} onClose={() => setShowAutoCloseModal(false)} sprintNumber={lastSprintNumber || 1} />
       <ReadmePreview isVisible={showReadmePreview} onClose={() => setShowReadmePreview(false)} />
     </div>
