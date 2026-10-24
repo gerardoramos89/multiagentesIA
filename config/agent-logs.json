@@ -1,36 +1,6 @@
 [
   {
     "agent": "qa",
-    "message": "Iniciando: 🧪 [QA] Configurar sistema de tests y primer caso de prueba",
-    "timestamp": "2026-10-24T01:37:04.832Z",
-    "level": "info"
-  },
-  {
-    "agent": "qa",
-    "message": "Generando código con deepseek-coder-v2:16b...",
-    "timestamp": "2026-10-24T01:37:04.839Z",
-    "level": "info"
-  },
-  {
-    "agent": "qa",
-    "message": "✅ Archivo creado: jest-config.js",
-    "timestamp": "2026-10-24T01:37:32.812Z",
-    "level": "success"
-  },
-  {
-    "agent": "qa",
-    "message": "Preparando commit...",
-    "timestamp": "2026-10-24T01:37:32.820Z",
-    "level": "info"
-  },
-  {
-    "agent": "qa",
-    "message": "✅ Push exitoso: ab5ef14",
-    "timestamp": "2026-10-24T01:37:36.357Z",
-    "level": "success"
-  },
-  {
-    "agent": "qa",
     "message": "✅ Completado en 31.5s",
     "timestamp": "2026-10-24T01:37:36.365Z",
     "level": "success"
@@ -88,5 +58,35 @@
     "message": "✅ Sprint archivado en historial",
     "timestamp": "2026-10-24T01:37:57.233Z",
     "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "🎯 Trabajando en: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
+    "timestamp": "2026-10-24T01:40:31.068Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Iniciando: 🔍 [ARCH] Auditoría de código y propuesta de refactorización",
+    "timestamp": "2026-10-24T01:40:31.075Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Generando código con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-24T01:40:31.080Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Archivo creado: multiagentesIA.py",
+    "timestamp": "2026-10-24T01:41:19.550Z",
+    "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-24T01:41:19.558Z",
+    "level": "info"
   }
 ]
