@@ -56,15 +56,24 @@
       "title": "Establecer las rutas de la API principal",
       "description": "[ARCH/DEV] Establecer las rutas de la API principal",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T04:25:21.463Z"
+      "status": "done",
+      "startedAt": "2026-10-24T04:25:21.463Z",
+      "completedAt": "2026-10-24T04:26:16.533Z",
+      "output": "Generado: api_arquitectura.md",
+      "commits": [
+        "580d00dad710fcc8811439fa359b0576753314df"
+      ],
+      "filesModified": [
+        "api_arquitectura.md"
+      ]
     },
     {
       "id": "task-1792815742561-4",
       "title": "🎯 Plan de acción sugerido:",
       "description": "🎯 Plan de acción sugerido:",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T04:26:18.552Z"
     },
     {
       "id": "task-1792815742561-5",
@@ -122,6 +131,7 @@
   "filesChanged": [
     "STRATEGY.md",
     "tarea_sugerida_manager.py",
-    "arquitectura_bd.md"
+    "arquitectura_bd.md",
+    "api_arquitectura.md"
   ]
 }
