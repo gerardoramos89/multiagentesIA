@@ -13,6 +13,7 @@ import { useAnalysisJob } from "@/lib/use-analysis-job";
 import LaunchModal from "./LaunchModal";
 import SprintRetrospectiveModal from "./SprintRetrospectiveModal";
 import TrelloBoard from "./TrelloBoard";
+import ModelsLogPanel from "./ModelsLogPanel"; // ✅ IMPORTADO
 
 const GENERIC_SKILLS: Record<string, string[]> = {
   po: ["User Stories", "Priorización", "Criterios de Aceptación"],
@@ -142,7 +143,6 @@ export default function DashboardScreen() {
   const [analysisJobId, setAnalysisJobId] = useState<string | null>(null);
   const analysis = useAnalysisJob(analysisJobId);
   
-  // ✅ 1. TODOS LOS ESTADOS DECLARADOS UNA SOLA VEZ AL PRINCIPIO
   const [realCommitsCount, setRealCommitsCount] = useState(0);
   const [sprintsCompleted, setSprintsCompleted] = useState(0);
   const [projectStatus, setProjectStatus] = useState<"config" | "ready" | "building" | "testing" | "deployed">("config");
@@ -189,15 +189,16 @@ export default function DashboardScreen() {
   const [lastRetrospective, setLastRetrospective] = useState<any>(null);
   const [lastSprintNumber, setLastSprintNumber] = useState<number>(0);
   const [agentLogs, setAgentLogs] = useState<Record<string, any[]>>({});
-  // ✅ NUEVO: Estado para tareas personalizadas del sprint
+  const [agentWorkLogs, setAgentWorkLogs] = useState<any[]>([]); // ✅ AÑADIDO
   const [customTasks, setCustomTasks] = useState("");
+  
+  // ✅ SISTEMA DE PESTAÑAS
+  const [activeTab, setActiveTab] = useState<"agents" | "models" | "logs">("agents");
 
-  // ✅ 2. VARIABLES DERIVADAS (UNA SOLA VEZ)
   const configuredCount = modules.filter(m => m.status === "on").length;
   const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady;
   const [openPanel, setOpenPanel] = useState<string>("");
 
-  // ✅ 3. USEEFFECTS LIMPIOS Y SIN DUPLICADOS
   useEffect(() => {
     const savedVision = localStorage.getItem('projectVision');
     if (savedVision) { try { setProjectVision(JSON.parse(savedVision)); } catch {} }
@@ -218,21 +219,17 @@ export default function DashboardScreen() {
     loadHistory();
   }, []);
 
-    // ✅ PRE-LLENAR TAREAS PERSONALIZADAS CON SUGERENCIAS DE LA RETROSPECTIVA
   useEffect(() => {
     if (lastRetrospective && (!sprintState || sprintState.sprint?.status === "completed") && customTasks.trim() === "") {
       const suggestions: string[] = [];
-      
       if (lastRetrospective.whatNeedsDefinition?.length > 0) {
         suggestions.push("📌 Tareas sugeridas (Qué falta por definir):");
         lastRetrospective.whatNeedsDefinition.forEach((item: string) => suggestions.push(`[ARCH/DEV] ${item}`));
       }
-      
       if (lastRetrospective.actionItems?.length > 0) {
         suggestions.push("\n🎯 Plan de acción sugerido:");
         lastRetrospective.actionItems.forEach((item: string) => suggestions.push(`[DEV/QA] ${item}`));
       }
-      
       if (suggestions.length > 0) {
         setCustomTasks(suggestions.join("\n"));
       }
@@ -288,12 +285,13 @@ export default function DashboardScreen() {
           setSprintState(null);
         }
 
-        // ✅ OBTENER LOGS DE AGENTES EN TIEMPO REAL
         const logsRes = await fetch("/api/agent-logs");
         const logsData = await logsRes.json();
-        if (logsData.success) {
-          setAgentLogs(logsData.logs);
-        }
+        if (logsData.success) setAgentLogs(logsData.logs);
+
+        const workLogsRes = await fetch("/api/agent-work-logs");
+        const workLogsData = await workLogsRes.json();
+        if (workLogsData.success) setAgentWorkLogs(workLogsData.logs);
 
       } catch {}
     };
@@ -301,6 +299,7 @@ export default function DashboardScreen() {
     const interval = setInterval(fetchSprintState, 2000);
     return () => clearInterval(interval);
   }, []);
+
   useEffect(() => {
     if (!autoCheckSurveys || sprintState?.sprint?.status !== "survey") return;
     const checkSurveys = async () => {
@@ -361,7 +360,6 @@ export default function DashboardScreen() {
 
   useEffect(() => { loadConfigFromServer(); }, []);
 
-  // ✅ 4. FUNCIONES AUXILIARES
   const loadConfigFromServer = async () => {
     try {
       const res = await fetch('/api/config/status');
@@ -433,7 +431,6 @@ export default function DashboardScreen() {
     };
   }, [githubConfig, realCommitsCount, projectStatus, progress, sprintPlanned, sprintExecuting, sprintState, hasCompletedSprints, projectConfig]);
 
-  // ✅ 5. RENDERIZADO (JSX)
   return (
     <div className="h-screen w-full bg-black flex overflow-hidden">
       <div className="w-full md:w-[70%] h-full relative">
@@ -441,12 +438,14 @@ export default function DashboardScreen() {
           onComplete={() => {}} showUI={false} 
           configuredModules={modules.filter(m => m.status === "on").map(m => m.id)}
           projectStatus={sprintExecuting ? "building" : projectStatus} 
-          commitsCount={realCommitsCount} // ✅ FORZAR EL CONTADOR REAL EN EL 3D
+          commitsCount={realCommitsCount}
           moduleStates={moduleStates} 
           lastWorkTimes={lastWorkTimes}
           taskCounts={{ po: 0, arch: 0, dev: 0, qa: 0, doc: 0 }} 
           telemetry={telemetry}
           sprintState={sprintState}
+          agentLogs={agentLogs}
+          agentWorkLogs={agentWorkLogs} // ✅ PASADO AL 3D
         />
         <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md border border-cyan-500/30 rounded-xl p-3">
           <div className="flex items-center justify-between mb-2">
@@ -468,70 +467,96 @@ export default function DashboardScreen() {
           <button onClick={loadConfigFromServer} className="text-[10px] flex items-center gap-1 text-cyan-400 hover:text-cyan-300 underline"><RefreshCw size={10} /> Sync</button>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-3 custom-scrollbar">
-          <AccordionItem title="Módulos" icon={Settings} id="modules" isOpen={openPanel === "modules"} onToggle={() => setOpenPanel(openPanel === "modules" ? "" : "modules")} badge={`${configuredCount}/${modules.length}`}>
-            <div className="space-y-2">
-              {modules.map((module) => {
-                const Icon = module.icon;
-                return (
-                  <div key={module.id} className={`p-2 rounded border flex items-center justify-between transition-all ${module.status === "on" ? "bg-emerald-950/20 border-emerald-500/30" : "bg-red-950/40 border-red-500/50"}`}>
-                    <div className="flex items-center gap-2">
-                      <div className={`p-1.5 rounded ${module.status === "on" ? "bg-emerald-500/20" : "bg-red-500/20"}`}><Icon size={14} className={module.status === "on" ? "text-emerald-400" : "text-red-400"} /></div>
-                      <div><span className="text-[11px] font-medium text-white block">{module.name}</span></div>
+        {/* ✅ SISTEMA DE PESTAÑAS */}
+        <div className="border-b border-gray-800 bg-gray-900/50 shrink-0">
+          <div className="flex">
+            <button onClick={() => setActiveTab("agents")} className={`flex-1 px-4 py-2 text-[10px] font-bold transition-all ${activeTab === "agents" ? "text-cyan-400 border-b-2 border-cyan-400 bg-cyan-950/20" : "text-gray-500 hover:text-gray-300"}`}>
+              <Bot size={14} className="inline mr-1" /> Agentes
+            </button>
+            <button onClick={() => setActiveTab("models")} className={`flex-1 px-4 py-2 text-[10px] font-bold transition-all ${activeTab === "models" ? "text-cyan-400 border-b-2 border-cyan-400 bg-cyan-950/20" : "text-gray-500 hover:text-gray-300"}`}>
+              <FileText size={14} className="inline mr-1" /> Models
+            </button>
+            <button onClick={() => setActiveTab("logs")} className={`flex-1 px-4 py-2 text-[10px] font-bold transition-all ${activeTab === "logs" ? "text-cyan-400 border-b-2 border-cyan-400 bg-cyan-950/20" : "text-gray-500 hover:text-gray-300"}`}>
+              <ScrollText size={14} className="inline mr-1" /> Logs
+            </button>
+          </div>
+        </div>
+
+        {/* ✅ CONTENIDO DE PESTAÑAS */}
+        <div className="flex-1 overflow-hidden">
+          {activeTab === "agents" && (
+            <div className="h-full overflow-y-auto p-3 custom-scrollbar">
+              <AccordionItem title="Módulos" icon={Settings} id="modules" isOpen={openPanel === "modules"} onToggle={() => setOpenPanel(openPanel === "modules" ? "" : "modules")} badge={`${configuredCount}/${modules.length}`}>
+                <div className="space-y-2">
+                  {modules.map((module) => {
+                    const Icon = module.icon;
+                    return (
+                      <div key={module.id} className={`p-2 rounded border flex items-center justify-between transition-all ${module.status === "on" ? "bg-emerald-950/20 border-emerald-500/30" : "bg-red-950/40 border-red-500/50"}`}>
+                        <div className="flex items-center gap-2">
+                          <div className={`p-1.5 rounded ${module.status === "on" ? "bg-emerald-500/20" : "bg-red-500/20"}`}><Icon size={14} className={module.status === "on" ? "text-emerald-400" : "text-red-400"} /></div>
+                          <div><span className="text-[11px] font-medium text-white block">{module.name}</span></div>
+                        </div>
+                        {module.status === "off" && <button onClick={() => setActiveConfigModal(module.id)} className="px-2 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-[9px] font-bold rounded transition-all">Config</button>}
+                      </div>
+                    );
+                  })}
+                </div>
+              </AccordionItem>
+
+              <AccordionItem title="Test Pre-Vuelo" icon={Activity} id="test" isOpen={openPanel === "test"} onToggle={() => setOpenPanel(openPanel === "test" ? "" : "test")} badge={systemTest.length ? `${systemTest.filter(r => r.status === "ok").length}/${systemTest.length} OK` : "Sin ejecutar"}>
+                <div className="space-y-2">
+                  {systemTest.length === 0 && <div className="p-2 border border-dashed border-gray-700 rounded text-[9px] text-gray-500">Ejecuta el diagnóstico.</div>}
+                  {systemTest.map((row) => (
+                    <div key={row.id} className={`p-2 rounded border ${row.status === "error" ? "border-red-500/60 bg-red-950/30" : "border-emerald-500/40 bg-emerald-950/20"}`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-[10px] text-white font-medium">{row.label}</span>
+                        <span className="text-[8px] text-gray-500 font-mono">{row.durationMs}ms</span>
+                      </div>
+                      <p className={`text-[9px] break-words ${row.status === "error" ? "text-red-400" : "text-emerald-300"}`}>{row.detail}</p>
                     </div>
-                    {module.status === "off" && <button onClick={() => setActiveConfigModal(module.id)} className="px-2 py-1 bg-cyan-600 hover:bg-cyan-500 text-white text-[9px] font-bold rounded transition-all">Config</button>}
-                  </div>
-                );
-              })}
-            </div>
-          </AccordionItem>
+                  ))}
+                  <button onClick={runPreFlightCheck} disabled={isRunningTest} className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-[10px] font-bold rounded hover:from-cyan-500 hover:to-blue-500 transition-all flex items-center justify-center gap-1 disabled:opacity-50">
+                    {isRunningTest ? <><RefreshCw size={12} className="animate-spin" /> Ejecutando...</> : <><Activity size={12} /> Ejecutar Diagnóstico</>}
+                  </button>
+                </div>
+              </AccordionItem>
 
-          <AccordionItem title="Test Pre-Vuelo" icon={Activity} id="test" isOpen={openPanel === "test"} onToggle={() => setOpenPanel(openPanel === "test" ? "" : "test")} badge={systemTest.length ? `${systemTest.filter(r => r.status === "ok").length}/${systemTest.length} OK` : "Sin ejecutar"}>
-            <div className="space-y-2">
-              {systemTest.length === 0 && <div className="p-2 border border-dashed border-gray-700 rounded text-[9px] text-gray-500">Ejecuta el diagnóstico.</div>}
-              {systemTest.map((row) => (
-                <div key={row.id} className={`p-2 rounded border ${row.status === "error" ? "border-red-500/60 bg-red-950/30" : "border-emerald-500/40 bg-emerald-950/20"}`}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] text-white font-medium">{row.label}</span>
-                    <span className="text-[8px] text-gray-500 font-mono">{row.durationMs}ms</span>
-                  </div>
-                  <p className={`text-[9px] break-words ${row.status === "error" ? "text-red-400" : "text-emerald-300"}`}>{row.detail}</p>
+              <AccordionItem title="Configuración del Proyecto" icon={FolderGit2} id="project" isOpen={openPanel === "project"} onToggle={() => setOpenPanel(openPanel === "project" ? "" : "project")} badge={!diagnosticsReady ? "🔒 Bloqueado" : projectConfig ? "Analizado" : "Pendiente"}>
+                <div className="space-y-3">
+                  {!diagnosticsReady ? (
+                    <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded">
+                      <p className="text-[9px] text-amber-300/80">Debes aprobar el <strong>Test Pre-Vuelo</strong>.</p>
+                    </div>
+                  ) : !projectConfig ? (
+                    <button onClick={analyzeProject} disabled={!githubConfig.token} className="w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold rounded transition-all">
+                      <GitBranch size={12} className="inline mr-1"/> Analizar Proyecto
+                    </button>
+                  ) : (
+                    <div className="p-2 bg-emerald-950/20 border border-emerald-500/30 rounded">
+                      <div className="text-[10px] text-emerald-400 font-bold mb-1">✓ Proyecto Detectado</div>
+                      <div className="text-[9px] text-gray-300">📦 {projectConfig.owner}/{projectConfig.repo} · 🔢 {realCommitsCount} commits totales</div>
+                    </div>
+                  )}
                 </div>
-              ))}
-              <button onClick={runPreFlightCheck} disabled={isRunningTest} className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-[10px] font-bold rounded hover:from-cyan-500 hover:to-blue-500 transition-all flex items-center justify-center gap-1 disabled:opacity-50">
-                {isRunningTest ? <><RefreshCw size={12} className="animate-spin" /> Ejecutando...</> : <><Activity size={12} /> Ejecutar Diagnóstico</>}
-              </button>
-            </div>
-          </AccordionItem>
+              </AccordionItem>
 
-          <AccordionItem title="Configuración del Proyecto" icon={FolderGit2} id="project" isOpen={openPanel === "project"} onToggle={() => setOpenPanel(openPanel === "project" ? "" : "project")} badge={!diagnosticsReady ? "🔒 Bloqueado" : projectConfig ? "Analizado" : "Pendiente"}>
-            <div className="space-y-3">
-              {!diagnosticsReady ? (
-                <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded">
-                  <p className="text-[9px] text-amber-300/80">Debes aprobar el <strong>Test Pre-Vuelo</strong>.</p>
-                </div>
-              ) : !projectConfig ? (
-                <button onClick={analyzeProject} disabled={!githubConfig.token} className="w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold rounded transition-all">
-                  <GitBranch size={12} className="inline mr-1"/> Analizar Proyecto
-                </button>
-              ) : (
-                <div className="p-2 bg-emerald-950/20 border border-emerald-500/30 rounded">
-                  <div className="text-[10px] text-emerald-400 font-bold mb-1">✓ Proyecto Detectado</div>
-                  <div className="text-[9px] text-gray-300">📦 {projectConfig.owner}/{projectConfig.repo} · 🔢 {realCommitsCount} commits totales</div>
-                </div>
+              {modules.find(m => m.id === "trello")?.status === "on" && trelloConfig.boardId && (
+                <AccordionItem title="Tablero Trello" icon={LayoutGrid} id="trello" isOpen={openPanel === "trello"} onToggle={() => setOpenPanel(openPanel === "trello" ? "" : "trello")} badge="En vivo">
+                  <TrelloBoard apiKey={trelloConfig.apiKey} token={trelloConfig.token} boardId={trelloConfig.boardId} />
+                </AccordionItem>
               )}
             </div>
-          </AccordionItem>
-
-          {modules.find(m => m.id === "trello")?.status === "on" && trelloConfig.boardId && (
-            <AccordionItem title="Tablero Trello" icon={LayoutGrid} id="trello" isOpen={openPanel === "trello"} onToggle={() => setOpenPanel(openPanel === "trello" ? "" : "trello")} badge="En vivo">
-              <TrelloBoard apiKey={trelloConfig.apiKey} token={trelloConfig.token} boardId={trelloConfig.boardId} />
-            </AccordionItem>
           )}
 
-          <AccordionItem title="Logs del Sistema" icon={ScrollText} id="logs" isOpen={openPanel === "logs"} onToggle={() => setOpenPanel(openPanel === "logs" ? "" : "logs")} badge="En vivo">
-            <LiveLogs />
-          </AccordionItem>
+          {activeTab === "models" && (
+            <ModelsLogPanel agentWorkLogs={agentWorkLogs} />
+          )}
+
+          {activeTab === "logs" && (
+            <div className="h-full overflow-y-auto p-3 custom-scrollbar">
+              <LiveLogs />
+            </div>
+          )}
         </div>
 
         <div className="p-4 border-t border-gray-800 bg-gray-900/50 shrink-0 space-y-3">
@@ -541,7 +566,6 @@ export default function DashboardScreen() {
 
           {!sprintState || sprintState?.sprint?.status === "completed" ? (
             <>
-              {/* ✅ CAMPO PARA TAREAS PERSONALIZADAS DEL SPRINT */}
               <div className="mb-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg">
                 <label className="text-[9px] text-gray-400 mb-1 block font-bold">
                   📋 Tareas del Sprint (Editables). La IA sugirió estas basadas en la retrospectiva:
@@ -566,7 +590,7 @@ export default function DashboardScreen() {
                         agents: agentsConfig.filter(a => a.enabled), 
                         brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief),
                         vision: projectVision,
-                        customTasks: tasksArray // ✅ Enviar tareas personalizadas al backend
+                        customTasks: tasksArray
                       }) 
                     });
                     const data = await res.json();
@@ -574,7 +598,7 @@ export default function DashboardScreen() {
                       alert(`✅ Sprint #${data.sprintNumber || 1} planificado con ${data.tasksCount} tareas.`); 
                       setSprintPlanned(true); 
                       setSprintState(null);
-                      setCustomTasks(""); // Limpiar después de planificar
+                      setCustomTasks("");
                     } else { 
                       alert(`❌ Error: ${data.message}`); 
                     }

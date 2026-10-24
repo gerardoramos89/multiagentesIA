@@ -1,5 +1,5 @@
 {
-  "totalCommits": 78,
+  "totalCommits": 79,
   "filesEverChanged": [
     "multiagentesIA.py",
     "DOCUMENTACION.md",
@@ -28,8 +28,11 @@
     "README_MultiagentesIA.md",
     "RETROSPECTIVE_SUGGESTIONS.md",
     "MultiAgentManager.py",
-    "arquitectura_multiagentesia.md"
+    "arquitectura_multiagentesia.md",
+    "tareas_sugeridas.py",
+    "definir_arquitectura_bd.py",
+    "MVP_functional.py"
   ],
-  "sprintsCompleted": 14,
-  "lastCommitHash": "700188662d0f287e793be3ac5ad9f05696b4d7eb"
+  "sprintsCompleted": 15,
+  "lastCommitHash": "544d497ccbd78456ac3b649239484f957f7a76b8"
 }

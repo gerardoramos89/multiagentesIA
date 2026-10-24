@@ -10,6 +10,7 @@ import * as THREE from "three";
 import { useRef, useMemo, useState } from "react";
 import type { FlightTelemetry } from "./AgentsScene3DWrapper"; // ✅ Importado para el tipo
 import RocketHUD from "./RocketHUD";
+import AgentWorkPanel from "./AgentWorkPanel";
 
 const agents = [
   { id: "po", name: "Product Owner", role: "Backlog & Trello", position: [-6, 0, 4], icon: Brain, color: "#a855f7" },
