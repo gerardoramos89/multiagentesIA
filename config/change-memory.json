@@ -1,5 +1,5 @@
 {
-  "totalCommits": 92,
+  "totalCommits": 93,
   "filesEverChanged": [
     "multiagentesIA.py",
     "DOCUMENTACION.md",
@@ -34,8 +34,9 @@
     "MVP_functional.py",
     "Strategy.md",
     "ARCHITECTURE.md",
-    "implementacion_funcionalidades_clave.py"
+    "implementacion_funcionalidades_clave.py",
+    "main.py"
   ],
-  "sprintsCompleted": 16,
-  "lastCommitHash": "724ec32fd7bba933ee80820a1b4147db8574e075"
+  "sprintsCompleted": 17,
+  "lastCommitHash": "96600640cdc5057f5979e82c279c62b38e028678"
 }

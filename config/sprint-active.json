@@ -1,98 +1,59 @@
 {
-  "sprintNumber": 16,
-  "startedAt": "2026-10-24T05:33:57.272Z",
+  "sprintNumber": 17,
+  "startedAt": "2026-10-24T05:44:49.114Z",
   "approvedBy": "human",
   "tasks": [
     {
-      "id": "task-1792820037272-0",
+      "id": "task-1792820689114-0",
       "title": "📋 [PO] Análisis estratégico y planificación de MultiagentesIA",
       "description": "Como Product Owner, analiza el estado actual de MultiagentesIA. Revisa las lecciones aprendidas del sprint anterior (sin lecciones previas) y define los criterios de éxito para este sprint. Genera un documento STRATEGY.md con: 1) Objetivos del sprint, 2) Criterios de aceptación, 3) Riesgos identificados, 4) Métricas de éxito.",
       "agent": "po",
-      "status": "done",
-      "startedAt": "2026-10-24T05:34:48.012Z",
-      "completedAt": "2026-10-24T05:35:29.684Z",
-      "output": "Generado: Strategy.md",
-      "commits": [
-        "dc14c317a1a726f5d343adcf465d507928b2ca35"
-      ],
-      "filesModified": [
-        "Strategy.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792820037272-1",
-      "title": "🏗️ [ARCH] Diseño de arquitectura para MultiagentesIA",
-      "description": "Como Arquitecto, revisa el código actual de MultiagentesIA y propón mejoras de arquitectura. Genera un archivo ARCHITECTURE.md con: 1) Diagrama de componentes (en texto), 2) Patrones de diseño recomendados, 3) Estructura de carpetas óptima, 4) Decisiones técnicas clave (ADR), 5) Deuda técnica identificada y cómo resolverla.",
+      "id": "task-1792820689114-1",
+      "title": "[ARCH] Diseñar e implementar un sistema de persistencia en localStorage para guardar el historial de sprints y que no se pierda al recargar el Dashboard.",
+      "description": "[ARCH] Diseñar e implementar un sistema de persistencia en localStorage para guardar el historial de sprints y que no se pierda al recargar el Dashboard.",
       "agent": "arch",
-      "status": "done",
-      "startedAt": "2026-10-24T05:35:31.692Z",
-      "completedAt": "2026-10-24T05:36:28.528Z",
-      "output": "Generado: ARCHITECTURE.md",
-      "commits": [
-        "f8a1b35d8319f7a60f882ac0243fbb49af9dd6d5"
-      ],
-      "filesModified": [
-        "ARCHITECTURE.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792820037272-2",
-      "title": "💻 [DEV] Implementación de funcionalidades clave",
-      "description": "Como Developer, implementa las funcionalidades principales pendientes de MultiagentesIA. Revisa ARCHITECTURE.md y STRATEGY.md para seguir los lineamientos. Enfócate en código limpio, modular y bien comentado.",
+      "id": "task-1792820689114-2",
+      "title": "Mejorar el componente 3D 'AgentWorkPanel' para que muestre una barra de progreso animada mientras el agente está generando el código en Ollama.",
+      "description": "[DEV] Mejorar el componente 3D 'AgentWorkPanel' para que muestre una barra de progreso animada mientras el agente está generando el código en Ollama.",
       "agent": "dev",
-      "status": "done",
-      "startedAt": "2026-10-24T05:36:30.546Z",
-      "completedAt": "2026-10-24T05:37:15.721Z",
-      "output": "Generado: main.py",
-      "commits": [
-        "ce19c74cc512bc60117810ccac436ee6428174d2"
-      ],
-      "filesModified": [
-        "main.py"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792820037272-3",
-      "title": "🧪 [QA] Revisión de calidad y pruebas",
-      "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
+      "id": "task-1792820689114-3",
+      "title": "Implementar la funcionalidad en el backend para mover automáticamente las tarjetas de Trello a la columna \"Done\" cuando el agente completa el commit exitosamente.",
+      "description": "[DEV] Implementar la funcionalidad en el backend para mover automáticamente las tarjetas de Trello a la columna \"Done\" cuando el agente completa el commit exitosamente.",
+      "agent": "dev",
+      "status": "pending"
+    },
+    {
+      "id": "task-1792820689114-4",
+      "title": "Crear un script de validación en Node.js que verifique que todos los endpoints (/api/sprint/plan, /api/sprint/execute) devuelvan el formato JSON correcto y manejen errores de red.",
+      "description": "[QA] Crear un script de validación en Node.js que verifique que todos los endpoints (/api/sprint/plan, /api/sprint/execute) devuelvan el formato JSON correcto y manejen errores de red.",
       "agent": "qa",
-      "status": "done",
-      "startedAt": "2026-10-24T05:37:17.736Z",
-      "completedAt": "2026-10-24T05:38:29.837Z",
-      "output": "Generado: QA_REPORT.md",
-      "commits": [
-        "37b6d9a27a741902f13f0347fffa72cfe86f081d"
-      ],
-      "filesModified": [
-        "QA_REPORT.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792820037272-4",
-      "title": "📝 [DOC] Documentación completa del sprint",
-      "description": "Como Technical Writer, actualiza el README.md de MultiagentesIA para que sea la GUÍA VIVA del proyecto. Debe incluir: 1) Descripción actualizada, 2) Estado del desarrollo, 3) Historial de sprints, 4) Guía de instalación y uso, 5) Próximos pasos. Hazlo profesional y estructurado.",
+      "id": "task-1792820689114-5",
+      "title": "Redactar un archivo README.md profesional y completo que incluya: 1) Requisitos previos (Node.js, Ollama, DeepSeek), 2) Variables de entorno necesarias (.env.local), 3) Guía de inicio rápido paso a paso.",
+      "description": "[DOC] Redactar un archivo README.md profesional y completo que incluya: 1) Requisitos previos (Node.js, Ollama, DeepSeek), 2) Variables de entorno necesarias (.env.local), 3) Guía de inicio rápido paso a paso.",
       "agent": "doc",
-      "status": "done",
-      "startedAt": "2026-10-24T05:38:31.850Z",
-      "completedAt": "2026-10-24T05:39:24.790Z",
-      "output": "Generado: README.md",
-      "commits": [
-        "724ec32fd7bba933ee80820a1b4147db8574e075"
-      ],
-      "filesModified": [
-        "README.md"
-      ]
+      "status": "pending"
     },
     {
-      "id": "task-1792820037272-5",
+      "id": "task-1792820689114-6",
       "title": "📊 [PO] Retrospectiva y propuesta de mejora para el próximo sprint",
       "description": "Como Product Owner, al finalizar este sprint: 1) Analiza qué se logró vs lo planeado, 2) Identifica patrones de éxito y fracaso, 3) Propón 3-5 mejoras concretas para el próximo sprint, 4) Genera un archivo RETROSPECTIVE_SUGGESTIONS.md con recomendaciones estratégicas basadas en el rendimiento del equipo.",
       "agent": "po",
-      "status": "working",
-      "startedAt": "2026-10-24T05:39:26.809Z"
+      "status": "pending"
     }
   ],
-  "status": "executing",
+  "status": "planned",
   "lessonsLearned": [],
   "vision": {
     "name": "MultiagentesIA",
@@ -101,12 +62,5 @@
     "scope": "",
     "targetSkills": "Next ",
     "isCompleted": true
-  },
-  "filesChanged": [
-    "Strategy.md",
-    "ARCHITECTURE.md",
-    "main.py",
-    "QA_REPORT.md",
-    "README.md"
-  ]
+  }
 }
