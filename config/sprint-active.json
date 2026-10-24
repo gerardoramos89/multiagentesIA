@@ -88,15 +88,24 @@
       "title": "Actualizar el diagrama de flujo en el manual de operaciones",
       "description": "[DEV/QA] Actualizar el diagrama de flujo en el manual de operaciones",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T16:02:14.698Z"
+      "status": "done",
+      "startedAt": "2026-10-24T16:02:14.698Z",
+      "completedAt": "2026-10-24T16:04:46.130Z",
+      "output": "Generado: nombre_del_archivo.ext",
+      "commits": [
+        "4109f17ebb17cb51f51e31a7c58108f7dc8bc161"
+      ],
+      "filesModified": [
+        "nombre_del_archivo.ext"
+      ]
     },
     {
       "id": "task-1792857408506-6",
       "title": "🧪 [QA] Revisión de calidad y pruebas",
       "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T16:04:48.142Z"
     },
     {
       "id": "task-1792857408506-7",
