@@ -13,7 +13,9 @@ import { useAnalysisJob } from "@/lib/use-analysis-job";
 import LaunchModal from "./LaunchModal";
 import SprintRetrospectiveModal from "./SprintRetrospectiveModal";
 import TrelloBoard from "./TrelloBoard";
-import ModelsLogPanel from "./ModelsLogPanel"; // ✅ IMPORTADO
+import ModelsLogPanel from "./ModelsLogPanel";
+import AutoCloseModal from "./AutoCloseModal";
+import ReadmePreview from "./ReadmePreview"; // ✅ AÑADIDO PARA PREVIEW
 
 const GENERIC_SKILLS: Record<string, string[]> = {
   po: ["User Stories", "Priorización", "Criterios de Aceptación"],
@@ -189,11 +191,13 @@ export default function DashboardScreen() {
   const [lastRetrospective, setLastRetrospective] = useState<any>(null);
   const [lastSprintNumber, setLastSprintNumber] = useState<number>(0);
   const [agentLogs, setAgentLogs] = useState<Record<string, any[]>>({});
-  const [agentWorkLogs, setAgentWorkLogs] = useState<any[]>([]); // ✅ AÑADIDO
+  const [agentWorkLogs, setAgentWorkLogs] = useState<any[]>([]);
   const [customTasks, setCustomTasks] = useState("");
   
-  // ✅ SISTEMA DE PESTAÑAS
+  // ✅ SISTEMA DE PESTAÑAS Y MODALES
   const [activeTab, setActiveTab] = useState<"agents" | "models" | "logs">("agents");
+  const [showAutoCloseModal, setShowAutoCloseModal] = useState(false); // ✅ CORREGIDO: DENTRO DEL COMPONENTE
+  const [showReadmePreview, setShowReadmePreview] = useState(false); // ✅ AÑADIDO PARA PREVIEW
 
   const configuredCount = modules.filter(m => m.status === "on").length;
   const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady;
@@ -318,7 +322,8 @@ export default function DashboardScreen() {
               setLastSprintNumber(histData.sprintNumber);
               setHasCompletedSprints(true);
             }
-            alert("✅ Sprint cerrado automáticamente. Todas las encuestas fueron respondidas.");
+            // ✅ CAMBIADO: Mostrar modal bonito en lugar de alert
+            setShowAutoCloseModal(true);
           }
         }
       } catch {}
@@ -434,6 +439,15 @@ export default function DashboardScreen() {
   return (
     <div className="h-screen w-full bg-black flex overflow-hidden">
       <div className="w-full md:w-[70%] h-full relative">
+        {/* ✅ BOTÓN FLOTANTE PARA PREVIEW DE README / INDEX.HTML */}
+        <button 
+          onClick={() => setShowReadmePreview(!showReadmePreview)}
+          className="absolute top-4 right-4 p-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-full shadow-lg hover:from-cyan-500 hover:to-blue-500 transition-all z-40"
+          title="Ver README / index.html"
+        >
+          <FileText size={20} />
+        </button>
+
         <AgentsScene3DWrapper 
           onComplete={() => {}} showUI={false} 
           configuredModules={modules.filter(m => m.status === "on").map(m => m.id)}
@@ -445,7 +459,7 @@ export default function DashboardScreen() {
           telemetry={telemetry}
           sprintState={sprintState}
           agentLogs={agentLogs}
-          agentWorkLogs={agentWorkLogs} // ✅ PASADO AL 3D
+          agentWorkLogs={agentWorkLogs}
         />
         <div className="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md border border-cyan-500/30 rounded-xl p-3">
           <div className="flex items-center justify-between mb-2">
@@ -577,6 +591,21 @@ export default function DashboardScreen() {
                   className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[9px] text-white focus:border-cyan-500 outline-none resize-none h-24"
                 />
               </div>
+              
+              <button 
+                onClick={async () => {
+                  try {
+                    const res = await fetch("/api/sync-to-github", { method: "POST" });
+                    const data = await res.json();
+                    alert(data.message);
+                  } catch (err: any) {
+                    alert(`❌ Error: ${err.message}`);
+                  }
+                }}
+                className="w-full py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white text-[10px] font-bold rounded hover:from-amber-500 hover:to-orange-500 transition-all flex items-center justify-center gap-2 mb-2"
+              >
+                <GitBranch size={14} /> 💾 Sincronizar Datos con GitHub
+              </button>
 
               <button 
                 disabled={!projectConfig || !diagnosticsReady || !projectVision.isCompleted}
@@ -733,6 +762,10 @@ export default function DashboardScreen() {
 
       <LaunchModal isOpen={showLaunchModal} onClose={() => setShowLaunchModal(false)} sprintNumber={sprintState?.sprint?.sprintNumber || 1} />
       <SprintRetrospectiveModal isOpen={showRetrospectiveModal} onClose={() => setShowRetrospectiveModal(false)} retrospective={lastRetrospective} sprintNumber={lastSprintNumber || 1} />
+      
+      {/* ✅ MODALES AÑADIDOS AL FINAL */}
+      <AutoCloseModal isOpen={showAutoCloseModal} onClose={() => setShowAutoCloseModal(false)} sprintNumber={lastSprintNumber || 1} />
+      <ReadmePreview isVisible={showReadmePreview} onClose={() => setShowReadmePreview(false)} />
     </div>
   );
 }

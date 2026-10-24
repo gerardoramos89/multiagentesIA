@@ -260,10 +260,25 @@ async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; o
     const rolePrompt = rolePrompts[task.agent] || rolePrompts.dev;
     const prompt = `${rolePrompt}\n\nCONTEXTO DEL PROYECTO:\n- Nombre: ${task.title}\n- Descripción: ${task.description}\n\nINSTRUCCIÓN: Genera UN SOLO archivo importante. Responde SOLO con el contenido. Primera línea: 'ARCHIVO: nombre.ext' y luego el código.`;
 
-    saveAgentWorkLog({ agent: task.agent, taskId: task.id, taskTitle: task.title, prompt: prompt.substring(0, 500) + "...", response: "", status: "working", startedAt: new Date().toISOString() });
+    // ✅ GUARDAR TIMESTAMP DE INICIO
+    const startedAt = new Date().toISOString();
+    const startTime = Date.now();
 
+    saveAgentWorkLog({ 
+      agent: task.agent, 
+      taskId: task.id, 
+      taskTitle: task.title, 
+      prompt: prompt.substring(0, 500) + "...", 
+      response: "", 
+      status: "working", 
+      startedAt 
+    });
+
+    addAgentLog(task.agent, `Generando con ${model}...`, "info");
+    
     const response = await fetch("http://127.0.0.1:11434/api/generate", {
-      method: "POST", headers: { "Content-Type": "application/json" },
+      method: "POST", 
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.3, num_predict: 2500 } })
     });
     
@@ -289,12 +304,41 @@ async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; o
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(filePath, content, "utf-8");
     
-    saveAgentWorkLog({ agent: task.agent, taskId: task.id, taskTitle: task.title, prompt: prompt.substring(0, 500) + "...", response: content.substring(0, 800) + "...", status: "done", startedAt: new Date().toISOString(), completedAt: new Date().toISOString(), fileName });
+    // ✅ CALCULAR DURACIÓN REAL
+    const completedAt = new Date().toISOString();
+    const duration = Math.round((Date.now() - startTime) / 1000);
     
-    addAgentLog(task.agent, `✅ Archivo creado: ${fileName}`, "success");
+    saveAgentWorkLog({ 
+      agent: task.agent, 
+      taskId: task.id, 
+      taskTitle: task.title, 
+      prompt: prompt.substring(0, 500) + "...", 
+      response: content.substring(0, 800) + (content.length > 800 ? "..." : ""), 
+      status: "done", 
+      startedAt,
+      completedAt,
+      fileName,
+      duration // ✅ AHORA SÍ TIENE LA DURACIÓN REAL
+    });
+    
+    addAgentLog(task.agent, `✅ Archivo creado: ${fileName} en ${duration}s`, "success");
     return { success: true, output: `Generado: ${fileName}`, filesModified: [fileName] };
   } catch (error: any) {
-    saveAgentWorkLog({ agent: task.agent, taskId: task.id, taskTitle: task.title, prompt: "", response: `Error: ${error.message}`, status: "error", startedAt: new Date().toISOString(), completedAt: new Date().toISOString() });
+    const completedAt = new Date().toISOString();
+    const duration = Math.round((Date.now() - startTime) / 1000);
+    
+    saveAgentWorkLog({ 
+      agent: task.agent, 
+      taskId: task.id, 
+      taskTitle: task.title, 
+      prompt: "", 
+      response: `Error: ${error.message}`, 
+      status: "error", 
+      startedAt: new Date().toISOString(),
+      completedAt,
+      duration
+    });
+    
     addAgentLog(task.agent, `❌ Error: ${error.message}`, "error");
     return { success: false, output: error.message };
   }
@@ -366,8 +410,12 @@ export async function startSprintExecution(vision?: any, projectContext?: string
     }
     sprint.status = "executing"; sprint.vision = vision; sprint.projectContext = projectContext; sprint.filesChanged = [];
     saveSprint(sprint);
+
     log("SPRINT", "system", `🚀 Sprint #${sprint.sprintNumber} iniciado. ${sprint.tasks.length} tareas en cola.`);
-    
+    sprint.tasks.forEach((task, i) => {
+      const agentIcon = task.agent === "po" ? "📋" : task.agent === "arch" ? "🏗️" : task.agent === "dev" ? "🛠️" : task.agent === "qa" ? "🧪" : "📝";
+      log("SPRINT", "system", `  ${i + 1}. ${agentIcon} [${task.agent.toUpperCase()}] ${task.title}`);
+    });
     executeTasksSequentially(sprint, vision, projectContext).catch((e) => log("ERROR", "executor", `Error: ${e?.message}`));
     return { success: true, message: "Sprint iniciado" };
   } finally {
