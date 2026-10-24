@@ -40,15 +40,24 @@
       "title": "Crear casos de prueba específicos para errores de validación en el endpoint de usuarios",
       "description": "[ARCH/DEV] Crear casos de prueba específicos para errores de validación en el endpoint de usuarios",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T17:10:34.857Z"
+      "status": "done",
+      "startedAt": "2026-10-24T17:10:34.857Z",
+      "completedAt": "2026-10-24T17:11:49.651Z",
+      "output": "Generado: ARCHITECTURE.md",
+      "commits": [
+        "920d5aee234e609e2a60cf34aceb903734dd9cff"
+      ],
+      "filesModified": [
+        "ARCHITECTURE.md"
+      ]
     },
     {
       "id": "task-1792861692408-3",
       "title": "Revisar y ajustar la estrategia de refactorización de datos",
       "description": "[DEV/QA] Revisar y ajustar la estrategia de refactorización de datos",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T17:11:51.671Z"
     },
     {
       "id": "task-1792861692408-4",
@@ -98,6 +107,7 @@
   },
   "filesChanged": [
     "STRATEGY.md",
-    "arquitectura_proyectofabricaagentes.md"
+    "arquitectura_proyectofabricaagentes.md",
+    "ARCHITECTURE.md"
   ]
 }

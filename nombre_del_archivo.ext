@@ -1,233 +1,151 @@
-```python
-# ARCHIVO: nombre_del_archivo.ext
+```javascript
+// Importaciones necesarias
+import express from 'express';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { validateInput } from '../utils/validators';
+import { handleError } from '../utils/errorHandler';
 
-# Importaciones necesarias
-import requests
-import json
-from io import BytesIO
-from PIL import Image
+// Creación del router
+const router = express.Router();
 
-# Módulo Core
-class CoreModule:
-    def __init__(self, config):
-        self.config = config
+// Definición de endpoints
+router.post('/sprints', async (req, res) => {
+  try {
+    // Validación de la entrada
+    const validationErrors = validateInput(req.body);
+    if (validationErrors.length > 0) {
+      return res.status(400).json({ errors: validationErrors });
+    }
 
-    def fetch_data(self, url):
-        try:
-            response = requests.get(url)
-            response.raise_for_status()  # Lanza una excepción para códigos de estado HTTP >= 400
-            return response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching data: {e}")
-            return None
+    // Llamada a la API de Ollama para generar un plan de sprints
+    const response = await axios.post('https://api.ollama.io/generatePlan', {
+      project: req.body.project,
+      duration: req.body.duration,
+      teamSize: req.body.teamSize
+    });
 
-# Módulo Agent
-class AgentModule:
-    def __init__(self, agent_config):
-        self.agent_config = agent_config
+    // Llamada a la API de Trello para crear un nuevo sprint
+    const trelloResponse = await axios.post('https://api.trello.com/1/lists', {
+      name: `Sprint ${uuidv4()}`,
+      idBoard: req.body.boardId
+    }, {
+      params: {
+        key: process.env.TRELLO_API_KEY,
+        token: process.env.TRELLO_API_TOKEN
+      }
+    });
 
-    def run_agent(self):
-        # Lógica específica del agente
-        pass
+    // Respuesta exitosa
+    res.status(201).json({
+      message: 'Sprint creado exitosamente',
+      data: {
+        sprintId: trelloResponse.data.id,
+        plan: response.data.plan
+      }
+    });
+  } catch (error) {
+    handleError(error, res);
+  }
+});
 
-# Módulo Comunicación
-class CommunicationModule:
-    def __init__(self, protocol, handlers):
-        self.protocol = protocol
-        self.handlers = handlers
-
-    def send_message(self, message):
-        # Implementación del protocolo para enviar mensajes
-        pass
-
-    def register_handler(self, handler):
-        self.handlers.append(handler)
-
-# Configuración de la aplicación
-config = {
-    "api_url": "https://api.example.com/v1",
-    "ollama_api_key": "your_ollama_api_key",
-    "trello_api_key": "your_trello_api_key"
-}
-
-# Instanciación de módulos
-core = CoreModule(config)
-agent = AgentModule({"agent_id": 1})
-communication = CommunicationModule("TCP", [])
-
-# Llamadas a las APIs
-data = core.fetch_data(config["api_url"])
-if data:
-    print(f"Data fetched: {data}")
-
-# Ejecución del agente
-agent.run_agent()
-
-# Enviar mensajes a través de la comunicación
-communication.send_message({"type": "command", "content": "start_sprint"})
+// Exportación del router
+export default router;
 ```
 
 ```javascript
-// ARCHIVO: nombre_del_archivo.ext
-
 // Importaciones necesarias
-const axios = require('axios');
-const fs = require('fs');
-const { createCanvas, loadImage } = require('canvas');
+import { Request, Response } from 'express';
 
-// Módulo Core
-class CoreModule {
-    constructor(config) {
-        this.config = config;
-    }
-
-    async fetchData(url) {
-        try {
-            const response = await axios.get(url);
-            return response.data;
-        } catch (error) {
-            console.error(`Error fetching data: ${error.message}`);
-            return null;
-        }
-    }
-}
-
-// Módulo Agent
-class AgentModule {
-    constructor(agentConfig) {
-        this.agentConfig = agentConfig;
-    }
-
-    runAgent() {
-        // Lógica específica del agente
-    }
-}
-
-// Módulo Comunicación
-class CommunicationModule {
-    constructor(protocol, handlers) {
-        this.protocol = protocol;
-        this.handlers = handlers;
-    }
-
-    sendMessage(message) {
-        // Implementación del protocolo para enviar mensajes
-    }
-
-    registerHandler(handler) {
-        this.handlers.push(handler);
-    }
-}
-
-// Configuración de la aplicación
-const config = {
-    apiUrl: "https://api.example.com/v1",
-    ollamaApiKey: "your_ollama_api_key",
-    trelloApiKey: "your_trello_api_key"
+// Función para manejar errores
+export const handleError = (error, res) => {
+  console.error(error);
+  res.status(500).json({ error: 'Hubo un error al procesar la solicitud' });
 };
 
-// Instanciación de módulos
-const core = new CoreModule(config);
-const agent = new AgentModule({ agentId: 1 });
-const communication = new CommunicationModule("TCP", []);
-
-// Llamadas a las APIs
-(async () => {
-    const data = await core.fetchData(config.apiUrl);
-    if (data) {
-        console.log(`Data fetched: ${JSON.stringify(data)}`);
-    }
-})();
-
-// Ejecución del agente
-agent.runAgent();
-
-// Enviar mensajes a través de la comunicación
-communication.sendMessage({ type: "command", content: "start_sprint" });
+// Función de validación de entrada
+export const validateInput = (input) => {
+  const errors = [];
+  if (!input.project) errors.push('El proyecto es obligatorio');
+  if (!input.duration) errors.push('La duración es obligatoria');
+  if (!input.teamSize) errors.push('El tamaño del equipo es obligatorio');
+  if (!input.boardId) errors.push('El ID del tablero es obligatorio');
+  return errors;
+};
 ```
 
-```typescript
-// ARCHIVO: nombre_del_archivo.ext
-
+```javascript
 // Importaciones necesarias
-import axios from 'axios';
-import fs from 'fs';
-import { createCanvas, loadImage } from 'canvas';
+import { Request, Response } from 'express';
+import { handleError } from '../utils/errorHandler';
 
-// Módulo Core
-class CoreModule {
-    config: any;
-
-    constructor(config: any) {
-        this.config = config;
-    }
-
-    async fetchData(url: string) {
-        try {
-            const response = await axios.get(url);
-            return response.data;
-        } catch (error) {
-            console.error(`Error fetching data: ${error.message}`);
-            return null;
-        }
-    }
-}
-
-// Módulo Agent
-class AgentModule {
-    agentConfig: any;
-
-    constructor(agentConfig: any) {
-        this.agentConfig = agentConfig;
-    }
-
-    runAgent() {
-        // Lógica específica del agente
-    }
-}
-
-// Módulo Comunicación
-class CommunicationModule {
-    protocol: string;
-    handlers: any[];
-
-    constructor(protocol: string, handlers: any[]) {
-        this.protocol = protocol;
-        this.handlers = handlers;
-    }
-
-    sendMessage(message: any) {
-        // Implementación del protocolo para enviar mensajes
-    }
-
-    registerHandler(handler: any) {
-        this.handlers.push(handler);
-    }
-}
-
-// Configuración de la aplicación
-const config = {
-    apiUrl: "https://api.example.com/v1",
-    ollamaApiKey: "your_ollama_api_key",
-    trelloApiKey: "your_trello_api_key"
+// Middleware para manejar errores globales
+const errorMiddleware = (err, req, res, next) => {
+  handleError(err, res);
 };
 
-// Instanciación de módulos
-const core = new CoreModule(config);
-const agent = new AgentModule({ agentId: 1 });
-const communication = new CommunicationModule("TCP", []);
+// Exportación del middleware
+export default errorMiddleware;
+```
 
-// Llamadas a las APIs
-(async () => {
-    const data = await core.fetchData(config.apiUrl);
-    if (data) {
-        console.log(`Data fetched: ${JSON.stringify(data)}`);
+```javascript
+// Importaciones necesarias
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import dotenv from 'dotenv';
+import sprintRouter from './routes/sprintRouter';
+import errorMiddleware from './middleware/errorMiddleware';
+
+// Configuración de variables de entorno
+dotenv.config();
+
+// Creación de la aplicación Express
+const app = express();
+
+// Configuración de middlewares
+app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
+
+// Configuración de routers
+app.use('/api/v1', sprintRouter);
+
+// Configuración del middleware de errores
+app.use(errorMiddleware);
+
+// Inicio del servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
+```
+
+```javascript
+// Importaciones necesarias
+import { Request, Response } from 'express';
+import { validateInput } from '../utils/validators';
+import { handleError } from '../utils/errorHandler';
+
+// Función para validar y crear un nuevo sprint
+const createSprint = async (req, res) => {
+  try {
+    // Validación de la entrada
+    const validationErrors = validateInput(req.body);
+    if (validationErrors.length > 0) {
+      return res.status(400).json({ errors: validationErrors });
     }
-})();
 
-// Ejecución del agente
-agent.runAgent();
+    // Lógica para crear un nuevo sprint
+    // ...
 
-// Enviar mensajes a través de la comunicación
-communication.sendMessage({ type: "command", content: "start_sprint" });
+    // Respuesta exitosa
+    res.status(201).json({ message: 'Sprint creado exitosamente' });
+  } catch (error) {
+    handleError(error, res);
+  }
+};
+
+// Exportación de la función
+export default createSprint;
 ```
