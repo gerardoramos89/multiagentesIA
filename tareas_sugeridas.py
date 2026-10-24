@@ -1,125 +1,82 @@
 ```python
 # Importaciones estándar
 import logging
-from typing import List, Optional
+from typing import List, Dict, Any
 
 # Configuración de logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# Definición de la clase Task
-class Task:
-    """Clase que representa una tarea."""
-    
-    def __init__(self, id: int, name: str, description: str, completed: bool = False):
-        """
-        Inicializa una nueva tarea.
-        
-        :param id: Identificador único de la tarea.
-        :param name: Nombre de la tarea.
-        :param description: Descripción detallada de la tarea.
-        :param completed: Estado de completitud de la tarea (por defecto False).
-        """
-        self.id = id
-        self.name = name
-        self.description = description
-        self.completed = completed
+# Definición de tipos
+Task = Dict[str, Any]
+TaskList = List[Task]
 
-    def mark_as_completed(self):
-        """Marca la tarea como completada."""
-        self.completed = True
-        logger.info(f'Tarea {self.name} (ID {self.id}) marcada como completada.')
+# Funciones auxiliares
+def load_tasks() -> TaskList:
+    """Carga las tareas desde un archivo o base de datos."""
+    # Simulación de carga de tareas
+    return [
+        {"id": 1, "title": "Hacer la compra", "completed": False},
+        {"id": 2, "title": "Estudiar para el examen", "completed": False},
+        {"id": 3, "title": "Llamar al médico", "completed": True}
+    ]
 
-    def to_dict(self):
-        """Convierte la tarea a un diccionario."""
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'completed': self.completed
-        }
+def save_tasks(tasks: TaskList):
+    """Guarda las tareas en un archivo o base de datos."""
+    # Simulación de guardado de tareas
+    logger.info(f"Guardando {len(tasks)} tareas.")
 
-# Definición de la clase TaskManager
-class TaskManager:
-    """Clase que gestiona una lista de tareas."""
-    
-    def __init__(self):
-        """Inicializa una lista vacía de tareas."""
-        self.tasks: List[Task] = []
+# Servicios de tareas
+class TaskService:
+    def __init__(self, task_list: TaskList):
+        self.task_list = task_list
+
+    def get_tasks(self) -> TaskList:
+        """Obtiene todas las tareas."""
+        return self.task_list
 
     def add_task(self, task: Task):
-        """
-        Agrega una nueva tarea a la lista.
-        
-        :param task: Instancia de Task a agregar.
-        """
-        self.tasks.append(task)
-        logger.info(f'Tarea {task.name} (ID {task.id}) agregada.')
+        """Agrega una nueva tarea."""
+        if task["id"] in [t["id"] for t in self.task_list]:
+            raise ValueError(f"La tarea con ID {task['id']} ya existe.")
+        self.task_list.append(task)
+        logger.info(f"Tarea agregada: {task['title']}")
 
-    def get_task(self, task_id: int) -> Optional[Task]:
-        """
-        Obtiene una tarea por su ID.
-        
-        :param task_id: Identificador de la tarea.
-        :return: Instancia de Task o None si no se encuentra.
-        """
-        for task in self.tasks:
-            if task.id == task_id:
-                return task
-        return None
+    def complete_task(self, task_id: int):
+        """Marca una tarea como completada."""
+        for task in self.task_list:
+            if task["id"] == task_id:
+                task["completed"] = True
+                logger.info(f"Tarea completada: {task['title']}")
+                return
+        raise ValueError(f"La tarea con ID {task_id} no existe.")
 
-    def list_tasks(self) -> List[Task]:
-        """
-        Lista todas las tareas.
-        
-        :return: Lista de tareas.
-        """
-        return self.tasks
+# Manejo de errores
+class TaskError(Exception):
+    """Excepción personalizada para errores en el manejo de tareas."""
+    pass
 
-    def mark_task_as_completed(self, task_id: int):
-        """
-        Marca una tarea como completada por su ID.
-        
-        :param task_id: Identificador de la tarea.
-        """
-        task = self.get_task(task_id)
-        if task:
-            task.mark_as_completed()
-        else:
-            logger.error(f'Tarea con ID {task_id} no encontrada.')
+# Pruebas unitarias
+def test_task_service():
+    task_service = TaskService(load_tasks())
 
-# Función principal para interactuar con el usuario
-def main():
-    """Función principal para interactuar con el usuario."""
-    task_manager = TaskManager()
-    
-    while True:
-        print("\n1. Agregar tarea")
-        print("2. Marcar tarea como completada")
-        print("3. Listar tareas")
-        print("4. Salir")
-        choice = input("Seleccione una opción: ")
-        
-        if choice == '1':
-            id = int(input("Ingrese el ID de la tarea: "))
-            name = input("Ingrese el nombre de la tarea: ")
-            description = input("Ingrese la descripción de la tarea: ")
-            task = Task(id, name, description)
-            task_manager.add_task(task)
-        elif choice == '2':
-            task_id = int(input("Ingrese el ID de la tarea: "))
-            task_manager.mark_task_as_completed(task_id)
-        elif choice == '3':
-            tasks = task_manager.list_tasks()
-            for task in tasks:
-                print(f'ID: {task.id}, Nombre: {task.name}, Descripción: {task.description}, Completada: {task.completed}')
-        elif choice == '4':
-            break
-        else:
-            print("Opción no válida. Por favor, seleccione una opción válida.")
+    # Prueba de agregar una tarea
+    task_service.add_task({"id": 4, "title": "Nueva tarea", "completed": False})
+    assert len(task_service.get_tasks()) == 4
 
+    # Prueba de completar una tarea
+    task_service.complete_task(4)
+    tasks = task_service.get_tasks()
+    assert tasks[3]["completed"] is True
+
+    logger.info("Todas las pruebas unitarias pasaron.")
+
+# Ejecución de pruebas unitarias
 if __name__ == "__main__":
-    main()
+    test_task_service()
+
+# Guardar tareas al finalizar
+save_tasks(load_tasks())
 ```
 
-Este archivo define una aplicación simple para gestionar tareas. Incluye una clase `Task` para representar cada tarea, una clase `TaskManager` para gestionar las tareas, y una función principal `main` para interactuar con el usuario. El código está bien comentado y sigue los principios SOLID, con un manejo de errores básico y una estructura modular.
+Este archivo implementa una aplicación simple para gestionar tareas pendientes. Utiliza principios SOLID, manejo de errores y código testeable. Las tareas se cargan desde una fuente simulada, se agregan y completan, y se guardan al finalizar. Las pruebas unitarias verifican el funcionamiento de las operaciones principales.
