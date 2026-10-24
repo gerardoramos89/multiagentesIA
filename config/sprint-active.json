@@ -24,15 +24,24 @@
       "title": "Claridad en los roles y responsabilidades del equipo",
       "description": "[ARCH/DEV] Claridad en los roles y responsabilidades del equipo",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T07:02:18.073Z"
+      "status": "done",
+      "startedAt": "2026-10-24T07:02:18.073Z",
+      "completedAt": "2026-10-24T07:03:27.427Z",
+      "output": "Generado: arquitectura_proyecto_f_brica_de_agentes.md",
+      "commits": [
+        "a56f8ee04576495ccced1ce961b27cd7d2805ee6"
+      ],
+      "filesModified": [
+        "arquitectura_proyecto_f_brica_de_agentes.md"
+      ]
     },
     {
       "id": "task-1792825274243-2",
       "title": "Métodos más efectivos para la estimación de tiempo y esfuerzo",
       "description": "[ARCH/DEV] Métodos más efectivos para la estimación de tiempo y esfuerzo",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T07:03:29.444Z"
     },
     {
       "id": "task-1792825274243-3",
@@ -81,6 +90,7 @@
     "isCompleted": true
   },
   "filesChanged": [
-    "STRATEGY.md"
+    "STRATEGY.md",
+    "arquitectura_proyecto_f_brica_de_agentes.md"
   ]
 }
