@@ -72,15 +72,24 @@
       "title": "Entrenar al equipo en técnicas más precisas para la estimación de tiempo",
       "description": "[DEV/QA] Entrenar al equipo en técnicas más precisas para la estimación de tiempo",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T07:05:42.579Z"
+      "status": "done",
+      "startedAt": "2026-10-24T07:05:42.579Z",
+      "completedAt": "2026-10-24T07:09:28.179Z",
+      "output": "Generado: nombre_del_archivo.ext",
+      "commits": [
+        "83db809fb6bfb0100936217584e0cdff2fcb1875"
+      ],
+      "filesModified": [
+        "nombre_del_archivo.ext"
+      ]
     },
     {
       "id": "task-1792825274243-5",
       "title": "🧪 [QA] Revisión de calidad y pruebas",
       "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T07:09:30.200Z"
     },
     {
       "id": "task-1792825274243-6",
