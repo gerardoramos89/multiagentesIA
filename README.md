@@ -1,113 +1,100 @@
 # MultiagentesIA
 
-## Descripción del Proyecto
+## 1. Introducción
+El proyecto MultiagentesIA tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas de gestión de sprints autónomas. Este proyecto está construido utilizando tecnologías avanzadas como Next.js, React, Tailwind, Node.js, Ollama, Trello API, y GitHub API.
 
-**Nombre:** MultiagentesIA
+## 2. Estructura de Carpetas
+La estructura de carpetas del proyecto se organiza de la siguiente manera:
 
-**Objetivo:** Desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas de gestión de sprints autónomas.
+```
+/src
+  /components
+  /context
+  /hooks
+  /pages
+  /public
+  /services
+  /utils
+```
 
-## Estado del Desarrollo
+## 3. Patrones de Diseño Específicos
+### 3.1. Patrón de Diseño: Modelo-Vista-Controlador (MVC)
+Se utilizará el patrón MVC para separar las responsabilidades en el backend y frontend.
 
-El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales módulos y tecnologías utilizadas incluyen:
+### 3.2. Patrón de Diseño: Repositorio
+Se implementará un patrón de repositorio para abstraer las operaciones de acceso a datos, facilitando la inserción de capas de persistencia y de servicios.
 
-- **Next.js** para el frontend.
-- **React** para la interfaz de usuario.
-- **Tailwind** para el diseño.
-- **Node.js** para el backend.
-- **Ollama** para la inteligencia artificial.
-- **Trello API** para la gestión de proyectos.
-- **GitHub API** para integración y gestión de repositorios.
+## 4. Decisiones Técnicas
+### 4.1. API RESTful
+Se diseñará una API RESTful para la gestión de sprints y la integración con Trello y GitHub.
 
-## Historial de Sprints
-
-- **Sprint 1:** Configuración del entorno de desarrollo y base de datos.
-- **Sprint 2:** Implementación de la autenticación y gestión básica de usuarios.
-- **Sprint 3:** Integración de la API de Trello para la gestión de sprints.
-- **Sprint 4:** Desarrollo del módulo de inteligencia artificial con Ollama.
-- **Sprint 5:** Implementación de la interfaz de usuario y pruebas finales.
-
-## Guía de Instalación y Uso
-
-### Requisitos
-
+## 5. Guía de Instalación y Uso
+### 5.1. Requisitos
 - Node.js v14.x o superior
 - npm v6.x o superior
-- Git
+- Una cuenta en Trello y GitHub
 
-### Pasos de Instalación
-
-1. **Clonar el repositorio:**
+### 5.2. Instalación
+1. Clona el repositorio:
    ```bash
    git clone https://github.com/tu-usuario/MultiagentesIA.git
+   ```
+2. Navega al directorio del proyecto:
+   ```bash
    cd MultiagentesIA
    ```
-
-2. **Instalar dependencias:**
+3. Instala las dependencias:
    ```bash
    npm install
    ```
 
-3. **Configurar variables de entorno:**
-   - Crear un archivo `.env` en la raíz del proyecto.
-   - Agregar las variables de entorno necesarias (API keys, URLs, etc.).
-
-4. **Ejecutar la aplicación:**
+### 5.3. Configuración
+1. Crea un archivo `.env` en la raíz del proyecto y añade tus credenciales de Trello y GitHub.
+   ```env
+   TRELLO_API_KEY=tu_api_key_de_trello
+   TRELLO_TOKEN=tu_token_de_trello
+   GITHUB_TOKEN=tu_token_de_github
+   ```
+2. Ejecuta el servidor de desarrollo:
    ```bash
    npm run dev
    ```
 
-### Ejemplos de Uso
-
-1. **Iniciar sesión:**
+### 5.4. Ejecución de Pruebas
+1. Para ejecutar las pruebas unitarias:
    ```bash
-   POST /api/auth/login
+   npm test
    ```
 
-2. **Gestionar un sprint en Trello:**
-   ```bash
-   POST /api/sprint
-   ```
+## 6. Ejemplos de Uso
+### 6.1. Gestión de Sprint
+1. Abre la aplicación en tu navegador.
+2. Inicia sesión con tus credenciales de Trello y GitHub.
+3. Crea un nuevo sprint y asigna tareas a los agentes.
+4. Visualiza el progreso del sprint en tiempo real.
 
-3. **Consultar información de un sprint:**
-   ```bash
-   GET /api/sprint/:id
-   ```
+## 7. Próximos Pasos
+- Integración con Ollama para la IA en la gestión de sprints.
+- Mejora de la interfaz de usuario para una experiencia de usuario más intuitiva.
+- Implementación de notificaciones y alertas para los usuarios.
 
-## Próximos Pasos
+## 8. Historial de Sprints
+- Sprint 1: Configuración del entorno y desarrollo básico de la API RESTful.
+- Sprint 2: Implementación de la autenticación y la integración con Trello.
+- Sprint 3: Desarrollo de la interfaz de usuario y pruebas iniciales.
 
-- **Sprint 6:** Mejora de la interfaz de usuario y optimización del rendimiento.
-- **Sprint 7:** Integración con GitHub para gestión de repositorios y colaboración.
-- **Sprint 8:** Implementación de métricas y monitoreo de la inteligencia artificial.
+## 9. Estado del Desarrollo
+El proyecto se encuentra en fase de desarrollo activa. Los sprints se gestionan de manera autónoma y los agentes trabajan en colaboración para mejorar la eficiencia de la gestión de sprints.
 
-## Diseño de Arquitectura
+## 10. Contribuciones
+¡Estamos emocionados por tu interés en contribuir al proyecto! Para contribuir, sigue estos pasos:
+1. Haz un fork del repositorio.
+2. Crea una nueva rama para tu característica o corrección de errores.
+3. Haz los cambios y realiza un pull request.
 
-### Diagrama de Componentes
+## 11. Contacto
+Para cualquier consulta o ayuda, no dudes en contactar al equipo de desarrollo en:
+- Email: contacto@multiagentesia.com
+- Sitio web: [MultiagentesIA](https://multiagentesia.com)
 
-```
-+-------------------+
-|    MultiagentesIA  |
-+--------+----------+
-         |
-         |
-+--------v----------+
-|    Core Module    |
-+--------+----------+
-         |
-         |
-+--------v----------+
-|    Agent Module   |
-+--------+----------+
-         |
-         |
-+--------v----------+
-|    Communication  |
-+-------------------+
-```
-
-### Patrones de Diseño Recomendados
-
-- **Modularidad:** Se recomienda dividir el sistema en módulos independientes (Core Module, Agent Module, Communication) para facilitar la mantenimiento y la escalabilidad.
-- **Inyección de Dependencias:** Se utilizará un contenedor de inversión de control (IoC) para manejar las dependencias entre módulos, lo que facilitará las pruebas y la sustitución de implementaciones.
-- **CQRS (Command Query Responsibility Segregation):** Se recomienda separar las operaciones de comando (para cambios) y consulta (para lecturas) para mejorar la eficiencia y la escalabilidad.
-
-Este README.md proporciona una visión general del proyecto, incluyendo su propósito, estado actual, guía de instalación y uso, y detalles sobre la arquitectura y los patrones de diseño utilizados.
+¡Gracias por usar MultiagentesIA!
