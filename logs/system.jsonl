@@ -1877,3 +1877,7 @@
 {"ts":"2026-10-24T02:56:18.820Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvlt4kqz_ryls1b"}}
 {"ts":"2026-10-24T02:56:18.833Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
 {"ts":"2026-10-24T02:56:18.840Z","level":"INFO","source":"analysis","message":"Job job_mvlt4kqz_ryls1b completado en 4236ms"}
+{"ts":"2026-10-24T02:58:22.910Z","level":"INFO","source":"executor","message":"Resetando 3 tareas a \"pending\"..."}
+{"ts":"2026-10-24T02:58:22.911Z","level":"SPRINT","source":"system","message":"🚀 Sprint #8 iniciado. 3 tareas en cola."}
+{"ts":"2026-10-24T02:58:22.911Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 3"}
+{"ts":"2026-10-24T02:58:22.917Z","level":"AGENT","source":"arch","message":"Arquitecto empezó: 🔍 [ARCH] Auditoría de código y propuesta de refactorización"}

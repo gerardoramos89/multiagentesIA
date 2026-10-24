@@ -2,86 +2,93 @@
 import random
 
 class Agente:
-    def __init__(self, id):
-        self.id = id
-        self.estado = "inactivo"
-        self.objetivo = None
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.estrategia = None
 
-    def establecer_objetivo(self, objetivo):
-        self.objetivo = objetivo
+    def set_estrategia(self, estrategia):
+        self.estrategia = estrategia
 
     def actuar(self):
-        if self.estado == "inactivo":
-            return
-        acciones = ["explotar", "mover", "atacar"]
-        accion = random.choice(acciones)
-        print(f"Agente {self.id} {accion}")
+        if self.estrategia:
+            return self.estrategia.actuar()
+        else:
+            return "El agente no tiene estrategia definida."
 
-class SistemaMultiagentes:
-    def __init__(self, num_agentes):
-        self.agentes = [Agente(i) for i in range(num_agentes)]
+class Estrategia:
+    def actuar(self):
+        pass
 
-    def establecer_objetivo_para_todos(self, objetivo):
-        for agente in self.agentes:
-            agente.establecer_objetivo(objetivo)
+class EstrategiaAleatoria(Estrategia):
+    def actuar(self):
+        acciones = ["atacar", "defender", "moverse"]
+        return random.choice(acciones)
 
-    def actuar_todos(self):
-        for agente in self.agentes:
-            agente.actuar()
+class AgenteInteligente(Agente):
+    def actuar(self):
+        return "Usar estrategia inteligente"
 
 # Ejemplo de uso
-sistema = SistemaMultiagentes(5)
-sistema.establecer_objetivo_para_todos("explotar enemigos")
-sistema.actuar_todos()
+agente1 = Agente("Agente1")
+agente2 = Agente("Agente2")
+
+estrategia_aleatoria = EstrategiaAleatoria()
+agente1.set_estrategia(estrategia_aleatoria)
+agente2.set_estrategia(EstrategiaAleatoria())
+
+print(agente1.actuar())
+print(agente2.actuar())
+
+# Propuesta de refactorización
+# 1. Separar las estrategias en un módulo diferente.
+# 2. Utilizar polimorfismo para manejar diferentes estrategias.
+# 3. Eliminar la redundancia en la creación de instancias de Agente.
+
+# Nuevo archivo estrategias.py
+# ARCHIVO: estrategias.py
+
 ```
 
-Comentarios de la auditoría:
-1. **Estructura del código**: El código está bien estructurado, con una clara separación entre la clase `Agente` y el sistema de múltiples agentes `SistemaMultiagentes`.
-2. **Patrones utilizados**: Se utiliza el patrón de diseño "Agente" para representar a cada agente.
-3. **Deuda técnica**:
-   - **Acciones aleatorias**: La elección de acciones aleatorias puede ser mejorada para proporcionar un comportamiento más predecible o inteligente.
-   - **Método `actuar`**: El método `actuar` podría ser mejorado para que las acciones sean más específicas según el objetivo del agente.
-
-Propuesta de refactorización:
 ```python
-import random
+from abc import ABC, abstractmethod
+
+class Estrategia(ABC):
+    @abstractmethod
+    def actuar(self):
+        pass
+
+class EstrategiaAleatoria(Estrategia):
+    def actuar(self):
+        acciones = ["atacar", "defender", "moverse"]
+        return random.choice(acciones)
+
+class EstrategiaInteligente(Estrategia):
+    def actuar(self):
+        return "Usar estrategia inteligente"
+
+# Nuevo archivo agentes.py
+# ARCHIVO: agentes.py
+
+from estrategias import Estrategia, EstrategiaAleatoria, EstrategiaInteligente
 
 class Agente:
-    def __init__(self, id):
-        self.id = id
-        self.estado = "inactivo"
-        self.objetivo = None
+    def __init__(self, nombre, estrategia):
+        self.nombre = nombre
+        self.estrategia = estrategia
 
-    def establecer_objetivo(self, objetivo):
-        self.objetivo = objetivo
+    def set_estrategia(self, estrategia):
+        self.estrategia = estrategia
 
     def actuar(self):
-        if self.estado == "inactivo":
-            return
-        if "explotar" in self.objetivo:
-            print(f"Agente {self.id} explotar enemigos")
-        elif "mover" in self.objetivo:
-            print(f"Agente {self.id} mover a la meta")
-        elif "atacar" in self.objetivo:
-            print(f"Agente {self.id} atacar objetivo")
-
-class SistemaMultiagentes:
-    def __init__(self, num_agentes):
-        self.agentes = [Agente(i) for i in range(num_agentes)]
-
-    def establecer_objetivo_para_todos(self, objetivo):
-        for agente in self.agentes:
-            agente.establecer_objetivo(objetivo)
-
-    def actuar_todos(self):
-        for agente in self.agentes:
-            agente.actuar()
+        return self.estrategia.actuar()
 
 # Ejemplo de uso
-sistema = SistemaMultiagentes(5)
-sistema.establecer_objetivo_para_todos("explotar enemigos")
-sistema.actuar_todos()
-```
+from agentes import Agente
+from estrategias import EstrategiaAleatoria
 
-Cambios realizados:
-- Modificado el método `actuar` para que las acciones sean específicas según el objetivo del agente.
+agente1 = Agente("Agente1", EstrategiaAleatoria())
+agente2 = Agente("Agente2", EstrategiaAleatoria())
+
+print(agente1.actuar())
+print(agente2.actuar())
+```
