@@ -1,80 +1,91 @@
-# Diagrama de Componentes
+# 🏗️ [ARCH] Diseño de arquitectura para MultiagentesIA
+
+## 1. Diagrama de componentes
 
 ```
 +-------------------+
 |    MultiagentesIA  |
++--------+----------+
+         |
+         |
++--------v----------+
+|    Core Module    |
++--------+----------+
+         |
+         |
++--------v----------+
+|    Agent Module   |
++--------+----------+
+         |
+         |
++--------v----------+
+|    Communication  |
 +-------------------+
-     |      |
-     v      v
-+--------+ +--------+
-|  AgentManager  | |  CommunicationModule  |
-+--------+ +--------+
-     |      |
-     v      v
-+--------+ +--------+
-|     TaskScheduler    | |     LearningModule     |
-+--------+ +--------+
-     |      |
-     v      v
-+--------+ +--------+
-|   DecisionEngine   | |     EnvironmentModule    |
-+--------+ +--------+
 ```
 
-# Patrones de Diseño Recomendados
+## 2. Patrones de diseño recomendados
 
-1. **Singleton Pattern**: Para `AgentManager` y `CommunicationModule` para asegurar que haya una única instancia gestionada globalmente.
-2. **Observer Pattern**: Para `TaskScheduler` para notificar a los agentes cuando se asignan nuevas tareas.
-3. **Strategy Pattern**: Para `DecisionEngine` para permitir diferentes estrategias de decisión basadas en el tipo de tarea.
-4. **Factory Pattern**: Para `EnvironmentModule` para crear diferentes entornos de simulación.
+- **Modularidad**: Se recomienda dividir el sistema en módulos independientes (Core Module, Agent Module, Communication) para facilitar la mantenimiento y la escalabilidad.
+- **Inyección de Dependencias**: Se utilizará un contenedor de inversión de control (IoC) para manejar las dependencias entre módulos, lo que facilitará las pruebas y la sustitución de implementaciones.
+- **CQRS (Command Query Responsibility Segregation)**: Se recomienda separar las operaciones de comando (para cambios) y consulta (para lecturas) para mejorar el rendimiento y la consistencia.
 
-# Estructura de Carpetas Óptima
+## 3. Estructura de carpetas
 
 ```
 MultiagentesIA/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   ├── com/
-│   │   │   │   ├── multiagentes/
-│   │   │   │   │   ├── ia/
-│   │   │   │   │   │   ├── agents/
-│   │   │   │   │   │   ├── modules/
-│   │   │   │   │   │   │   ├── manager/
-│   │   │   │   │   │   │   ├── scheduler/
-│   │   │   │   │   │   │   ├── learning/
-│   │   │   │   │   │   │   ├── engine/
-│   │   │   │   │   │   │   ├── environment/
-│   │   │   ├── resources/
-│   │   │   ├── application.properties
-│   ├── test/
-│   │   ├── java/
-│   │   │   ├── com/
-│   │   │   │   ├── multiagentes/
-│   │   │   │   │   ├── ia/
-│   │   │   │   │   │   ├── agents/
-│   │   │   │   │   │   ├── modules/
-│   │   │   │   │   │   │   ├── manager/
-│   │   │   │   │   │   │   ├── scheduler/
-│   │   │   │   │   │   │   ├── learning/
-│   │   │   │   │   │   │   ├── engine/
-│   │   │   │   │   │   │   ├── environment/
-│   │   │   │   │   │   ├── tests/
+├── core/
+│   ├── services/
+│   ├── models/
+│   ├── utils/
+│   └── config/
+├── agents/
+│   ├── base_agent/
+│   ├── specific_agent1/
+│   ├── specific_agent2/
+│   └── config/
+├── communication/
+│   ├── protocols/
+│   ├── message_handlers/
+│   └── config/
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── acceptance/
+└── config/
+    ├── app.config
+    ├── logging.config
+    └── database.config
 ```
 
-# Decisiones Técnicas Clave (ADR)
+## 4. Decisiones técnicas clave (ADR)
 
-1. **ADR-001**: Uso de Spring Boot para la configuración y arranque rápido de la aplicación.
-2. **ADR-002**: Implementación de búsqueda y rescate como tarea estándar para todos los agentes.
-3. **ADR-003**: Uso de Maven para la gestión de dependencias y construcción del proyecto.
+### ADR-001: Uso de Patrón Modular
+**Estado:** Aprobado
+**Contexto:** El sistema original es monolítico y difícil de mantener.
+**Decisión:** Implementar un enfoque modular con módulos independientes para Core, Agents y Comunicación.
+**Consecuencias:** Mejora la claridad del código, facilita las pruebas unitarias y mejora la escalabilidad.
 
-# Deuda Técnica Identificada y Cómo Solverla
+### ADR-002: Implementación de CQRS
+**Estado:** Aprobado
+**Contexto:** El sistema requiere una separación clara entre comandos y consultas para mejorar el rendimiento y la consistencia.
+**Decisión:** Implementar CQRS con un modelo de eventos para notificaciones.
+**Consecuencias:** Mayor rendimiento en consultas, mejor manejo de la lógica de negocio y mayor flexibilidad en cambios.
 
-1. **Deuda Técnica**: Falta de claridad en las interfaces y clases abstractas, lo que dificulta la extensión y mantenimiento.
-   - **Solución**: Definir interfaces claras y documentar claramente las expectativas de las implementaciones.
-2. **Deuda Técnica**: Dependencia excesiva de módulos específicos en el `ApplicationRunner`, lo que limita la escalabilidad.
-   - **Solución**: Refactorizar el arranque para reducir dependencias y permitir un arranque más flexible.
-3. **Deuda Técnica**: Falta de pruebas unitarias y de integración robustas.
-   - **Solución**: Añadir pruebas unitarias y de integración para cada componente y refactorizar según sea necesario para facilitar las pruebas.
+## 5. Deuda técnica identificada y cómo resolverla
 
-Esta arquitectura y las decisiones técnicas propuestas buscan mejorar la modularidad, la escalabilidad y el mantenimiento del sistema MultiagentesIA.
+### Deuda técnica: Dependencias acopladas
+**Descripción:** Módulos dependen directamente de otros sin una abstracción clara, lo que dificulta las pruebas y cambios.
+**Solución:** Implementar interfaces y utilizar inyección de dependencias.
+**Consecuencias:** Mejora la modularidad, facilita las sustituciones y mejora la calidad del código.
+
+### Deuda técnica: Falta de separación de responsabilidades
+**Descripción:** El código es difícil de mantener debido a que las responsabilidades están mezcladas.
+**Solución:** Separar las responsabilidades de comando y consulta en módulos diferentes.
+**Consecuencias:** Mejora el rendimiento y la consistencia, facilita la gestión de eventos y cambios en la lógica de negocio.
+
+### Deuda técnica: Falta de pruebas
+**Descripción:** El código actual carece de pruebas unitarias y de integración.
+**Solución:** Implementar un conjunto de pruebas automatizadas para cada módulo.
+**Consecuencias:** Mejora la confianza en el código, facilita la detección de errores y promueve un enfoque de desarrollo basado en pruebas.
+
+Este enfoque de refactorización y adopción de buenas prácticas de diseño mejorará la calidad del código, la mantenibilidad y la escalabilidad del sistema MultiagentesIA.
