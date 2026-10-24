@@ -3,48 +3,51 @@
 ## 1. Análisis de Logros vs. Planeado
 
 ### Logros:
-- Se logró la integración básica con la API de Trello, permitiendo la visualización y gestión inicial de tarjetas y listas.
-- Implementación inicial de la IA Ollama para sugerir tareas y prioridades, mostrando resultados prometedores pero requiriendo ajustes para mayor precisión.
-- Configuración básica de la interfaz de usuario en Next.js, permitiendo la navegación y visualización de datos en la aplicación.
+- Se logró la integración inicial con la API de Trello, permitiendo la visualización y gestión básica de tarjetas y listas.
+- Implementación de un dashboard básico que muestra el progreso del sprint.
+- Inicio del desarrollo de la funcionalidad de generación de sprints autónomos utilizando Ollama para la IA.
 
 ### Fracaso:
-- La implementación de la IA Ollama no logró alcanzar el nivel de precisión esperado, lo que afectó negativamente la planificación y asignación de tareas para el siguiente sprint.
-- La integración con la API de GitHub no se completó debido a limitaciones técnicas y falta de tiempo para resolver problemas de autenticación y permisos.
+- La integración con la API de GitHub no se completó como se esperaba, retrasando la funcionalidad de seguimiento de repositorios y colaboradores.
+- La implementación de la IA para la generación de sprints no mostró los resultados esperados en términos de precisión y eficiencia.
 
 ## 2. Identificación de Patrones de Éxito y Fracaso
 
-- **Patrones de Éxito:**
-  - La integración con Trello fue más exitosa de lo esperado, mostrando una clara mejora en la gestión de tareas y proyectos.
-  - El equipo demostró habilidades en la adaptación rápida a herramientas y tecnologías nuevas, lo que es crucial para proyectos ágiles.
+### Patrones de Éxito:
+- La integración con Trello fue más rápida de lo previsto, lo que indica una buena coordinación y comprensión del equipo en el uso de herramientas de gestión de proyectos.
+- El dashboard proporcionó una visión clara del progreso, lo que motivó al equipo a mantenerse enfocado.
 
-- **Patrones de Fracaso:**
-  - La dependencia de la IA Ollama para la toma de decisiones fue un fracaso, ya que la precisión y la capacidad de sugerir acciones efectivas no se cumplieron con las expectativas.
-  - La falta de experiencia en el manejo de API externas como GitHub afectó significativamente el alcance y la planificación del proyecto.
+### Patrones de Fracaso:
+- La falta de experiencia en el manejo de APIs complejas, como la de GitHub, resultó en un retraso significativo.
+- La implementación de la IA requirió una mayor inversión en capacitación y ajustes iniciales, lo que afectó negativamente el cronograma.
 
 ## 3. Propuesta de Mejora para el Próximo Sprint
 
 ### Mejoras Concretas:
-1. **Ajuste y Mejora de la IA Ollama:**
-   - Investigar y aplicar modelos de IA más avanzados que puedan ofrecer predicciones más precisas y sugerencias efectivas.
-   - Desarrollar un sistema de feedback para la IA, permitiendo a los usuarios calificar y comentar sobre las sugerencias proporcionadas.
+1. **Acelerar la Integración con GitHub API**:
+   - **Dado**: Se tiene acceso a la documentación y pruebas iniciales de la API de GitHub.
+   - **Cuando**: Al inicio del siguiente sprint.
+   - **Entonces**: Se deberá completar la integración de la API para permitir el seguimiento detallado de proyectos y colaboradores.
 
-2. **Integración Avanzada con GitHub API:**
-   - Reiniciar la integración con la API de GitHub, enfocándose en resolver los problemas de autenticación y permisos.
-   - Explorar opciones de integración más avanzadas, como la sincronización directa con repositorios de GitHub para un flujo de trabajo más eficiente.
+2. **Refinar la IA para la Generación de Sprints**:
+   - **Dado**: Datos iniciales de pruebas y feedback del equipo.
+   - **Cuando**: Durante la segunda mitad del sprint actual.
+   - **Entonces**: Se deberá ajustar el modelo de IA para mejorar la precisión y eficiencia en la generación de sprints.
 
-3. **Ampliación de Funcionalidades en la Aplicación:**
-   - Desarrollar una vista detallada para las tarjetas de Trello, incluyendo información adicional y gráficos que ayuden en la toma de decisiones.
-   - Implementar un sistema de seguimiento de progreso para cada tarea, permitiendo a los equipos visualizar el estado y el progreso en tiempo real.
+3. **Entrenamiento Avanzado para el Equipo**:
+   - **Dado**: Falta de experiencia en manejo de tecnologías avanzadas como la IA.
+   - **Cuando**: Al inicio del próximo sprint.
+   - **Entonces**: Se deberá programar un taller de capacitación para mejorar las habilidades del equipo en el uso de herramientas avanzadas.
 
 ## 4. Análisis de Riesgos y Roadmap
 
-### Riesgos:
-- El retraso en la integración de la IA podría afectar significativamente el cronograma del proyecto.
-- Problemas con la API de GitHub podrían llevar a una pérdida de datos y a una disminución en la eficiencia del equipo.
+### Riesgos Identificados:
+- Rezagos en la integración de APIs puede afectar significativamente el cronograma y las expectativas de entrega.
+- La complejidad de la IA puede requerir ajustes y mejoras constantes, lo que podría ser un desafío en términos de tiempo y recursos.
 
-### Roadmap:
-- **Sprint 1:** Integración básica con Trello y demostración de concepto de la IA Ollama.
-- **Sprint 2:** Mejora de la IA, inicio de la integración con GitHub y desarrollo de funciones básicas en la aplicación.
-- **Sprint 3:** Ajustes en la IA, ampliación de funcionalidades y pruebas finales.
+### Roadmap de Mejora:
+- **Sprint 3**: Concentrarse en la finalización de la integración de GitHub API y el refinamiento de la IA.
+- **Sprint 4**: Enfocarse en la implementación de las mejoras basadas en los resultados de la retroalimentación del sprint anterior y el entrenamiento avanzado para el equipo.
+- **Sprint 5**: Planificar revisiones y ajustes finales según los resultados de los primeros meses de uso del sistema, priorizando las áreas de mejora identificadas.
 
-Este roadmap y las propuestas de mejora están diseñadas para abordar los puntos débiles identificados y para impulsar el éxito en el siguiente sprint y más allá.
+Este enfoque estratégico nos permitirá mantener un alto rendimiento y adaptarnos rápidamente a los desafíos identificados, asegurando la entrega de una solución robusta y eficiente.
