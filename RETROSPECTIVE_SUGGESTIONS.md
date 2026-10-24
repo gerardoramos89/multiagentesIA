@@ -1,46 +1,40 @@
-# Objetivos de Negocio Medibles:
+# Objetivos de Negocio Medibles
 - **Incrementar la eficiencia de los sprints en un 15%**
-- **Mejorar la satisfacción del cliente en la gestión de proyectos en un 10%**
-- **Reducir el tiempo de desarrollo de un sprint en un 5%**
+- **Mejorar la satisfacción del equipo de desarrollo en un 20%**
+- **Aumentar la precisión de las predicciones de entrega en un 10%**
 
-# Criterios de Aceptación Claros (Given-When-Then):
-- **Given** que el equipo ha finalizado el sprint actual.
-- **When** el Product Owner analiza los resultados y la retroalimentación del equipo.
-- **Then** debe documentarse claramente las mejoras propuestas para el próximo sprint.
+# Criterios de Aceptación Claros (Given-When-Then)
+1. **Given** que el equipo ha finalizado el sprint actual,
+2. **When** se realiza la retrospectiva,
+3. **Then** se han identificado claramente las mejoras y las acciones concretas para el próximo sprint.
 
-# Análisis de Riesgos:
-- **Riesgo 1: Cambios en las tecnologías y herramientas pueden retrasar el proyecto.**
-  - **Mitigación:** Mantener un plan de contingencia con alternativas probadas y aprobadas.
-- **Riesgo 2: Problemas con la integración de la API de Trello y GitHub.**
-  - **Mitigación:** Realizar pruebas exhaustivas y establecer plazos flexibles para la integración.
-- **Riesgo 3: Desmotivación del equipo debido a la alta presión de metas.**
-  - **Mitigación:** Implementar sesiones de motivación regular y feedback constructivo.
+# Análisis de Riesgos
+- **Riesgo 1**: Cambios en las tecnologías o herramientas pueden retrasar el progreso del proyecto.
+  - **Mitigación**: Mantener un plan de contingencia con alternativas probadas y aprobadas.
+- **Riesgo 2**: Problemas de integración entre las APIs de Trello y GitHub.
+  - **Mitigación**: Realizar pruebas exhaustivas y establecer un plan de pruebas de integración.
+- **Riesgo 3**: Desmotivación del equipo debido a cambios en las tareas asignadas.
+  - **Mitigación**: Fomentar la comunicación y la retroalimentación continua.
 
-# Roadmap:
-- **Sprint 1:** Configuración inicial del sistema, integración básica de Trello y GitHub.
-- **Sprint 2:** Implementación de la IA para la gestión de sprints, pruebas iniciales.
-- **Sprint 3:** Ajustes basados en retroalimentación del sprint 2, mejora de la interfaz de usuario.
-- **Sprint 4:** Integración completa de la IA, pruebas finales y lanzamiento beta.
-- **Sprint 5:** Recopilación de feedback del lanzamiento beta, ajustes finales y lanzamiento oficial.
+# Roadmap
+- **Sprint 1**: Configuración inicial del sistema, integración básica con Trello y GitHub.
+- **Sprint 2**: Implementación de la IA para la gestión de sprints.
+- **Sprint 3**: Pruebas y ajustes basados en la retroalimentación del equipo.
+- **Sprint 4**: Liberación inicial del sistema con mejoras basadas en la retrospectiva.
 
-# Retrospectiva y Propuesta de Mejora para el Próximo Sprint:
+# Retrospectiva y Propuesta de Mejora para el Próximo Sprint
+## 1. Análisis de Logros vs. Planeado
+- **Logros**: Se logró configurar el sistema inicial con integración a Trello y GitHub.
+- **Fracaso**: La implementación de la IA para la gestión de sprints no fue completada como se esperaba.
 
-## 1. Análisis de Logros vs Planeado:
-- **Logros:** Se logró configurar el sistema básico de gestión de sprints con integración a Trello y GitHub.
-- **Fracaso:** La integración de la IA no fue completada como se esperaba, afectando la eficiencia de los sprints.
+## 2. Identificación de Patrones de Éxito y Fracaso
+- **Patrones de Éxito**: La comunicación grupal y el uso de herramientas como Trello han sido efectivos para mantener un seguimiento del progreso.
+- **Patrones de Fracaso**: La complejidad de la integración de la IA sobrepujó las expectativas, requiriendo más tiempo de capacitación y ajuste.
 
-## 2. Identificación de Patrones de Éxito y Fracaso:
-- **Patrones de Éxito:** La comunicación interna fue efectiva, permitiendo ajustes rápidos en el plan de acción.
-- **Patrones de Fracaso:** Falta de alineación en los objetivos del equipo, lo que llevó a desmotivación y retrasos.
+## 3. Propuesta de Mejoras para el Próximo Sprint
+- **Mejora 1**: Concentrarse en la implementación de la IA para la gestión de sprints, asignando recursos adicionales para su desarrollo y ajuste.
+- **Mejora 2**: Reforzar la comunicación y la retroalimentación temprana para prevenir desmotivaciones tempranas.
+- **Mejora 3**: Realizar una evaluación más profunda de las herramientas y tecnologías disponibles para asegurar una mejor integración y compatibilidad.
 
-## 3. Propuesta de Mejoras para el Próximo Sprint:
-- **Mejora 1:** Implementar sesiones de coaching para mantener el compromiso y la motivación del equipo.
-- **Mejora 2:** Priorizar la integración de la IA para el próximo sprint, estableciendo hitos claros y medibles.
-- **Mejora 3:** Ampliar las reuniones de planificación y revisión de sprint para incluir feedback continuo y ajustes en tiempo real.
-
-## 4. Recomendaciones Estratégicas:
-- **Recomendación 1:** Establecer metas SMART (Específicas, Medibles, Alcanzables, Relevantes y Temporales) para cada miembro del equipo.
-- **Recomendación 2:** Crear un plan de formación continuo para la incorporación de nuevas tecnologías y herramientas.
-- **Recomendación 3:** Implementar un sistema de incentivos basado en resultados y contribución al proyecto.
-
-Este documento estratégico proporciona una guía clara para el equipo y para futuras iteraciones del proyecto, asegurando un enfoque continuo en la mejora y el cumplimiento de los objetivos de negocio.
+# Conclusiones
+La retrospectiva ha revelado la necesidad de enfocarnos más en la implementación de la IA y en mejorar la comunicación interna. El siguiente sprint deberá centrarse en estas áreas, asegurando así un avance más sólido y una mayor satisfacción del equipo.
