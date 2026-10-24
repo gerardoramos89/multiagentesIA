@@ -1,65 +1,83 @@
 # Arquitectura del Proyecto de Fábrica de Agentes
 
 ## 1. Introducción
-El Proyecto de Fábrica de Agentes tiene como objetivo principal desarrollar un sistema autónomo de gestión de sprints con inteligencia artificial (IA). Este sistema estará construido utilizando tecnologías modernas y robustas, que incluyen Next.js, React, Tailwind, Node.js, Ollama, Trello API y GitHub API.
+El Proyecto de Fábrica de Agentes tiene como objetivo principal desarrollar un sistema autónomo de gestión de sprints con IA. Este documento describe la arquitectura del proyecto, enfocada en la estrategia de manejo de datos y las mejoras necesarias para futuras refactorizaciones.
 
-## 2. Estructura de Carpetas
-La estructura de carpetas del proyecto se organizará de la siguiente manera:
+## 2. Stack de Tecnologías
+- **Frontend:**
+  - **Next.js** para el desarrollo de la aplicación web.
+  - **React** como biblioteca principal para el manejo del DOM.
+  - **Tailwind** para estilos y componentes de diseño.
 
+- **Backend:**
+  - **Node.js** para el servidor y la lógica de negocio.
+  - **Ollama** como servicio de inteligencia artificial.
+
+- **APIs:**
+  - **Trello API** para la integración con el tablero de Trello.
+  - **GitHub API** para la integración con el repositorio de GitHub.
+
+## 3. Estructura de Carpetas
 ```
-/proyecto-fabrica-agentes
-  /src
-    /components
-    /context
-    /hooks
-    /pages
-    /public
-    /services
-    /utils
-  /tests
-  /config
-  /scripts
-  /docs
-    ARCHITECTURE.md
+/src
+  /components
+    /shared
+    /ui
+  /context
+  /hooks
+  /pages
+    /api
+    /_app.js
+    /index.js
+  /services
+    /data
+    /api
+  /utils
 ```
 
-## 3. Patrones de Diseño Específicos
-### 3.1. Patrón de Diseño de Contexto Global
-Se utilizará el patrón de diseño de Contexto Global para gestionar el estado global de la aplicación. Esto permitirá una gestión centralizada de estados y props, facilitando la comunicación y la sincronización entre componentes.
+## 4. Patrones de Diseño
+### 4.1. Patrón de Contexto (Context API)
+Se utilizará el Patrón de Contexto para el manejo de estados globales y la gestión de datos compartidos entre componentes.
 
-### 3.2. Patrón de Diseño de Servicios
-Se implementará el patrón de diseño de Servicios para abstraer la lógica de negocio y la interacción con APIs externas. Cada servicio estará encapsulado en su propio módulo, facilitando la testeabilidad y la mantenibilidad del código.
+### 4.2. Patrón de Hooks (Custom Hooks)
+Se crearán Custom Hooks para abstraer la lógica de negocio y facilitar la reutilización de código.
 
-## 4. Decisiones Técnicas
-### 4.1. Gestión de Estados con Zustand
-Se utilizará Zustand como gestor de estados global para la aplicación. Zustand ofrece una forma clara y eficiente de gestionar el estado de la aplicación, facilitando la implementación de reducers y actions.
+### 4.3. Patrón de Servicios (Service Layer)
+Los servicios de datos y API se abstraerán en un layer de servicio para mantener la separación de responsabilidades y facilitar las pruebas.
 
-### 4.2. Estilización con Tailwind CSS
-Se optará por utilizar Tailwind CSS para la estilización de la aplicación. Tailwind proporciona una manera eficiente y consistente de aplicar estilos, permitiendo una rápida iteración y una fácil personalización.
+## 5. Estrategia de Manejo de Datos
+### 5.1. Almacenamiento en Caché
+Se implementará una capa de caché utilizando Redis para reducir las llamadas a la API y mejorar el rendimiento.
 
-### 4.3. Integración con Trello API
-La integración con la API de Trello se realizará mediante el uso de Axios para gestionar las solicitudes HTTP. Se implementarán endpoints específicos para interactuar con las tarjetas y listas de Trello, facilitando la gestión de sprints y tareas.
+### 5.2. Optimización de Consultas
+Se optimizarán las consultas a la base de datos y a las APIs externas para reducir la carga y mejorar la eficiencia.
 
-## 5. Escalabilidad
-### 5.1. Arquitectura de Microservicios
-Se considerará la implementación de una arquitectura de microservicios para escalar la aplicación. Cada microservicio estará aislado y podrá escalarse de manera independiente, permitiendo una mayor flexibilidad y rendimiento.
+### 5.3. Eventos Asincrónicos
+Se utilizarán Event Emitters para manejar eventos asincrónicos y garantizar la coherencia de los datos.
 
-### 5.2. Caching con Redis
-Se implementará Redis como caché para reducir la latencia y el tiempo de respuesta en las solicitudes a la API de Trello. Redis también ayudará a mitigar el estrés en el servidor, mejorando la capacidad de respuesta de la aplicación.
+## 6. Decisiones Técnicas
+### 6.1. API Restful
+Se seguirá el estándar RESTful para la implementación de endpoints de la API, asegurando una comunicación clara y predecible.
 
-## 6. Seguridad
-### 6.1. Autenticación y Seguridad de Datos
-Se implementará un sistema de autenticación robusto utilizando OAuth 2.0. Además, se utilizarán variables de entorno para gestionar las credenciales sensibles, asegurando que no se expongan en el código fuente.
+### 6.2. Autenticación y Seguridad
+Se implementará autenticación OAuth 2.0 para proteger los endpoints y datos sensibles.
 
-### 6.2. Validación de Entradas
-Se implementarán validaciones en las entradas del usuario para prevenir inyecciones de código y otros tipos de ataques. Utilizaremos bibliotecas como Joi o Yup para garantizar la integridad de los datos ingresados.
+### 6.3. Monitoreo y Registro
+Se utilizará **ELK Stack** para el monitoreo y registro de eventos, asegurando una rápida detección y resolución de problemas.
 
-## 7. Reducción de Deuda Técnica
-### 7.1. Pruebas Unitarias y de Integración
-Se implementarán pruebas unitarias y de integración para detectar errores tempranamente y asegurar que el código funcione como se espera. Utilizaremos Jest para las pruebas unitarias y Supertest para las pruebas de integración.
+## 7. Escalabilidad
+### 7.1. Escalabilidad Horizontal
+Se planifica la implementación de un cluster de servidores utilizando Kubernetes para escalar horizontalmente el backend y el frontend.
 
-### 7.2. Revisión de Código Continua
-Se implementará un sistema de revisión de código continuo utilizando GitHub Actions. Este sistema automatizará las pruebas y verificaciones de calidad, asegurando que cada cambio en el código sea validado antes de ser integrado en el repositorio principal.
+### 7.2. Escalabilidad Vertical
+Se optimizará el uso de recursos y se implementarán patrones de escalabilidad vertical, como el uso de instancias más potentes para servicios críticos.
 
-## 8. Conclusiones
-El Proyecto de Fábrica de Agentes se ha diseñado con una arquitectura modular y escalable, utilizando tecnologías modernas y patrones de diseño sólidos. Las decisiones técnicas tomadas buscan garantizar una alta seguridad, escalabilidad y mantenimiento del sistema a largo plazo.
+## 8. Reducción de Deuda Técnica
+### 8.1. Refactorización Planificada
+Se identificarán y abordarán las deudas técnicas identificadas durante el desarrollo, planificando refactorizaciones para mantener el código limpio y eficiente.
+
+### 8.2. Pruebas Automatizadas
+Se incrementará el porcentaje de pruebas automatizadas para garantizar la calidad del código y facilitar la detección de errores.
+
+## 9. Conclusiones
+Este documento ha definido la arquitectura del Proyecto de Fábrica de Agentes, enfocada en la estrategia de manejo de datos y las mejoras necesarias para futuras refactorizaciones. La implementación de patrones de diseño, decisiones técnicas y prácticas de seguridad aseguran una solución escalable y segura.
