@@ -120,15 +120,24 @@
       "title": "Scrum master",
       "description": "Scrum master",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T14:57:40.447Z"
+      "status": "done",
+      "startedAt": "2026-10-24T14:57:40.447Z",
+      "completedAt": "2026-10-24T14:59:34.219Z",
+      "output": "Generado: nombre_del_archivo.ext",
+      "commits": [
+        "760e671636a3ecd0c5bc7ff8328bcf999dd161b4"
+      ],
+      "filesModified": [
+        "nombre_del_archivo.ext"
+      ]
     },
     {
       "id": "task-1792853523834-8",
       "title": "🏗️ [ARCH] Diseño de arquitectura para MultiagentesIA",
       "description": "Como Arquitecto, revisa el código actual de MultiagentesIA y propón mejoras de arquitectura. Genera un archivo ARCHITECTURE.md con: 1) Diagrama de componentes (en texto), 2) Patrones de diseño recomendados, 3) Estructura de carpetas óptima, 4) Decisiones técnicas clave (ADR), 5) Deuda técnica identificada y cómo resolverla.",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T14:59:36.231Z"
     },
     {
       "id": "task-1792853523834-9",
