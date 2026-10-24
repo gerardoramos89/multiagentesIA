@@ -33,7 +33,7 @@ ARCHIVO: src/primerTest.test.ts
 ```typescript
 import { suma } from './suma';
 
-test('suma de 1 + 2 es igual a 3', () => {
+test('Suma de 1 + 2 es igual a 3', () => {
   expect(suma(1, 2)).toBe(3);
 });
 ```
@@ -41,7 +41,7 @@ test('suma de 1 + 2 es igual a 3', () => {
 ARCHIVO: src/suma.ts
 
 ```typescript
-export function suma(a: number, b: number): number {
+export const suma = (a: number, b: number): number => {
   return a + b;
-}
+};
 ```
