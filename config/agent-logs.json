@@ -1,47 +1,5 @@
 [
   {
-    "agent": "dev",
-    "message": "✅ Completado en 59.7s",
-    "timestamp": "2026-10-24T03:20:28.923Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Todas las tareas completadas. Generando retrospectiva...",
-    "timestamp": "2026-10-24T03:20:30.933Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Generando retrospectiva del sprint...",
-    "timestamp": "2026-10-24T03:20:30.943Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Retrospectiva completa generada",
-    "timestamp": "2026-10-24T03:20:45.546Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📋 Creando encuestas en Trello para feedback humano...",
-    "timestamp": "2026-10-24T03:20:45.556Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📋 Creando encuestas en Trello...",
-    "timestamp": "2026-10-24T03:20:45.566Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ 5 encuestas de revisión humana creadas en Trello",
-    "timestamp": "2026-10-24T03:20:47.664Z",
-    "level": "success"
-  },
-  {
     "agent": "po",
     "message": "✅ Encuestas creadas. Esperando respuestas del humano.",
     "timestamp": "2026-10-24T03:20:47.672Z",
@@ -87,6 +45,48 @@
     "agent": "arch",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T03:30:44.828Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Push exitoso: 55bbdb6",
+    "timestamp": "2026-10-24T03:30:48.341Z",
+    "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Completado en 62.0s",
+    "timestamp": "2026-10-24T03:30:48.349Z",
+    "level": "success"
+  },
+  {
+    "agent": "dev",
+    "message": "🎯 Trabajando en: 💻 [DEV] Implementar funcionalidad principal",
+    "timestamp": "2026-10-24T03:30:50.364Z",
+    "level": "info"
+  },
+  {
+    "agent": "dev",
+    "message": "Iniciando: 💻 [DEV] Implementar funcionalidad principal",
+    "timestamp": "2026-10-24T03:30:50.372Z",
+    "level": "info"
+  },
+  {
+    "agent": "dev",
+    "message": "Generando código con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-24T03:30:50.379Z",
+    "level": "info"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Archivo creado: MultiagentesIA.py",
+    "timestamp": "2026-10-24T03:31:18.587Z",
+    "level": "success"
+  },
+  {
+    "agent": "dev",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-24T03:31:18.597Z",
     "level": "info"
   }
 ]

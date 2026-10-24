@@ -4,91 +4,42 @@ import random
 class Agente:
     def __init__(self, nombre):
         self.nombre = nombre
-        self.estrategia = None
+        self.tareas = []
 
-    def set_estrategia(self, estrategia):
-        self.estrategia = estrategia
+    def agregar_tarea(self, tarea):
+        self.tareas.append(tarea)
 
-    def actuar(self):
-        if self.estrategia:
-            return self.estrategia.actuar()
-        else:
-            return "El agente no tiene estrategia definida."
+    def realizar_tarea(self):
+        if self.tareas:
+            tarea = random.choice(self.tareas)
+            print(f"{self.nombre} está realizando la tarea: {tarea}")
+            self.tareas.remove(tarea)
 
-class Estrategia:
-    def actuar(self):
-        pass
+class PlataformaMultiagentes:
+    def __init__(self, num_agentes):
+        self.agentes = [Agente(f"Agente {i+1}") for i in range(num_agentes)]
 
-class EstrategiaAleatoria(Estrategia):
-    def actuar(self):
-        acciones = ["atacar", "defender", "moverse"]
-        return random.choice(acciones)
+    def agregar_tarea(self, tarea):
+        agente = random.choice(self.agentes)
+        agente.agregar_tarea(tarea)
 
-class AgenteInteligente(Agente):
-    def actuar(self):
-        return "Usar estrategia inteligente"
+    def ejecutar_ciclo(self):
+        for agente in self.agentes:
+            agente.realizar_tarea()
 
-# Ejemplo de uso
-agente1 = Agente("Agente1")
-agente2 = Agente("Agente2")
+def main():
+    num_agentes = 5
+    plataforma = PlataformaMultiagentes(num_agentes)
 
-estrategia_aleatoria = EstrategiaAleatoria()
-agente1.set_estrategia(estrategia_aleatoria)
-agente2.set_estrategia(EstrategiaAleatoria())
+    tareas = ["Análisis", "Diseño", "Implementación", "Prueba", "Documentación"]
+    for tarea in tareas:
+        plataforma.agregar_tarea(tarea)
 
-print(agente1.actuar())
-print(agente2.actuar())
+    for _ in range(10):
+        plataforma.ejecutar_ciclo()
 
-# Propuesta de refactorización
-# 1. Separar las estrategias en un módulo diferente.
-# 2. Utilizar polimorfismo para manejar diferentes estrategias.
-# 3. Eliminar la redundancia en la creación de instancias de Agente.
-
-# Nuevo archivo estrategias.py
-# ARCHIVO: estrategias.py
-
+if __name__ == "__main__":
+    main()
 ```
 
-```python
-from abc import ABC, abstractmethod
-
-class Estrategia(ABC):
-    @abstractmethod
-    def actuar(self):
-        pass
-
-class EstrategiaAleatoria(Estrategia):
-    def actuar(self):
-        acciones = ["atacar", "defender", "moverse"]
-        return random.choice(acciones)
-
-class EstrategiaInteligente(Estrategia):
-    def actuar(self):
-        return "Usar estrategia inteligente"
-
-# Nuevo archivo agentes.py
-# ARCHIVO: agentes.py
-
-from estrategias import Estrategia, EstrategiaAleatoria, EstrategiaInteligente
-
-class Agente:
-    def __init__(self, nombre, estrategia):
-        self.nombre = nombre
-        self.estrategia = estrategia
-
-    def set_estrategia(self, estrategia):
-        self.estrategia = estrategia
-
-    def actuar(self):
-        return self.estrategia.actuar()
-
-# Ejemplo de uso
-from agentes import Agente
-from estrategias import EstrategiaAleatoria
-
-agente1 = Agente("Agente1", EstrategiaAleatoria())
-agente2 = Agente("Agente2", EstrategiaAleatoria())
-
-print(agente1.actuar())
-print(agente2.actuar())
-```
+Este código define una clase `Agente` que puede agregar tareas y realizar una tarea aleatoria. La clase `PlataformaMultiagentes` gestiona una lista de agentes y asigna tareas a los agentes de manera aleatoria. El método `ejecutar_ciclo` hace que cada agente realice una tarea. Finalmente, la función `main` configura la plataforma con un número fijo de agentes y tareas, y ejecuta un ciclo de tareas varias veces.
