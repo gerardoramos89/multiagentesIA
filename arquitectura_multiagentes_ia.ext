@@ -1,0 +1,113 @@
+```python
+# Definición de la arquitectura para MultiagentesIA usando Next.js
+
+# 1. Definir la estructura de directorios
+# - src: Contendrá el código fuente de la aplicación
+# - public: Contendrá los archivos estáticos y el archivo index.html
+# - components: Contendrá los componentes reutilizables
+# - pages: Contendrá las páginas de la aplicación
+# - styles: Contendrá los archivos de estilo
+
+# 2. Configuración de Next.js
+# next.config.js: Archivo de configuración de Next.js
+
+module.exports = {
+  reactStrictMode: true,
+  swcMinify: true,
+  images: {
+    domains: ['example.com'], // Agregar dominios de imágenes si es necesario
+  },
+};
+
+# 3. Definir componentes reutilizables
+# Button.js: Componente de botón
+
+import React from 'react';
+
+const Button = ({ children, onClick }) => {
+  return (
+    <button onClick={onClick} className="button">
+      {children}
+    </button>
+  );
+};
+
+export default Button;
+
+# 4. Definir páginas
+# index.js: Página principal
+
+import React from 'react';
+import Button from '../components/Button';
+
+const HomePage = () => {
+  const handleClick = () => {
+    alert('¡Hola! Soy un botón.');
+  };
+
+  return (
+    <div>
+      <h1>Bienvenido a la aplicación MultiagentesIA</h1>
+      <Button onClick={handleClick}>Haz clic aquí</Button>
+    </div>
+  );
+};
+
+export default HomePage;
+
+# 5. Estilos globales
+# global.css: Archivo de estilos globales
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #333;
+}
+
+# 6. Configuración de la aplicación
+# _app.js: Archivo que configura la aplicación
+
+import '../styles/global.css';
+
+const MyApp = ({ Component, pageProps }) => {
+  return <Component {...pageProps} />;
+};
+
+export default MyApp;
+
+# 7. Definir rutas
+# next.config.js: Configuración de rutas
+
+const routes = [
+  {
+    page: 'Home',
+    path: '/',
+  },
+  {
+    page: 'About',
+    path: '/about',
+  },
+];
+
+module.exports = {
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, dirPaths, lib, config }
+  ) {
+    const pathMap = { ...defaultPathMap };
+    routes.forEach((route) => {
+      pathMap[route.path] = { page: route.page };
+    });
+    return pathMap;
+  },
+};
+```
+
+Este archivo define una arquitectura para una aplicación MultiagentesIA usando Next.js, siguiendo las mejores prácticas de organización y estructura de código.

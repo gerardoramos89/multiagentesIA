@@ -2059,3 +2059,7 @@
 {"ts":"2026-10-24T03:29:29.672Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvlub9ev_g69huj"}}
 {"ts":"2026-10-24T03:29:29.687Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
 {"ts":"2026-10-24T03:29:29.692Z","level":"INFO","source":"analysis","message":"Job job_mvlub9ev_g69huj completado en 3572ms"}
+{"ts":"2026-10-24T03:29:46.296Z","level":"INFO","source":"executor","message":"Resetando 4 tareas a \"pending\"..."}
+{"ts":"2026-10-24T03:29:46.297Z","level":"SPRINT","source":"system","message":"🚀 Sprint #10 iniciado. 4 tareas en cola."}
+{"ts":"2026-10-24T03:29:46.297Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 4"}
+{"ts":"2026-10-24T03:29:46.303Z","level":"AGENT","source":"arch","message":"Arquitecto empezó: 🏗️ [ARCH] Diseñar arquitectura para MultiagentesIA"}
