@@ -22,19 +22,21 @@ El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales m�
 
 - **Sprint 1:** Configuración del entorno de desarrollo y base de datos.
 - **Sprint 2:** Implementación de la autenticación y gestión básica de usuarios.
-- **Sprint 3:** Integración de la API de Trello para la gestión de tareas.
-- **Sprint 4:** Desarrollo del módulo de inteligencia artificial con Ollama.
-- **Sprint 5:** Pruebas y ajustes finales.
+- **Sprint 3:** Integración de la API de Trello para la gestión de sprints.
+- **Sprint 4:** Desarrollo de módulos de agentes autónomos.
+- **Sprint 5:** Implementación de la inteligencia artificial con Ollama.
+- **Sprint 6:** Pruebas y ajustes finales.
 
-## Guía de Instalación
+## Guía de Instalación y Uso
 
 ### Requisitos
 
 - Node.js v14.x o superior
 - npm v6.x o superior
-- Git
+- Una cuenta en Trello y GitHub.
+- Ollama API key.
 
-### Pasos para Instalar
+### Instalación
 
 1. Clona el repositorio:
    ```bash
@@ -48,62 +50,31 @@ El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales m�
    ```
 
 3. Configura las variables de entorno:
-   - Renombra el archivo `.env.example` a `.env`.
-   - Completa las variables de entorno con tus credenciales y configuraciones.
+   - Crea un archivo `.env` en la raíz del proyecto.
+   - Añade las siguientes variables:
+     ```
+     TRELLO_API_KEY=tu_api_key_de_trello
+     TRELLO_TOKEN=tu_token_de_trello
+     GITHUB_TOKEN=tu_token_de_github
+     OLLAMA_API_KEY=tu_api_key_de_ollama
+     ```
 
-4. Inicia el servidor de desarrollo:
+4. Inicia el servidor:
    ```bash
    npm run dev
    ```
 
-## Ejemplos de Uso
+### Uso
 
-### Iniciar la Aplicación
-
-Para iniciar la aplicación en modo de desarrollo:
-```bash
-npm run dev
-```
-
-### Gestión de Tareas en Trello
-
-1. Autentícate con tu cuenta de Trello:
-   ```javascript
-   const trello = require('trello-api');
-   trello.setApiKey('tu_api_key');
-   trello.setToken('tu_token');
-   ```
-
-2. Crear una nueva tarjeta en un tablero:
-   ```javascript
-   trello.cards.create({
-     name: 'Nueva Tarjeta',
-     desc: 'Descripción de la tarjeta',
-     idList: 'id_del_lista'
-   });
-   ```
-
-### Integración con GitHub
-
-1. Autentícate con tu cuenta de GitHub:
-   ```javascript
-   const github = require('github-api');
-   const client = new github({
-     token: 'tu_token_de_github'
-   });
-   ```
-
-2. Crear un nuevo repositorio:
-   ```javascript
-   const repo = client.getRepo('usuario', 'nuevo_repo');
-   repo.create();
-   ```
+1. Una vez el servidor esté en funcionamiento, abre tu navegador y navega a `http://localhost:3000`.
+2. Regístrate o inicia sesión para acceder a la plataforma.
+3. Utiliza la interfaz para gestionar tus sprints y agentes.
 
 ## Próximos Pasos
 
-- **Sprint 6:** Implementación de métricas y monitoreo.
-- **Sprint 7:** Mejora de la interfaz de usuario y experiencia del usuario.
-- **Sprint 8:** Integración de módulos de aprendizaje automático.
+- Implementar métricas y dashboards para la visualización de datos.
+- Mejorar la interfaz de usuario para una experiencia de usuario más intuitiva.
+- Integrar más APIs para una gestión de datos más robusta.
 
 ## Arquitectura del Proyecto
 
@@ -136,4 +107,4 @@ npm run dev
 - **Inyección de Dependencias:** Se utilizará un contenedor de inversión de control (IoC) para manejar las dependencias entre módulos, lo que facilitará las pruebas y la sustitución de implementaciones.
 - **CQRS (Command Query Responsibility Segregation):** Se recomienda separar las operaciones de comando (para cambios) y consulta (para lecturas) para mejorar la eficiencia y la escalabilidad.
 
-Este README.md proporciona una visión general del proyecto, incluyendo su propósito, estado actual, guía de instalación, ejemplos de uso y detalles de la arquitectura, todo ello estructurado y profesionalmente presentado.
+Este README.md proporciona una visión general del proyecto, su estado actual, instrucciones para su instalación y uso, y una descripción de la arquitectura y patrones de diseño utilizados.
