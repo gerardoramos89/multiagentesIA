@@ -56,15 +56,24 @@
       "title": "Implementar la funcionalidad en el backend para mover automáticamente las tarjetas de Trello a la columna \"Done\" cuando el agente completa el commit exitosamente.",
       "description": "[DEV] Implementar la funcionalidad en el backend para mover automáticamente las tarjetas de Trello a la columna \"Done\" cuando el agente completa el commit exitosamente.",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T05:47:27.840Z"
+      "status": "done",
+      "startedAt": "2026-10-24T05:47:27.840Z",
+      "completedAt": "2026-10-24T05:48:12.531Z",
+      "output": "Generado: trello_integration.py",
+      "commits": [
+        "000e6f21d6621d62c9c8791e77f16646ca8d193c"
+      ],
+      "filesModified": [
+        "trello_integration.py"
+      ]
     },
     {
       "id": "task-1792820689114-4",
       "title": "Crear un script de validación en Node.js que verifique que todos los endpoints (/api/sprint/plan, /api/sprint/execute) devuelvan el formato JSON correcto y manejen errores de red.",
       "description": "[QA] Crear un script de validación en Node.js que verifique que todos los endpoints (/api/sprint/plan, /api/sprint/execute) devuelvan el formato JSON correcto y manejen errores de red.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T05:48:14.542Z"
     },
     {
       "id": "task-1792820689114-5",
@@ -94,6 +103,7 @@
   "filesChanged": [
     "Strategy.md",
     "sistema_persistencia_localstorage.md",
-    "AgentWorkPanel.tsx"
+    "AgentWorkPanel.tsx",
+    "trello_integration.py"
   ]
 }
