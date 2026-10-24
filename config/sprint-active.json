@@ -40,15 +40,24 @@
       "title": "Definir la arquitectura de base de datos",
       "description": "[ARCH/DEV] Definir la arquitectura de base de datos",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T04:24:16.545Z"
+      "status": "done",
+      "startedAt": "2026-10-24T04:24:16.545Z",
+      "completedAt": "2026-10-24T04:25:19.452Z",
+      "output": "Generado: arquitectura_bd.md",
+      "commits": [
+        "3c1d92b29fdc176cfd1106df7a5c97e58d8507f8"
+      ],
+      "filesModified": [
+        "arquitectura_bd.md"
+      ]
     },
     {
       "id": "task-1792815742561-3",
       "title": "Establecer las rutas de la API principal",
       "description": "[ARCH/DEV] Establecer las rutas de la API principal",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T04:25:21.463Z"
     },
     {
       "id": "task-1792815742561-4",
@@ -112,6 +121,7 @@
   },
   "filesChanged": [
     "STRATEGY.md",
-    "tarea_sugerida_manager.py"
+    "tarea_sugerida_manager.py",
+    "arquitectura_bd.md"
   ]
 }
