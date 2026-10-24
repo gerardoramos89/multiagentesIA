@@ -88,15 +88,24 @@
       "title": "Revisar y ajustar la planificación para incluir tiempo suficiente para la integración con Ollama en el componente 3D",
       "description": "[DEV/QA] Revisar y ajustar la planificación para incluir tiempo suficiente para la integración con Ollama en el componente 3D",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T06:19:16.880Z"
+      "status": "done",
+      "startedAt": "2026-10-24T06:19:16.880Z",
+      "completedAt": "2026-10-24T06:19:53.382Z",
+      "output": "Generado: revision_ajuste_planificacion.py",
+      "commits": [
+        "419a281e3dd7596b182b6d6cae9f00da494338f4"
+      ],
+      "filesModified": [
+        "revision_ajuste_planificacion.py"
+      ]
     },
     {
       "id": "task-1792822478685-6",
       "title": "Implementar un plan detallado para la migración de tarjetas de Trello hacia la columna 'Done' en el backend, incluyendo pruebas exhaustivas",
       "description": "[DEV/QA] Implementar un plan detallado para la migración de tarjetas de Trello hacia la columna 'Done' en el backend, incluyendo pruebas exhaustivas",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T06:19:55.395Z"
     },
     {
       "id": "task-1792822478685-7",
@@ -135,6 +144,7 @@
     "tareas_sugeridas.py",
     "RolesResponsabilidadesEquipo.md",
     "ProyectoRevisado.md",
-    "plan_de_accion_sugerido.py"
+    "plan_de_accion_sugerido.py",
+    "revision_ajuste_planificacion.py"
   ]
 }
