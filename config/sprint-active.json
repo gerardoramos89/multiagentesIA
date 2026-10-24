@@ -24,15 +24,24 @@
       "title": "🏗️ [ARCH] Diseño de arquitectura para MultiagentesIA",
       "description": "Como Arquitecto, revisa el código actual de MultiagentesIA y propón mejoras de arquitectura. Genera un archivo ARCHITECTURE.md con: 1) Diagrama de componentes (en texto), 2) Patrones de diseño recomendados, 3) Estructura de carpetas óptima, 4) Decisiones técnicas clave (ADR), 5) Deuda técnica identificada y cómo resolverla.",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T05:35:31.692Z"
+      "status": "done",
+      "startedAt": "2026-10-24T05:35:31.692Z",
+      "completedAt": "2026-10-24T05:36:28.528Z",
+      "output": "Generado: ARCHITECTURE.md",
+      "commits": [
+        "f8a1b35d8319f7a60f882ac0243fbb49af9dd6d5"
+      ],
+      "filesModified": [
+        "ARCHITECTURE.md"
+      ]
     },
     {
       "id": "task-1792820037272-2",
       "title": "💻 [DEV] Implementación de funcionalidades clave",
       "description": "Como Developer, implementa las funcionalidades principales pendientes de MultiagentesIA. Revisa ARCHITECTURE.md y STRATEGY.md para seguir los lineamientos. Enfócate en código limpio, modular y bien comentado.",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T05:36:30.546Z"
     },
     {
       "id": "task-1792820037272-3",
@@ -67,6 +76,7 @@
     "isCompleted": true
   },
   "filesChanged": [
-    "Strategy.md"
+    "Strategy.md",
+    "ARCHITECTURE.md"
   ]
 }
