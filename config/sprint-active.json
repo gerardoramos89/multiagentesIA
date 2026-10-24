@@ -40,15 +40,24 @@
       "title": "Métodos más efectivos para la estimación de tiempo y esfuerzo",
       "description": "[ARCH/DEV] Métodos más efectivos para la estimación de tiempo y esfuerzo",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T07:03:29.444Z"
+      "status": "done",
+      "startedAt": "2026-10-24T07:03:29.444Z",
+      "completedAt": "2026-10-24T07:04:42.386Z",
+      "output": "Generado: arquitectura_proyectofabricaagentes.md",
+      "commits": [
+        "e6c2b924910a581aca76441f4e03a44830440ef4"
+      ],
+      "filesModified": [
+        "arquitectura_proyectofabricaagentes.md"
+      ]
     },
     {
       "id": "task-1792825274243-3",
       "title": "Revisar y ajustar la documentación de roles y responsabilidades",
       "description": "[DEV/QA] Revisar y ajustar la documentación de roles y responsabilidades",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T07:04:44.409Z"
     },
     {
       "id": "task-1792825274243-4",
@@ -91,6 +100,7 @@
   },
   "filesChanged": [
     "STRATEGY.md",
-    "arquitectura_proyecto_f_brica_de_agentes.md"
+    "arquitectura_proyecto_f_brica_de_agentes.md",
+    "arquitectura_proyectofabricaagentes.md"
   ]
 }
