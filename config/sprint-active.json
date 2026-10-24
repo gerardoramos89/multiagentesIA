@@ -40,15 +40,24 @@
       "title": "Es necesario definir y documentar más claramente los roles y responsabilidades en el equipo para evitar confusiones",
       "description": "[ARCH/DEV] Es necesario definir y documentar más claramente los roles y responsabilidades en el equipo para evitar confusiones",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T06:16:31.566Z"
+      "status": "done",
+      "startedAt": "2026-10-24T06:16:31.566Z",
+      "completedAt": "2026-10-24T06:17:30.949Z",
+      "output": "Generado: RolesResponsabilidadesEquipo.md",
+      "commits": [
+        "e6c621a47dc68437a7e3987a669dec7223a0a970"
+      ],
+      "filesModified": [
+        "RolesResponsabilidadesEquipo.md"
+      ]
     },
     {
       "id": "task-1792822478685-3",
       "title": "Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "description": "[ARCH/DEV] Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T06:17:32.957Z"
     },
     {
       "id": "task-1792822478685-4",
@@ -105,6 +114,7 @@
   },
   "filesChanged": [
     "Strategy.md",
-    "tareas_sugeridas.py"
+    "tareas_sugeridas.py",
+    "RolesResponsabilidadesEquipo.md"
   ]
 }
