@@ -1,54 +1,6 @@
 [
   {
     "agent": "po",
-    "message": "✅ Completado en 68.0s",
-    "timestamp": "2026-10-24T16:08:58.920Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Todas las tareas completadas. Generando retrospectiva...",
-    "timestamp": "2026-10-24T16:09:00.924Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "📊 Generando retrospectiva técnica...",
-    "timestamp": "2026-10-24T16:09:00.932Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Retrospectiva técnica generada",
-    "timestamp": "2026-10-24T16:09:25.459Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "📋 Creando tarjetas de revisión...",
-    "timestamp": "2026-10-24T16:09:25.468Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ 5 tarjetas creadas en Trello",
-    "timestamp": "2026-10-24T16:09:27.545Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Tarjetas creadas. Esperando respuestas.",
-    "timestamp": "2026-10-24T16:09:27.556Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "🔒 Cerrando sprint...",
-    "timestamp": "2026-10-24T16:09:28.764Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
     "message": "✅ Sprint archivado en historial",
     "timestamp": "2026-10-24T16:09:28.775Z",
     "level": "success"
@@ -298,5 +250,53 @@
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T16:15:45.730Z",
     "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "✅ Push exitoso: 9a9abf3",
+    "timestamp": "2026-10-24T16:15:48.644Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "✅ Completado en 52.5s",
+    "timestamp": "2026-10-24T16:15:48.651Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "📊 Todas las tareas completadas. Generando retrospectiva...",
+    "timestamp": "2026-10-24T16:15:50.658Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "📊 Generando retrospectiva técnica...",
+    "timestamp": "2026-10-24T16:15:50.665Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "✅ Retrospectiva técnica generada",
+    "timestamp": "2026-10-24T16:16:11.877Z",
+    "level": "success"
+  },
+  {
+    "agent": "po",
+    "message": "📋 Creando tarjetas de revisión...",
+    "timestamp": "2026-10-24T16:16:11.885Z",
+    "level": "info"
+  },
+  {
+    "agent": "po",
+    "message": "❌ Error creando tarjetas: Faltan credenciales de Trello",
+    "timestamp": "2026-10-24T16:16:11.893Z",
+    "level": "error"
+  },
+  {
+    "agent": "po",
+    "message": "⚠️ Error creando tarjetas.",
+    "timestamp": "2026-10-24T16:16:11.903Z",
+    "level": "warn"
   }
 ]

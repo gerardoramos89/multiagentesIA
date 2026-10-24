@@ -31,7 +31,6 @@ interface AgentConfig { id: string; name: string; model: string; enabled: boolea
 interface DiagRow { id: string; label: string; status: "ok" | "warning" | "error"; detail: string; version?: string; timestamp: string; durationMs: number; }
 interface LogEntry { ts: string; level: string; source: string; message: string; meta?: any; }
 type ModuleStatus = "normal" | "error" | "working" | "done";
-
 const AccordionItem = ({ title, icon: Icon, id, isOpen, onToggle, children, badge }: { title: string; icon: any; id: string; isOpen: boolean; onToggle: () => void; children: React.ReactNode; badge?: string; }) => (
   <div className="border border-gray-800 rounded-lg overflow-hidden bg-gray-900/30 mb-2 transition-all hover:border-gray-700">
     <button onClick={onToggle} className="w-full flex items-center justify-between p-3 hover:bg-gray-800/50 transition-colors text-left">
@@ -144,7 +143,8 @@ function LiveLogs() {
 export default function DashboardScreen() {
   const [analysisJobId, setAnalysisJobId] = useState<string | null>(null);
   const analysis = useAnalysisJob(analysisJobId);
-  
+    const [autonomousMode, setAutonomousMode] = useState(false); // ✅ ESTA LÍNEA FALTABA
+
   const [realCommitsCount, setRealCommitsCount] = useState(0);
   const [sprintsCompleted, setSprintsCompleted] = useState(0);
   const [projectStatus, setProjectStatus] = useState<"config" | "ready" | "building" | "testing" | "deployed">("config");
@@ -159,7 +159,7 @@ export default function DashboardScreen() {
     { id: "github", name: "GitHub (Repositorios)", status: "off", icon: GitBranch },
     { id: "trello", name: "Trello (Gestión)", status: "off", icon: LayoutGrid },
   ]);
-
+const [surveyAnswers, setSurveyAnswers] = useState<Record<string, string>>({});
   const [activeConfigModal, setActiveConfigModal] = useState<string | null>(null);
   const [githubConfig, setGithubConfig] = useState({ owner: "", repo: "", token: "" });
   const [trelloConfig, setTrelloConfig] = useState({ apiKey: "", token: "", boardId: "" });
@@ -377,30 +377,66 @@ export default function DashboardScreen() {
   useEffect(() => { loadConfigFromServer(); }, []);
 
   const loadConfigFromServer = async () => {
-    try {
-      const res = await fetch('/api/config/status');
-      const config = await res.json();
-      if (config.trello?.configured) {
-        setTrelloConfig({ apiKey: config.trello.apiKey, token: config.trello.token, boardId: config.trello.boardId });
-        setModules(prev => prev.map(m => m.id === "trello" ? { ...m, status: "on" } : m));
-      }
-      if (config.github?.configured) {
-        setGithubConfig(prev => ({ ...prev, owner: config.github.owner, repo: config.github.repo, token: config.github.token }));
-        setModules(prev => prev.map(m => m.id === "github" ? { ...m, status: "on" } : m));
-      }
-    } catch (error) { console.error("Error cargando config:", error); }
-  };
+  try {
+    const res = await fetch('/api/config/status');
+    const config = await res.json();
+    
+    console.log("🔍 Configuración cargada:", config);
+    
+    // Actualizar GitHub
+    if (config.github?.configured) {
+      setGithubConfig({
+        owner: config.github.owner,
+        repo: config.github.repo,
+        token: config.github.token // El token ya viene con "***" al final
+      });
+      setModules(prev => prev.map(m => m.id === "github" ? { ...m, status: "on" } : m));
+    }
+    
+    // Actualizar Trello
+    if (config.trello?.configured) {
+      setTrelloConfig({
+        apiKey: config.trello.apiKey,
+        token: config.trello.token,
+        boardId: config.trello.boardId
+      });
+      setModules(prev => prev.map(m => m.id === "trello" ? { ...m, status: "on" } : m));
+    }
+    
+    alert(`✅ Configuración cargada:\n- GitHub: ${config.github?.configured ? '✅' : '❌'}\n- Trello: ${config.trello?.configured ? '✅' : '❌'}`);
+  } catch (error) {
+    console.error("Error cargando config:", error);
+    alert("❌ Error al cargar la configuración");
+  }
+};
 
-  const analyzeProject = async () => {
-    if (!githubConfig.owner || !githubConfig.repo || !githubConfig.token) { alert("Configura GitHub primero"); return; }
-    setIsAnalyzingProject(true);
-    try {
-      const res = await fetch("/api/project/analyze", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ owner: githubConfig.owner, repo: githubConfig.repo, token: githubConfig.token }) });
-      const data = await res.json();
-      if (data.success) setAnalysisJobId(data.jobId);
-      else { alert(`Error: ${data.message}`); setIsAnalyzingProject(false); }
-    } catch { alert("Error de conexión"); setIsAnalyzingProject(false); }
-  };
+const analyzeProject = async () => {
+  if (!githubConfig.owner || !githubConfig.repo || !githubConfig.token) { 
+    alert("Configura GitHub primero (haz clic en Sync)"); 
+    return; 
+  }
+  setIsAnalyzingProject(true);
+  try {
+    const res = await fetch("/api/project/analyze", { 
+      method: "POST", 
+      headers: { "Content-Type": "application/json" }, 
+      body: JSON.stringify({ 
+        owner: githubConfig.owner, 
+        repo: githubConfig.repo, 
+        token: githubConfig.token // ✅ Ahora envía el token completo
+      }) 
+    });
+    const data = await res.json();
+    if (data.success) setAnalysisJobId(data.jobId);
+    else { 
+      alert(`Error: ${data.message}`); 
+      setIsAnalyzingProject(false); 
+    }
+  } catch { 
+    alert("Error de conexión"); 
+    setIsAnalyzingProject(false); 
+  }
+};
 
   const runPreFlightCheck = async () => {
     setIsRunningTest(true);
@@ -489,6 +525,21 @@ export default function DashboardScreen() {
             <p className="text-[10px] text-gray-400">Configuración Inteligente</p>
           </div>
           <button onClick={loadConfigFromServer} className="text-[10px] flex items-center gap-1 text-cyan-400 hover:text-cyan-300 underline"><RefreshCw size={10} /> Sync</button>
+        <button 
+  onClick={async () => {
+    try {
+      const res = await fetch('/api/config/status');
+      const config = await res.json();
+      console.log("🔍 DIAGNÓSTICO DE CONFIGURACIÓN:", config);
+      alert(JSON.stringify(config, null, 2));
+    } catch (error: any) {
+      alert(`Error: ${error.message}`);
+    }
+  }}
+  className="text-[10px] flex items-center gap-1 text-amber-400 hover:text-amber-300 underline ml-2"
+>
+  🔍 Diagnóstico
+</button>
         </div>
 
         <div className="border-b border-gray-800 bg-gray-900/50 shrink-0">
@@ -736,17 +787,90 @@ export default function DashboardScreen() {
                 </div>
               )}
 
-              {sprintState?.sprint?.status === "survey" && (
-                <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded space-y-2">
-                  <div className="flex items-center gap-2"><Eye size={14} className="text-amber-400 animate-pulse" /><span className="text-[10px] font-bold text-amber-400">Esperando tus respuestas en Trello</span></div>
-                  <p className="text-[9px] text-gray-400">Responde las tarjetas en Trello. El sistema cerrará el sprint automáticamente.</p>
-                  <div className="flex items-center gap-2">
-                    <input type="checkbox" checked={autoCheckSurveys} onChange={(e) => setAutoCheckSurveys(e.target.checked)} className="w-3 h-3" />
-                    <span className="text-[8px] text-gray-400">Verificación automática cada 15s</span>
-                  </div>
-                </div>
-              )}
+{sprintState?.sprint?.status === "survey" && sprintState?.sprint?.surveys && (
+  <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded space-y-3">
+    <div className="flex items-center gap-2">
+      <Eye size={14} className="text-amber-400" />
+      <span className="text-[10px] font-bold text-amber-400">Review del Sprint (Responde para cerrar)</span>
+    </div>
+    <p className="text-[9px] text-gray-400">Responde estas preguntas para cerrar el sprint y aplicar las mejoras al siguiente.</p>
+    
+    <div className="space-y-2 max-h-60 overflow-y-auto custom-scrollbar pr-1">
+      {sprintState.sprint.surveys.map((survey: any) => (
+        <div key={survey.id} className="space-y-1">
+          <label className="text-[9px] text-gray-300 font-bold flex items-start gap-1">
+            {survey.type === "multiple" ? "🎯" : "❓"} {survey.question}
+          </label>
+          
+          {survey.type === "multiple" ? (
+            <select 
+              value={surveyAnswers[survey.id] || ""}
+              onChange={(e) => setSurveyAnswers(prev => ({ ...prev, [survey.id]: e.target.value }))}
+              className="w-full p-1.5 bg-black/40 border border-gray-700 rounded text-[9px] text-white focus:border-amber-500 outline-none"
+            >
+              <option value="">Selecciona una opción...</option>
+              {survey.options?.map((opt: string) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+          ) : (
+            <textarea 
+              value={surveyAnswers[survey.id] || ""}
+              onChange={(e) => setSurveyAnswers(prev => ({ ...prev, [survey.id]: e.target.value }))}
+              placeholder="Escribe tu respuesta o decisión..."
+              className="w-full p-1.5 bg-black/40 border border-gray-700 rounded text-[9px] text-white focus:border-amber-500 outline-none resize-none h-16"
+            />
+          )}
+        </div>
+      ))}
+    </div>
 
+    <button 
+      onClick={async () => {
+        // Validar que todas estén respondidas
+        const allAnswered = sprintState.sprint.surveys.every((s: any) => surveyAnswers[s.id]?.trim() !== "");
+        if (!allAnswered) {
+          alert("⚠️ Por favor responde todas las preguntas antes de cerrar el sprint.");
+          return;
+        }
+        if (!confirm("¿Enviar respuestas y cerrar el sprint?")) return;
+        
+        try {
+          const res = await fetch("/api/survey/submit", { 
+            method: "POST", 
+            headers: { "Content-Type": "application/json" }, 
+            body: JSON.stringify({ answers: surveyAnswers }) 
+          });
+          const data = await res.json();
+          
+          if (data.success) {
+            alert("✅ Sprint cerrado exitosamente con tus respuestas.");
+            setSprintPlanned(false); 
+            setSprintExecuting(false); 
+            setSprintState(null);
+            setSurveyAnswers({});
+            
+            // Recargar historial para el siguiente sprint
+            const histRes = await fetch("/api/sprint/last-retrospective");
+            const histData = await histRes.json();
+            if (histData.success && histData.retrospective) {
+              setLastRetrospective(histData.retrospective); 
+              setLastSprintNumber(histData.sprintNumber); 
+              setHasCompletedSprints(true);
+            }
+          } else {
+            alert(`❌ Error: ${data.message}`);
+          }
+        } catch (err: any) {
+          alert(`❌ Error: ${err.message}`);
+        }
+      }}
+      className="w-full py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white text-[10px] font-bold rounded hover:from-amber-500 hover:to-orange-500 transition-all flex items-center justify-center gap-1 shadow-lg shadow-amber-900/20"
+    >
+      <CheckCircle2 size={12} /> Responder y Cerrar Sprint
+    </button>
+  </div>
+)}
               {sprintState?.sprint?.status === "review" && (
                 <div className="p-3 bg-emerald-950/20 border border-emerald-500/40 rounded space-y-2">
                   <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-400" /><span className="text-[10px] font-bold text-emerald-400">Sprint Completado</span></div>

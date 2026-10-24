@@ -1,50 +1,30 @@
 {
   "projectName": "multiagentesIA",
   "owner": "gerardoramos89",
-  "repo": "multiagentesIA",
-  "analyzedAt": "2026-10-24T07:01:12.286Z",
-  "gitSha": "074fe158540346e87aebc127477b545704424ac2",
-  "type": "existing",
+  "repository": "gerardoramos89/multiagentesIA",
+  "branch": "main",
   "stack": {
-    "languages": [],
+    "languages": [
+      {
+        "name": "Desconocido",
+        "percentage": 100
+      }
+    ],
     "frameworks": [],
-    "tools": {
-      "build": null,
-      "test": null,
-      "ci": "GitHub Actions",
-      "packageManager": null
-    }
+    "tools": []
   },
   "status": {
-    "commits": 1,
-    "stars": 0,
-    "forks": 0,
-    "hasTests": false,
-    "coverage": null,
     "hasReadme": true,
-    "hasCiCd": true,
-    "estimatedDebt": "medium"
+    "commits": 1,
+    "lastCommit": "2026-10-23T01:07:59Z",
+    "contributors": 1
   },
-  "analysis": {
-    "coverage": "full",
-    "filesScanned": 37,
-    "apiRequests": 0,
-    "durationMs": 4071,
-    "warnings": []
+  "structure": {
+    "folders": [],
+    "keyFiles": [
+      "README.md"
+    ]
   },
-  "branch": "main",
-  "decisionsPending": [
-    {
-      "id": "target_stack",
-      "question": "¿Qué stack objetivo quieres?",
-      "options": [
-        "Next.js + TS + Tailwind",
-        "React + Vite + TS",
-        "Otro"
-      ],
-      "blocking": true,
-      "reason": "Define la estructura base."
-    }
-  ],
-  "userDecisions": {}
+  "analyzedAt": "2026-10-24T17:07:25.853Z",
+  "summary": "Proyecto multiagentesIA de gerardoramos89. Stack: No detectado. 1 commits."
 }

@@ -500,16 +500,25 @@ async function transitionToRetrospective(sprint: SprintState) {
   const retrospectiveResult = await generateRetrospective();
   if (retrospectiveResult.success && retrospectiveResult.retrospective) {
     sprint.retrospective = retrospectiveResult.retrospective;
-    sprint.status = "survey"; saveSprint(sprint);
-    log("SPRINT", "system", `✅ Retrospectiva generada. Creando tarjetas de revisión...`);
-    addAgentLog("po", "📋 Creando tarjetas de revisión...", "info");
+    saveSprint(sprint);
+    
+    log("SPRINT", "system", `✅ Retrospectiva generada. Intentando crear tarjetas en Trello...`);
+    addAgentLog("po", "📋 Creando tarjetas en Trello...", "info");
+    
     const surveyResult = await createSurveys();
-    if (surveyResult.success) {
-      log("SPRINT", "system", `✅ Tarjetas creadas. Esperando respuestas del humano...`);
-      addAgentLog("po", "✅ Tarjetas creadas. Esperando respuestas.", "success");
+    
+    if (surveyResult.success && surveyResult.surveys && surveyResult.surveys.length > 0) {
+      // ✅ ÉXITO: Hay tarjetas en Trello, esperar respuestas
+      sprint.status = "survey";
+      saveSprint(sprint);
+      log("SPRINT", "system", `✅ ${surveyResult.surveys.length} tarjetas creadas en Trello. Esperando respuestas del humano...`);
+      addAgentLog("po", `✅ ${surveyResult.surveys.length} tarjetas creadas. Esperando respuestas.`, "success");
     } else {
-      log("SPRINT", "system", `⚠️ Error creando tarjetas.`);
-      addAgentLog("po", "⚠️ Error creando tarjetas.", "warn");
+      // ❌ FALLÓ O NO HAY TARJETAS: Pasar directamente a review para no atascar el sistema
+      sprint.status = "review";
+      saveSprint(sprint);
+      log("SPRINT", "system", `⚠️ No se pudieron crear tarjetas en Trello. Sprint listo para cierre manual.`);
+      addAgentLog("po", `⚠️ Trello no disponible. Sprint en revisión manual.`, "warn");
     }
   } else {
     log("SPRINT", "system", `⚠️ Error generando retrospectiva.`);

@@ -1,44 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { loadBrief, saveBrief } from "@/lib/analysis/brief";
+import { NextResponse } from "next/server";
+import fs from "node:fs";
+import path from "node:path";
+
+const BRIEF_FILE = path.join(process.cwd(), "config", "project-brief.json");
 
 export async function GET() {
   try {
-    const brief = loadBrief();
-    if (!brief) {
-      return NextResponse.json(
-        { success: false, message: "No hay brief disponible" },
-        { status: 404 }
-      );
+    if (!fs.existsSync(BRIEF_FILE)) {
+      return NextResponse.json({ success: false, message: "Análisis en progreso..." }, { status: 202 });
     }
-    return NextResponse.json({ success: true, brief }, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message },
-      { status: 500 }
-    );
-  }
-}
-
-export async function PUT(req: NextRequest) {
-  try {
-    const { userDecisions } = await req.json();
-    const brief = loadBrief();
     
-    if (!brief) {
-      return NextResponse.json(
-        { success: false, message: "No hay brief para actualizar" },
-        { status: 404 }
-      );
-    }
-
-    brief.userDecisions = { ...brief.userDecisions, ...userDecisions };
-    saveBrief(brief);
-
-    return NextResponse.json({ success: true, brief }, { status: 200 });
+    const brief = JSON.parse(fs.readFileSync(BRIEF_FILE, "utf-8"));
+    return NextResponse.json({ success: true, brief });
   } catch (error: any) {
-    return NextResponse.json(
-      { success: false, message: error.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
