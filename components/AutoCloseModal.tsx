@@ -41,7 +41,7 @@ export default function AutoCloseModal({ isOpen, onClose, sprintNumber }: AutoCl
                 🎉 ¡Sprint #{sprintNumber} Completado!
               </h2>
               <p className="text-emerald-300 text-sm mb-4">
-                Todas las encuestas fueron respondidas exitosamente
+                Todas las tareas del sprint fueron completadas exitosamente
               </p>
               
               <div className="bg-black/40 border border-emerald-500/30 rounded-lg p-4 mb-4">
@@ -51,7 +51,7 @@ export default function AutoCloseModal({ isOpen, onClose, sprintNumber }: AutoCl
                   <Sparkles size={16} />
                 </div>
                 <p className="text-[10px] text-gray-400 mt-2">
-                  La retrospectiva y las lecciones aprendidas están disponibles para el próximo sprint
+                  La retrospectiva y las lecciones aprendidas están listas para el próximo sprint
                 </p>
               </div>
               

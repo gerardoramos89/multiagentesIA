@@ -1,64 +1,123 @@
-```markdown
 # MultiagentesIA
 
 ## Descripción del Proyecto
 
 **Nombre:** MultiagentesIA
 
-**Objetivo:** El objetivo principal de este proyecto es desarrollar una plataforma multiagente que permita gestionar la Inteligencia Artificial de manera eficiente. La plataforma estará equipada con agentes autónomos, cada uno con reglas SCRUM definidas, lo que permitirá una gestión integral de la Inteligencia Artificial, desde la codificación hasta la implementación.
+**Objetivo:** Desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas de gestión de sprints autónomas, codificadas y creando todo lo necesario para un ciclo del software desde un cliclo.
 
 ## Estado del Desarrollo
 
-Actualmente, el proyecto se encuentra en una fase avanzada de desarrollo. Se han implementado las bases de datos y la estructura básica del agente. El siguiente sprint se enfocará en la integración de múltiples agentes y la optimización de las reglas SCRUM.
+El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales módulos incluyen:
+
+- **Core Module:** Módulo central que gestiona la lógica de negocio y la comunicación entre los módulos.
+- **Agent Module:** Módulo que contiene los agentes autónomos, cada uno con reglas específicas de gestión de sprints.
+- **Communication:** Módulo que se encarga de la comunicación con APIs externas como Trello y GitHub.
 
 ## Historial de Sprints
 
-- Sprint 1: Configuración del entorno de desarrollo y desarrollo básico del agente.
-- Sprint 2: Implementación de la base de datos y pruebas iniciales.
-- Sprint 3: Integración de agentes y ajustes en las reglas SCRUM.
-- Sprint 4: Pruebas de rendimiento y optimización.
+- **Sprint 1:** Configuración inicial del proyecto, instalación de dependencias y primeros avances en la arquitectura.
+- **Sprint 2:** Implementación del módulo de agentes y primeros tests unitarios.
+- **Sprint 3:** Integración con Trello API y GitHub API.
+- **Sprint 4:** Optimización y corrección de errores.
 
-## Guía de Instalación y Uso
+## Guía de Instalación
 
-### Requisitos
+### Requisitos Previos
 
 - Node.js v14.x o superior
 - npm v6.x o superior
-- Git
 
-### Instalación
+### Instalación Paso a Paso
 
-1. Clona el repositorio:
+1. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/tu-usuario/MultiagentesIA.git
-   ```
-2. Navega al directorio del proyecto:
-   ```bash
    cd MultiagentesIA
    ```
-3. Instala las dependencias:
+
+2. **Instalar dependencias:**
    ```bash
    npm install
    ```
 
-### Uso
+3. **Configurar variables de entorno:**
+   - Crear un archivo `.env` en la raíz del proyecto.
+   - Agregar las variables de entorno necesarias, como las claves de API de Trello y GitHub.
 
-1. Inicia el servidor:
+4. **Ejecutar la aplicación:**
    ```bash
-   npm start
+   npm run dev
    ```
-2. Accede a la plataforma en tu navegador web a través de `http://localhost:3000`.
+
+## Ejemplos de Uso
+
+### Ejemplo 1: Crear un nuevo agente
+
+```javascript
+const { Agent } = require('./path/to/agentModule');
+
+const miAgente = new Agent({
+  name: 'MiAgente',
+  rules: {
+    sprintDuration: 14,
+    sprintStart: 'YYYY-MM-DD',
+    sprintEnd: 'YYYY-MM-DD'
+  }
+});
+
+miAgente.start();
+```
+
+### Ejemplo 2: Comunicación con Trello
+
+```javascript
+const { Trello } = require('./path/to/communicationModule');
+
+const trello = new Trello({
+  apiKey: process.env.TRELLO_API_KEY,
+  token: process.env.TRELLO_TOKEN
+});
+
+trello.createBoard('MiNuevoTablero', 'MiDescripción');
+```
 
 ## Próximos Pasos
 
-- Integración de múltiples agentes y optimización de las reglas SCRUM.
-- Desarrollo de una interfaz de usuario amigable.
-- Implementación de métricas y monitoreo de rendimiento.
-- Publicación de la plataforma en la nube.
+- **Implementar la lógica de negocio completa.**
+- **Mejorar la interfaz de usuario.**
+- **Agregar más módulos de comunicación y agentes.**
+- **Realizar pruebas unitarias y de integración.**
 
----
+## Arquitectura del Proyecto
 
-¡Gracias por utilizar MultiagentesIA!
+### Diagrama de Componentes
+
+```
++-------------------+
+|    MultiagentesIA  |
++--------+----------+
+         |
+         |
++--------v----------+
+|    Core Module    |
++--------+----------+
+         |
+         |
++--------v----------+
+|    Agent Module   |
++--------+----------+
+         |
+         |
++--------v----------+
+|    Communication  |
++-------------------+
 ```
 
-Este archivo proporciona una guía clara y estructurada para el proyecto MultiagentesIA, incluyendo una descripción detallada del proyecto, su estado actual, historial de sprints, instrucciones de instalación y uso, y los próximos pasos.
+### Patrones de Diseño Recomendados
+
+- **Modularidad:** Se recomienda dividir el sistema en módulos independientes (Core Module, Agent Module, Communication) para facilitar la mantenimiento y la escalabilidad.
+- **Inyección de Dependencias:** Se utilizará un contenedor de inversión de control (IoC) para manejar las dependencias entre módulos, lo que facilitará las pruebas y la sustitución de implementaciones.
+- **CQRS (Command Query Responsibility Segregation):** Se recomienda separar las operaciones de comando (para cambios) y consulta (para lecturas) para mejorar la eficiencia y la escalabilidad.
+
+Este README.md proporciona una visión general clara y estructurada del proyecto MultiagentesIA, incluyendo su propósito, estado de desarrollo, guía de instalación, ejemplos de uso y la arquitectura del proyecto.
