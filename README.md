@@ -1,110 +1,66 @@
+```markdown
 # MultiagentesIA
 
-¡Bienvenido al proyecto MultiagentesIA! Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas Scrum que sean autónomos y codificados.
+## Descripción del Proyecto
+Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial. El equipo de desarrollo ha trabajado en la implementación de un conjunto de agentes autónomos, cada uno con reglas y responsabilidades específicas.
 
-## Objetivo
+## Objetivo del Proyecto
+La plataforma multiagente tiene como objetivo facilitar la gestión y la colaboración de equipos de desarrollo de Inteligencia Artificial, permitiendo que cada agente trabaje de manera autónoma y cumpla con las reglas y responsabilidades definidas.
 
-El objetivo principal de este proyecto es crear una plataforma que permita la gestión de proyectos de Inteligencia Artificial utilizando un equipo de agentes autónomos. Los agentes estarán regidos por las reglas Scrum y serán capaces de trabajar de manera independiente.
+## Alcance del Proyecto
+El proyecto se centra en la implementación de una arquitectura multiagente que permita la creación de agentes con reglas y responsabilidades definidas. Los agentes están codificados y pueden ser gestionados desde una interfaz de usuario intuitiva.
 
-## Alcance
+## Habilidades Utilizadas
+- **Next**: Tecnología utilizada para el desarrollo de la aplicación.
 
-El alcance del proyecto incluye:
-- Desarrollo de una plataforma multiagente.
-- Implementación de reglas Scrum para los agentes.
-- Creación de agentes autónomos y codificados.
-- Integración de todas las funcionalidades en un solo clic.
+## Estructura del Proyecto
+El proyecto se estructura de la siguiente manera:
+- **src/**: Contiene el código fuente de la aplicación.
+- **docs/**: Contiene la documentación del proyecto.
+- **README.md**: Este archivo que usted está leyendo, proporciona una guía de uso y avances del proyecto.
 
-## Skills
+## Estados del Proyecto
+- **Total de commits**: 37
+- **Sprints completados**: 10
+- **Archivos modificados históricamente**: 6
 
-Este proyecto está desarrollado utilizando Next.js, una biblioteca de React para aplicaciones de servidor y cliente.
+## Avances del Sprint
+Durante este sprint, se han realizado los siguientes avances:
+- **Implementación de agentes autónomos**: Se han añadido nuevos agentes con reglas y responsabilidades definidas.
+- **Interfaz de usuario**: Se ha mejorado la interfaz de usuario para facilitar la gestión y la interacción con los agentes.
+- **Documentación**: Se ha actualizado la documentación del proyecto para reflejar los cambios y avances realizados.
 
-## Instalación y Uso
-
-### Requisitos
-
-- Node.js v12.x o superior
-- npm v6.x o superior (o yarn)
+## Guía de Uso
+### Requisitos Previos
+- Node.js v14.x o superior
+- npm v6.x o superior
 
 ### Instalación
-
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/multiagentesIA.git
-   cd multiagentesIA
+   git clone https://github.com/tu-usuario/MultiagentesIA.git
    ```
-
-2. Instala las dependencias:
+2. Navega al directorio del proyecto:
+   ```bash
+   cd MultiagentesIA
+   ```
+3. Instala las dependencias:
    ```bash
    npm install
-   # o
-   yarn install
    ```
 
-3. Inicia el servidor de desarrollo:
+### Ejecución
+1. Inicia la aplicación:
    ```bash
-   npm run dev
-   # o
-   yarn dev
+   npm start
    ```
+2. Accede a la interfaz de usuario en tu navegador web.
 
-4. Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
+### Documentación
+Para obtener más detalles sobre la implementación y la arquitectura del proyecto, consulta la documentación en el directorio `docs/`.
 
-## Guía de Contribución
+## Conclusiones
+Este sprint ha sido productivo y ha llevado al proyecto hacia un avance significativo en la implementación de agentes autónomos y la mejora de la interfaz de usuario. La documentación ha sido actualizada para proporcionar una guía clara y actualizada sobre el uso y la implementación del proyecto.
 
-¡Estamos encantados de que quieras contribuir con el proyecto MultiagentesIA! Aquí tienes una guía para ayudarte a empezar:
-
-### Cómo Contribuir
-
-1. **Fork del Repositorio**: Primero, haz un fork del repositorio principal.
-
-2. **Clona tu Fork**: Clona tu fork en tu máquina local.
-   ```bash
-   git clone https://github.com/tu-usuario/multiagentesIA.git
-   cd multiagentesIA
-   ```
-
-3. **Crea una Rama**: Crea una nueva rama para tu contribución.
-   ```bash
-   git checkout -b nueva-funcionalidad
-   ```
-
-4. **Realiza tus Cambios**: Realiza los cambios necesarios en el código.
-
-5. **Prueba tus Cambios**: Asegúrate de que tus cambios funcionen correctamente ejecutando las pruebas unitarias y de integración.
-   ```bash
-   npm test
-   # o
-   yarn test
-   ```
-
-6. **Commitea tus Cambios**: Commitea tus cambios con un mensaje descriptivo.
-   ```bash
-   git commit -m "Añadida nueva funcionalidad: descripción de la funcionalidad"
-   ```
-
-7. **Push a tu Fork**: Empuja tus cambios a tu fork en GitHub.
-   ```bash
-   git push origin nueva-funcionalidad
-   ```
-
-8. **Crea un Pull Request**: Ve a tu fork en GitHub y crea un Pull Request hacia el repositorio principal.
-
-### Código de Conducta
-
-Este proyecto sigue el [Código de Conducta de Contributor Covenant](https://www.contributor-covenant.org/). Al participar, debes seguir el código de conducta.
-
-## Documentación de API
-
-La documentación de la API estará disponible en el siguiente enlace una vez esté disponible.
-
-## Estado del Proyecto
-
-- **Total de commits:** 30
-- **Sprints completados:** 8
-- **Archivos modificados históricamente:** 5
-
-¡Gracias por tu interés en el proyecto MultiagentesIA!
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+¡Gracias por su contribución y esfuerzo en el desarrollo de MultiagentesIA!
+```
