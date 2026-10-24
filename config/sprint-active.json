@@ -56,15 +56,24 @@
       "title": "Establecer las rutas de la API principal el arquitecto con fastapi",
       "description": "Establecer las rutas de la API principal el arquitecto con fastapi",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T04:52:33.310Z"
+      "status": "done",
+      "startedAt": "2026-10-24T04:52:33.310Z",
+      "completedAt": "2026-10-24T04:53:32.002Z",
+      "output": "Generado: api_routes.py",
+      "commits": [
+        "22e4ae2be683669d4b77997c7dff220af011210e"
+      ],
+      "filesModified": [
+        "api_routes.py"
+      ]
     },
     {
       "id": "task-1792817298010-4",
       "title": "🎯 Plan de acción sugerido:",
       "description": "🎯 Plan de acción sugerido:",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T04:53:34.014Z"
     },
     {
       "id": "task-1792817298010-5",
@@ -115,6 +124,7 @@
   "filesChanged": [
     "STRATEGY.md",
     "tareas_sugeridas.py",
-    "definir_arquitectura_bd.py"
+    "definir_arquitectura_bd.py",
+    "api_routes.py"
   ]
 }
