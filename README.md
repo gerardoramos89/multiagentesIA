@@ -4,90 +4,85 @@
 
 **Nombre:** MultiagentesIA
 
-**Objetivo:** Desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas de gestión de sprints autónomas, codificadas y creando todo lo necesario para un ciclo del software desde un cliclo.
+**Objetivo:** Desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y equipos de agentes con reglas de gestión de sprints autónomas, codificadas y creando todo lo necesario para un ciclo del software en un solo clic.
 
 ## Estado del Desarrollo
 
-El proyecto se encuentra en una etapa avanzada de desarrollo. Los principales módulos incluyen:
+El proyecto se encuentra en una fase avanzada de desarrollo. Se han completado los siguientes sprints:
 
-- **Core Module:** Módulo central que gestiona la lógica de negocio y la comunicación entre los módulos.
-- **Agent Module:** Módulo que contiene los agentes autónomos, cada uno con reglas específicas de gestión de sprints.
-- **Communication:** Módulo que se encarga de la comunicación con APIs externas como Trello y GitHub.
+- Sprint 1: Configuración del entorno de desarrollo con Next.js y React.
+- Sprint 2: Integración de Tailwind para el diseño responsive.
+- Sprint 3: Implementación de Node.js para la lógica de negocio.
+- Sprint 4: Conexión con la API de Trello para la gestión de tareas.
+- Sprint 5: Integración de Ollama para la IA en el sistema.
 
 ## Historial de Sprints
 
-- **Sprint 1:** Configuración inicial del proyecto, instalación de dependencias y primeros avances en la arquitectura.
-- **Sprint 2:** Implementación del módulo de agentes y primeros tests unitarios.
-- **Sprint 3:** Integración con Trello API y GitHub API.
-- **Sprint 4:** Optimización y corrección de errores.
+- **Sprint 1:** Configuración del entorno de desarrollo con Next.js y React.
+  - **Tecnologías:** Next.js, React, Tailwind CSS.
+  - **Tareas:** Setup del proyecto, configuración de rutas, creación de componentes básicos.
+  - **Resultados:** Entorno de desarrollo configurado, estructura básica del proyecto.
 
-## Guía de Instalación
+- **Sprint 2:** Integración de Tailwind para el diseño responsive.
+  - **Tareas:** Implementación de Tailwind CSS para estilos responsivos.
+  - **Resultados:** Diseño responsive implementado, componentes estilizados.
 
-### Requisitos Previos
+- **Sprint 3:** Implementación de Node.js para la lógica de negocio.
+  - **Tareas:** Creación de endpoints para la API de Node.js.
+  - **Resultados:** API básica configurada, integración con la base de datos.
+
+- **Sprint 4:** Conexión con la API de Trello para la gestión de tareas.
+  - **Tareas:** Autenticación con Trello API, integración de endpoints.
+  - **Resultados:** Sistema de gestión de tareas conectado a Trello.
+
+- **Sprint 5:** Integración de Ollama para la IA en el sistema.
+  - **Tareas:** Implementación de Ollama para tareas de IA.
+  - **Resultados:** Sistema de IA en funcionamiento, integración con la API de Node.js.
+
+## Guía de Instalación y Uso
+
+### Requisitos
 
 - Node.js v14.x o superior
 - npm v6.x o superior
+- Git
 
-### Instalación Paso a Paso
+### Pasos para Instalar
 
-1. **Clonar el repositorio:**
+1. Clona el repositorio:
    ```bash
    git clone https://github.com/tu-usuario/MultiagentesIA.git
    cd MultiagentesIA
    ```
 
-2. **Instalar dependencias:**
+2. Instala las dependencias:
    ```bash
    npm install
    ```
 
-3. **Configurar variables de entorno:**
-   - Crear un archivo `.env` en la raíz del proyecto.
-   - Agregar las variables de entorno necesarias, como las claves de API de Trello y GitHub.
+3. Configura las variables de entorno:
+   - Crea un archivo `.env` en la raíz del proyecto.
+   - Agrega las variables de entorno necesarias, como las credenciales de Trello y Ollama.
 
-4. **Ejecutar la aplicación:**
+4. Inicia el servidor de desarrollo:
    ```bash
    npm run dev
    ```
 
-## Ejemplos de Uso
+### Ejemplos de Uso
 
-### Ejemplo 1: Crear un nuevo agente
+1. **Gestión de Tareas:**
+   - Autenticarse con Trello API.
+   - Crear, actualizar y eliminar tareas en un tablero de Trello.
 
-```javascript
-const { Agent } = require('./path/to/agentModule');
-
-const miAgente = new Agent({
-  name: 'MiAgente',
-  rules: {
-    sprintDuration: 14,
-    sprintStart: 'YYYY-MM-DD',
-    sprintEnd: 'YYYY-MM-DD'
-  }
-});
-
-miAgente.start();
-```
-
-### Ejemplo 2: Comunicación con Trello
-
-```javascript
-const { Trello } = require('./path/to/communicationModule');
-
-const trello = new Trello({
-  apiKey: process.env.TRELLO_API_KEY,
-  token: process.env.TRELLO_TOKEN
-});
-
-trello.createBoard('MiNuevoTablero', 'MiDescripción');
-```
+2. **Integración de IA:**
+   - Utilizar Ollama para tareas de IA, como análisis de datos y recomendaciones.
 
 ## Próximos Pasos
 
-- **Implementar la lógica de negocio completa.**
-- **Mejorar la interfaz de usuario.**
-- **Agregar más módulos de comunicación y agentes.**
-- **Realizar pruebas unitarias y de integración.**
+- **Sprint 6:** Mejora de la interfaz de usuario.
+- **Sprint 7:** Implementación de pruebas unitarias y de integración.
+- **Sprint 8:** Optimización de la API y reducción de latencia.
 
 ## Arquitectura del Proyecto
 
@@ -120,4 +115,19 @@ trello.createBoard('MiNuevoTablero', 'MiDescripción');
 - **Inyección de Dependencias:** Se utilizará un contenedor de inversión de control (IoC) para manejar las dependencias entre módulos, lo que facilitará las pruebas y la sustitución de implementaciones.
 - **CQRS (Command Query Responsibility Segregation):** Se recomienda separar las operaciones de comando (para cambios) y consulta (para lecturas) para mejorar la eficiencia y la escalabilidad.
 
-Este README.md proporciona una visión general clara y estructurada del proyecto MultiagentesIA, incluyendo su propósito, estado de desarrollo, guía de instalación, ejemplos de uso y la arquitectura del proyecto.
+## Contribución
+
+¡Estamos emocionados de recibir contribuciones de la comunidad! Para contribuir, sigue estos pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama para tu feature o bugfix.
+3. Haz los cambios y haz un commit.
+4. Haz un pull request a la rama main.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+---
+
+¡Gracias por usar MultiagentesIA!
