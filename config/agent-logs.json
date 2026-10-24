@@ -1,48 +1,6 @@
 [
   {
     "agent": "po",
-    "message": "✅ Encuestas creadas. Esperando respuestas del humano.",
-    "timestamp": "2026-10-24T03:50:47.547Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "🔒 Cerrando sprint...",
-    "timestamp": "2026-10-24T03:51:03.132Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Sprint archivado en historial",
-    "timestamp": "2026-10-24T03:51:03.142Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "🎯 Trabajando en: 📋 [PO] Análisis estratégico y planificación de MultiagentesIA",
-    "timestamp": "2026-10-24T04:22:27.389Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "Iniciando: 📋 [PO] Análisis estratégico y planificación de MultiagentesIA",
-    "timestamp": "2026-10-24T04:22:27.395Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "Generando con deepseek-coder-v2:16b...",
-    "timestamp": "2026-10-24T04:22:27.403Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Archivo creado: STRATEGY.md",
-    "timestamp": "2026-10-24T04:23:14.163Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T04:23:14.171Z",
     "level": "info"
@@ -87,6 +45,48 @@
     "agent": "dev",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T04:24:11.362Z",
+    "level": "info"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Push exitoso: 9e03f66",
+    "timestamp": "2026-10-24T04:24:14.528Z",
+    "level": "success"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Completado en 55.0s",
+    "timestamp": "2026-10-24T04:24:14.541Z",
+    "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "🎯 Trabajando en: Definir la arquitectura de base de datos",
+    "timestamp": "2026-10-24T04:24:16.547Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Iniciando: Definir la arquitectura de base de datos",
+    "timestamp": "2026-10-24T04:24:16.586Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "Generando con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-24T04:24:16.611Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Archivo creado: arquitectura_bd.md",
+    "timestamp": "2026-10-24T04:25:16.440Z",
+    "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-24T04:25:16.450Z",
     "level": "info"
   }
 ]
