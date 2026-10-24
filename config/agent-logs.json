@@ -1,41 +1,5 @@
 [
   {
-    "agent": "arch",
-    "message": "✅ Completado en 66.2s",
-    "timestamp": "2026-10-24T05:25:46.528Z",
-    "level": "success"
-  },
-  {
-    "agent": "dev",
-    "message": "🎯 Trabajando en: 💻 [DEV] Implementación de funcionalidades clave",
-    "timestamp": "2026-10-24T05:25:48.540Z",
-    "level": "info"
-  },
-  {
-    "agent": "dev",
-    "message": "Iniciando: 💻 [DEV] Implementación de funcionalidades clave",
-    "timestamp": "2026-10-24T05:25:48.550Z",
-    "level": "info"
-  },
-  {
-    "agent": "dev",
-    "message": "✅ Archivo creado: implementacion_funcionalidades_clave.py",
-    "timestamp": "2026-10-24T05:26:34.740Z",
-    "level": "success"
-  },
-  {
-    "agent": "dev",
-    "message": "Preparando commit...",
-    "timestamp": "2026-10-24T05:26:34.749Z",
-    "level": "info"
-  },
-  {
-    "agent": "dev",
-    "message": "✅ Push exitoso: fc6f2b0",
-    "timestamp": "2026-10-24T05:26:37.608Z",
-    "level": "success"
-  },
-  {
     "agent": "dev",
     "message": "✅ Completado en 49.1s",
     "timestamp": "2026-10-24T05:26:37.617Z",
@@ -297,6 +261,42 @@
     "agent": "dev",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T05:37:12.833Z",
+    "level": "info"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Push exitoso: ce19c74",
+    "timestamp": "2026-10-24T05:37:15.721Z",
+    "level": "success"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Completado en 45.2s",
+    "timestamp": "2026-10-24T05:37:15.728Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "🎯 Trabajando en: 🧪 [QA] Revisión de calidad y pruebas",
+    "timestamp": "2026-10-24T05:37:17.738Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Iniciando: 🧪 [QA] Revisión de calidad y pruebas",
+    "timestamp": "2026-10-24T05:37:17.744Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "✅ Archivo creado: QA_REPORT.md",
+    "timestamp": "2026-10-24T05:38:26.842Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-24T05:38:26.850Z",
     "level": "info"
   }
 ]
