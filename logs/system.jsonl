@@ -2128,3 +2128,7 @@
 {"ts":"2026-10-24T03:42:56.580Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvlusjlj_04v3pk"}}
 {"ts":"2026-10-24T03:42:56.595Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
 {"ts":"2026-10-24T03:42:56.602Z","level":"INFO","source":"analysis","message":"Job job_mvlusjlj_04v3pk completado en 4130ms"}
+{"ts":"2026-10-24T03:43:14.084Z","level":"INFO","source":"executor","message":"Resetando 9 tareas a \"pending\"..."}
+{"ts":"2026-10-24T03:43:14.086Z","level":"SPRINT","source":"system","message":"🚀 Sprint #11 iniciado. 9 tareas en cola."}
+{"ts":"2026-10-24T03:43:14.086Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 9"}
+{"ts":"2026-10-24T03:43:14.096Z","level":"AGENT","source":"dev","message":"Developer empezó: 🛠️ [DEV] 📌 Tareas sugeridas (Qué falta por definir):"}
