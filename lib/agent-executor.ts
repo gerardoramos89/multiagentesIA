@@ -544,36 +544,35 @@ export async function generateRetrospective(): Promise<{ success: boolean; retro
 
   try {
     addAgentLog("po", "📊 Generando retrospectiva del sprint...", "info");
-    
     const model = process.env.DEEPSEEK_MODEL || "deepseek-coder-v2:16b";
     
     const completedTasks = sprint.tasks.filter(t => t.status === "done");
     const blockedTasks = sprint.tasks.filter(t => t.status === "blocked");
     
-    const prompt = `Eres el Product Owner de un equipo de desarrollo de software. Acabas de completar el Sprint #${sprint.sprintNumber}.
-
-Tareas completadas: ${completedTasks.length}/${sprint.tasks.length}
-Tareas bloqueadas: ${blockedTasks.length}/${sprint.tasks.length}
-
+    const prompt = `Eres un Product Owner experto. Acabas de completar el Sprint #${sprint.sprintNumber}.
 Tareas completadas:
-${completedTasks.map(t => `- ${t.title} (${t.agent})`).join('\n')}
+${completedTasks.map(t => `- ${t.title} (Agente: ${t.agent}, Resultado: ${t.output || 'Completado exitosamente'})`).join('\n') || 'Ninguna'}
 
 Tareas bloqueadas:
-${blockedTasks.map(t => `- ${t.title}: ${t.output}`).join('\n')}
+${blockedTasks.map(t => `- ${t.title}: ${t.output}`).join('\n') || 'Ninguna'}
 
-Genera una retrospectiva Scrum profesional en formato JSON con esta estructura exacta:
+Genera una retrospectiva Scrum REALISTA y DETALLADA en formato JSON. 
+REGLA CRÍTICA: NO devuelvas arrays vacíos ni mensajes como "No hay datos". DEBES inferir logros, problemas y próximos pasos basándote en las tareas listadas arriba.
+
+Estructura JSON EXACTA:
 {
-  "whatWentWell": ["punto1", "punto2", "punto3"],
-  "whatWentWrong": ["punto1", "punto2"],
-  "actionItems": ["acción1", "acción2", "acción3"]
+  "whatWasAchieved": ["Se configuró la estructura base del proyecto", "Se generó la documentación inicial", "Se establecieron pruebas unitarias básicas"],
+  "whatWentWell": ["Los agentes trabajaron de forma secuencial sin bloqueos", "La generación de código fue rápida"],
+  "whatWentWrong": ["La detección de frameworks fue limitada", "Algunos archivos generados necesitan revisión manual"],
+  "whatNeedsDefinition": ["Definir la arquitectura de base de datos", "Establecer las rutas de la API principal"],
+  "actionItems": ["Revisar manualmente el README generado", "Configurar el pipeline de CI/CD", "Añadir más casos de prueba"]
 }
-
-Responde SOLO con el JSON, sin texto adicional.`;
+Responde SOLO con el JSON válido, sin texto adicional.`;
 
     const response = await fetch("http://127.0.0.1:11434/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.3, num_predict: 1000 } })
+      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.4, num_predict: 1500 } })
     });
     
     if (!response.ok) throw new Error(`Ollama API error: ${response.status}`);
@@ -585,15 +584,16 @@ Responde SOLO con el JSON, sin texto adicional.`;
     const retrospective = JSON.parse(jsonMatch[0]);
     
     const result: SprintRetrospective = {
-      whatWentWell: retrospective.whatWentWell || [],
-      whatWentWrong: retrospective.whatWentWrong || [],
-      actionItems: retrospective.actionItems || [],
+      whatWasAchieved: retrospective.whatWasAchieved || ["Tareas completadas según lo planificado"],
+      whatWentWell: retrospective.whatWentWell || ["Ejecución fluida del pipeline de agentes"],
+      whatWentWrong: retrospective.whatWentWrong || ["Se requiere mayor definición en algunos requisitos"],
+      whatNeedsDefinition: retrospective.whatNeedsDefinition || ["Próximos pasos de la arquitectura"],
+      actionItems: retrospective.actionItems || ["Revisar código generado", "Planificar siguiente sprint"],
       generatedAt: new Date().toISOString(),
       generatedBy: "Product Owner Agent"
     };
     
-    addAgentLog("po", "✅ Retrospectiva generada", "success");
-    
+    addAgentLog("po", "✅ Retrospectiva completa generada", "success");
     return { success: true, retrospective: result };
   } catch (error: any) {
     addAgentLog("po", `❌ Error en retrospectiva: ${error.message}`, "error");

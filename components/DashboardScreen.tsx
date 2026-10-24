@@ -188,6 +188,9 @@ export default function DashboardScreen() {
   const [hasCompletedSprints, setHasCompletedSprints] = useState(false);
   const [lastRetrospective, setLastRetrospective] = useState<any>(null);
   const [lastSprintNumber, setLastSprintNumber] = useState<number>(0);
+  
+  // ✅ NUEVO: Estado para tareas personalizadas del sprint
+  const [customTasks, setCustomTasks] = useState("");
 
   // ✅ 2. VARIABLES DERIVADAS (UNA SOLA VEZ)
   const configuredCount = modules.filter(m => m.status === "on").length;
@@ -410,7 +413,7 @@ export default function DashboardScreen() {
           onComplete={() => {}} showUI={false} 
           configuredModules={modules.filter(m => m.status === "on").map(m => m.id)}
           projectStatus={sprintExecuting ? "building" : projectStatus} 
-          commitsCount={telemetry.commits || 0}
+          commitsCount={realCommitsCount} // ✅ FORZAR EL CONTADOR REAL EN EL 3D
           moduleStates={moduleStates} 
           lastWorkTimes={lastWorkTimes}
           taskCounts={{ po: 0, arch: 0, dev: 0, qa: 0, doc: 0 }} 
@@ -510,17 +513,46 @@ export default function DashboardScreen() {
 
           {!sprintState || sprintState?.sprint?.status === "completed" ? (
             <>
+              {/* ✅ CAMPO PARA TAREAS PERSONALIZADAS DEL SPRINT */}
+              <div className="mb-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg">
+                <label className="text-[9px] text-gray-400 mb-1 block font-bold">
+                  📋 Tareas del Sprint (Opcional, una por línea). Si lo dejas vacío, la IA las generará automáticamente.
+                </label>
+                <textarea 
+                  value={customTasks}
+                  onChange={(e) => setCustomTasks(e.target.value)}
+                  placeholder="Ej:&#10;Crear pantalla de login&#10;Configurar base de datos&#10;Implementar API de usuarios"
+                  className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[9px] text-white focus:border-cyan-500 outline-none resize-none h-16"
+                />
+              </div>
+
               <button 
                 disabled={!projectConfig || !diagnosticsReady || !projectVision.isCompleted}
                 onClick={async () => {
                   try {
-                    const res = await fetch("/api/sprint/plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ agents: agentsConfig.filter(a => a.enabled), brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief) }) });
+                    const tasksArray = customTasks.split('\n').filter(t => t.trim() !== "");
+                    const res = await fetch("/api/sprint/plan", { 
+                      method: "POST", 
+                      headers: { "Content-Type": "application/json" }, 
+                      body: JSON.stringify({ 
+                        agents: agentsConfig.filter(a => a.enabled), 
+                        brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief),
+                        vision: projectVision,
+                        customTasks: tasksArray // ✅ Enviar tareas personalizadas al backend
+                      }) 
+                    });
                     const data = await res.json();
                     if (data.success) { 
                       alert(`✅ Sprint #${data.sprintNumber || 1} planificado con ${data.tasksCount} tareas.`); 
-                      setSprintPlanned(true); setSprintState(null);
-                    } else { alert(`❌ Error: ${data.message}`); }
-                  } catch (err: any) { alert(`❌ Error: ${err.message}`); }
+                      setSprintPlanned(true); 
+                      setSprintState(null);
+                      setCustomTasks(""); // Limpiar después de planificar
+                    } else { 
+                      alert(`❌ Error: ${data.message}`); 
+                    }
+                  } catch (err: any) { 
+                    alert(`❌ Error: ${err.message}`); 
+                  }
                 }} 
                 className={`w-full py-2 rounded-lg font-bold text-[10px] transition-all flex items-center justify-center gap-2 ${projectConfig && diagnosticsReady && projectVision.isCompleted ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" : "bg-gray-800 text-gray-500 cursor-not-allowed"}`}
               >
@@ -539,7 +571,9 @@ export default function DashboardScreen() {
                     } else {
                       alert("ℹ️ No hay sprints completados aún");
                     }
-                  } catch (err: any) { alert(`❌ Error: ${err.message}`); }
+                  } catch (err: any) { 
+                    alert(`❌ Error: ${err.message}`); 
+                  }
                 }}
                 className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-[10px] font-bold rounded hover:from-cyan-500 hover:to-blue-500 transition-all flex items-center justify-center gap-2"
               >
