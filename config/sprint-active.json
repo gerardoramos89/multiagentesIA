@@ -72,15 +72,24 @@
       "title": "Crear un script de validación en Node.js que verifique que todos los endpoints (/api/sprint/plan, /api/sprint/execute) devuelvan el formato JSON correcto y manejen errores de red.",
       "description": "[QA] Crear un script de validación en Node.js que verifique que todos los endpoints (/api/sprint/plan, /api/sprint/execute) devuelvan el formato JSON correcto y manejen errores de red.",
       "agent": "qa",
-      "status": "working",
-      "startedAt": "2026-10-24T05:48:14.542Z"
+      "status": "done",
+      "startedAt": "2026-10-24T05:48:14.542Z",
+      "completedAt": "2026-10-24T05:48:35.956Z",
+      "output": "Generado: validar_endpoints.js",
+      "commits": [
+        "c0fdd6089e5ebfdb6765446ea9fe2892bc79996d"
+      ],
+      "filesModified": [
+        "validar_endpoints.js"
+      ]
     },
     {
       "id": "task-1792820689114-5",
       "title": "Redactar un archivo README.md profesional y completo que incluya: 1) Requisitos previos (Node.js, Ollama, DeepSeek), 2) Variables de entorno necesarias (.env.local), 3) Guía de inicio rápido paso a paso.",
       "description": "[DOC] Redactar un archivo README.md profesional y completo que incluya: 1) Requisitos previos (Node.js, Ollama, DeepSeek), 2) Variables de entorno necesarias (.env.local), 3) Guía de inicio rápido paso a paso.",
       "agent": "doc",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T05:48:37.969Z"
     },
     {
       "id": "task-1792820689114-6",
@@ -104,6 +113,7 @@
     "Strategy.md",
     "sistema_persistencia_localstorage.md",
     "AgentWorkPanel.tsx",
-    "trello_integration.py"
+    "trello_integration.py",
+    "validar_endpoints.js"
   ]
 }
