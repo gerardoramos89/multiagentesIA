@@ -194,5 +194,16 @@
     "startedAt": "2026-10-24T05:49:28.154Z",
     "completedAt": "2026-10-24T05:49:28.154Z",
     "fileName": "README.md"
+  },
+  {
+    "agent": "po",
+    "taskId": "task-1792820689114-6",
+    "taskTitle": "📊 [PO] Retrospectiva y propuesta de mejora para el próximo sprint",
+    "prompt": "Eres un Product Owner experto. Tu trabajo es ESTRATÉGICO. No generes código. Genera documentos de planificación. Enfócate en: objetivos claros, criterios de aceptación, riesgos y propuestas de mejora.\n\nCONTEXTO DEL PROYECTO:\n- Nombre: 📊 [PO] Retrospectiva y propuesta de mejora para el próximo sprint\n- Descripción: Como Product Owner, al finalizar este sprint: 1) Analiza qué se logró vs lo planeado, 2) Identifica patrones de éxito y fracaso, 3) Propón 3-5 mejoras concretas para el próximo sprint...",
+    "response": "# Retrospectiva y Propuesta de Mejora para el Próximo Sprint\n\n## Objetivos Claros\n- **Objetivo General**: Evaluar el desempeño del equipo en el sprint actual y proponer mejoras concretas para el siguiente sprint.\n- **Objetivos Específicos**:\n  - Realizar una evaluación detallada de lo que se logró vs. lo planeado.\n  - Identificar patrones de éxito y fracaso para el próximo sprint.\n  - Proponer 3-5 mejoras específicas para el próximo sprint.\n\n## Criterios de Aceptación\n- **Evaluación de Desempeño**:\n  - Comparar los resultados obtenidos con los objetivos establecidos al inicio del sprint.\n  - Identificar qué elementos del sprint planeado fueron exitosos y cuáles no.\n- **Identificación de Patrones**:\n  - Analizar las razones detrás de los éxitos y fracasos.\n  - Determinar si las mejoras prop...",
+    "status": "done",
+    "startedAt": "2026-10-24T05:50:24.191Z",
+    "completedAt": "2026-10-24T05:50:24.191Z",
+    "fileName": "RETROSPECTIVE_SUGGESTIONS.md"
   }
 ]
