@@ -1,47 +1,5 @@
 [
   {
-    "agent": "po",
-    "message": "Preparando commit...",
-    "timestamp": "2026-10-24T04:40:04.594Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Push exitoso: 12382c6",
-    "timestamp": "2026-10-24T04:40:07.728Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Completado en 47.1s",
-    "timestamp": "2026-10-24T04:40:07.737Z",
-    "level": "success"
-  },
-  {
-    "agent": "dev",
-    "message": "🎯 Trabajando en: Crear un gestgor de mulkti agentes que con ollama use varios modelos y trabajane lso agentes en conjunto para con un repositorio de gisthub crear un programa con roles de scrum y su metodologia usando telgram para ver todos los logs, y ayudarle como humano en cada sprint a dar indicaciones y palnificar",
-    "timestamp": "2026-10-24T04:40:09.752Z",
-    "level": "info"
-  },
-  {
-    "agent": "dev",
-    "message": "Iniciando: Crear un gestgor de mulkti agentes que con ollama use varios modelos y trabajane lso agentes en conjunto para con un repositorio de gisthub crear un programa con roles de scrum y su metodologia usando telgram para ver todos los logs, y ayudarle como humano en cada sprint a dar indicaciones y palnificar",
-    "timestamp": "2026-10-24T04:40:09.759Z",
-    "level": "info"
-  },
-  {
-    "agent": "dev",
-    "message": "Generando con deepseek-coder-v2:16b...",
-    "timestamp": "2026-10-24T04:40:09.765Z",
-    "level": "info"
-  },
-  {
-    "agent": "dev",
-    "message": "✅ Archivo creado: MultiAgentManager.py",
-    "timestamp": "2026-10-24T04:40:49.765Z",
-    "level": "success"
-  },
-  {
     "agent": "dev",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T04:40:49.771Z",
@@ -87,6 +45,48 @@
     "agent": "arch",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T04:42:06.240Z",
+    "level": "info"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Push exitoso: c85bed1",
+    "timestamp": "2026-10-24T04:42:09.560Z",
+    "level": "success"
+  },
+  {
+    "agent": "arch",
+    "message": "✅ Completado en 74.7s",
+    "timestamp": "2026-10-24T04:42:09.567Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "🎯 Trabajando en: 🧪 [QA] Revisión de calidad y pruebas",
+    "timestamp": "2026-10-24T04:42:11.583Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Iniciando: 🧪 [QA] Revisión de calidad y pruebas",
+    "timestamp": "2026-10-24T04:42:11.589Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Generando con deepseek-coder-v2:16b...",
+    "timestamp": "2026-10-24T04:42:11.595Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "✅ Archivo creado: QA_REPORT.md",
+    "timestamp": "2026-10-24T04:42:53.816Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-24T04:42:53.824Z",
     "level": "info"
   }
 ]
