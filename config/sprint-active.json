@@ -40,15 +40,24 @@
       "title": "📝 [DOC] Actualizar documentación y README del sprint",
       "description": "Actualizar el README.md con los avances, nuevos archivos, cambios de arquitectura y guía de uso de este sprint.",
       "agent": "doc",
-      "status": "working",
-      "startedAt": "2026-10-24T03:31:23.672Z"
+      "status": "done",
+      "startedAt": "2026-10-24T03:31:23.672Z",
+      "completedAt": "2026-10-24T03:32:20.421Z",
+      "output": "Generado: README.md",
+      "commits": [
+        "a4ba7003483dcb91f236900c8e5a91b9fefc283d"
+      ],
+      "filesModified": [
+        "README.md"
+      ]
     },
     {
       "id": "task-1792812570612-3",
       "title": "🧪 [QA] Revisión de calidad y pruebas del sprint",
       "description": "Verificar que el código generado cumpla con los estándares, revisar errores y añadir/actualizar tests unitarios.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T03:32:22.437Z"
     }
   ],
   "status": "executing",
@@ -63,6 +72,7 @@
   },
   "filesChanged": [
     "arquitectura_multiagentes_ia.ext",
-    "MultiagentesIA.py"
+    "MultiagentesIA.py",
+    "README.md"
   ]
 }
