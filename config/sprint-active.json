@@ -88,15 +88,24 @@
       "title": "Actualizar el manual de operaciones con detalles de la nueva estructura de datos",
       "description": "[DEV/QA] Actualizar el manual de operaciones con detalles de la nueva estructura de datos",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T17:15:34.494Z"
+      "status": "done",
+      "startedAt": "2026-10-24T17:15:34.494Z",
+      "completedAt": "2026-10-24T17:15:57.083Z",
+      "output": "Generado: ManualOperaciones.md",
+      "commits": [
+        "f12fdec62f9d277ab847a5da25e4af3eb35fff83"
+      ],
+      "filesModified": [
+        "ManualOperaciones.md"
+      ]
     },
     {
       "id": "task-1792861692408-6",
       "title": "🧪 [QA] Revisión de calidad y pruebas",
       "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T17:15:59.090Z"
     },
     {
       "id": "task-1792861692408-7",
@@ -128,6 +137,7 @@
     "arquitectura_proyectofabricaagentes.md",
     "ARCHITECTURE.md",
     "nombre_del_archivo.ext",
-    "tests_validacion.js"
+    "tests_validacion.js",
+    "ManualOperaciones.md"
   ]
 }
