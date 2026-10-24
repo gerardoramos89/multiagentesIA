@@ -40,15 +40,24 @@
       "title": "Product",
       "description": "Product",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T14:54:07.605Z"
+      "status": "done",
+      "startedAt": "2026-10-24T14:54:07.605Z",
+      "completedAt": "2026-10-24T14:55:31.606Z",
+      "output": "Generado: nombre_del_archivo.ext",
+      "commits": [
+        "914454bbc14989cec08de55c34518ef46f24096b"
+      ],
+      "filesModified": [
+        "nombre_del_archivo.ext"
+      ]
     },
     {
       "id": "task-1792853523834-3",
       "title": "Arquitecto",
       "description": "Arquitecto",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T14:55:33.615Z"
     },
     {
       "id": "task-1792853523834-4",
@@ -119,6 +128,7 @@
   },
   "filesChanged": [
     "STRATEGY.md",
-    "roles_del_equipo.js"
+    "roles_del_equipo.js",
+    "nombre_del_archivo.ext"
   ]
 }
