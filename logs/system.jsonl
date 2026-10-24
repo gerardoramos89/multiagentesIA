@@ -2416,3 +2416,7 @@
 {"ts":"2026-10-24T04:48:13.135Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvlx4hp5_adz5qw"}}
 {"ts":"2026-10-24T04:48:13.151Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
 {"ts":"2026-10-24T04:48:13.159Z","level":"INFO","source":"analysis","message":"Job job_mvlx4hp5_adz5qw completado en 4043ms"}
+{"ts":"2026-10-24T04:49:39.327Z","level":"INFO","source":"executor","message":"Resetando 10 tareas a \"pending\"..."}
+{"ts":"2026-10-24T04:49:39.328Z","level":"SPRINT","source":"system","message":"🚀 Sprint #14 iniciado. 10 tareas en cola."}
+{"ts":"2026-10-24T04:49:39.328Z","level":"INFO","source":"executor","message":"Tareas pendientes encontradas: 10"}
+{"ts":"2026-10-24T04:49:39.336Z","level":"AGENT","source":"po","message":"Product Owner empezó: 📋 [PO] Análisis estratégico y planificación de MultiagentesIA"}
