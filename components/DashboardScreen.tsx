@@ -586,27 +586,11 @@ export default function DashboardScreen() {
                   className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[9px] text-white focus:border-cyan-500 outline-none resize-none h-24"
                 />
               </div>
-              
-              <button 
-                onClick={async () => {
-                  try {
-                    const res = await fetch("/api/sync-to-github", { method: "POST" });
-                    const data = await res.json();
-                    alert(data.message);
-                  } catch (err: any) {
-                    alert(`❌ Error: ${err.message}`);
-                  }
-                }}
-                className="w-full py-2 bg-gradient-to-r from-amber-600 to-orange-600 text-white text-[10px] font-bold rounded hover:from-amber-500 hover:to-orange-500 transition-all flex items-center justify-center gap-2 mb-2"
-              >
-                <GitBranch size={14} /> 💾 Sincronizar Datos con GitHub
-              </button>
 
               <button 
                 disabled={!projectConfig || !diagnosticsReady || !projectVision.isCompleted}
                 onClick={async () => {
                   try {
-                    // ✅ FILTRADO INTELIGENTE: Elimina líneas vacías y títulos de sección
                     const tasksArray = customTasks.split('\n')
                       .map(t => t.trim())
                       .filter(t => 
@@ -705,7 +689,7 @@ export default function DashboardScreen() {
               {sprintState?.sprint?.status === "survey" && (
                 <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded space-y-2">
                   <div className="flex items-center gap-2"><Eye size={14} className="text-amber-400 animate-pulse" /><span className="text-[10px] font-bold text-amber-400">Esperando tus respuestas en Trello</span></div>
-                  <p className="text-[9px] text-gray-400">Responde las encuestas en Trello. El sistema cerrará el sprint automáticamente.</p>
+                  <p className="text-[9px] text-gray-400">Responde las tarjetas en Trello. El sistema cerrará el sprint automáticamente.</p>
                   <div className="flex items-center gap-2">
                     <input type="checkbox" checked={autoCheckSurveys} onChange={(e) => setAutoCheckSurveys(e.target.checked)} className="w-3 h-3" />
                     <span className="text-[8px] text-gray-400">Verificación automática cada 15s</span>
