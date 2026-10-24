@@ -40,15 +40,24 @@
       "title": "Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "description": "[ARCH/DEV] Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T06:40:14.983Z"
+      "status": "done",
+      "startedAt": "2026-10-24T06:40:14.983Z",
+      "completedAt": "2026-10-24T06:41:03.806Z",
+      "output": "Generado: ProyectoF_bricaDeAgentes_Arquitectura.md",
+      "commits": [
+        "1478506f964dafb630bef71217a81092a2f74657"
+      ],
+      "filesModified": [
+        "ProyectoF_bricaDeAgentes_Arquitectura.md"
+      ]
     },
     {
       "id": "task-1792823859635-3",
       "title": "Revisar y ajustar la planificación para incluir tiempo suficiente para la integración con Ollama en el componente 3D",
       "description": "[DEV/QA] Revisar y ajustar la planificación para incluir tiempo suficiente para la integración con Ollama en el componente 3D",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T06:41:05.818Z"
     },
     {
       "id": "task-1792823859635-4",
@@ -91,6 +100,7 @@
   },
   "filesChanged": [
     "STRATEGY.md",
-    "arquitectura_proyecto_f_brica_de_agentes.md"
+    "arquitectura_proyecto_f_brica_de_agentes.md",
+    "ProyectoF_bricaDeAgentes_Arquitectura.md"
   ]
 }
