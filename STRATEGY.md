@@ -2,27 +2,35 @@
 
 ## 1. Objetivos del Sprint
 El objetivo principal de este sprint es lanzar una versión beta del sistema autónomo de gestión de sprints con IA, llamado MultiagentesIA. Los objetivos específicos incluyen:
-- Implementar la integración con la API de Ollama para la IA.
+
+- Implementar la integración con la API de Ollama para la IA de apoyo en la gestión de sprints.
 - Desarrollar una interfaz de usuario intuitiva utilizando Next.js y React.
-- Integrar la API de Trello para la gestión de proyectos.
-- Crear una herramienta que permita a los usuarios gestionar sus sprints de manera eficiente y con la ayuda de la IA.
+- Integrar la API de Trello para la gestión de tareas y proyectos.
+- Implementar funcionalidades avanzadas de IA para la optimización de tareas y planificación de sprints.
+- Mejorar la experiencia de usuario mediante la integración con GitHub API para seguimiento de progreso y colaboración.
 
 ## 2. Criterios de Aceptación
-Para considerar que el sprint ha sido exitoso, se deben cumplir los siguientes criterios:
-- **Dado**: Un usuario ha creado una cuenta en la aplicación MultiagentesIA.
-- **Cuando**: El usuario ha iniciado sesión y ha accedido a la sección de gestión de sprints.
-- **Entonces**: El sistema debe mostrar una lista de tareas pendientes, permitir la adición de nuevas tareas, y permitir la asignación de tareas a agentes de IA.
-- **Y**: La IA debe proporcionar recomendaciones basadas en el historial de tareas y prioridades del usuario.
-- **Y**: La interfaz de usuario debe ser intuitiva y fácil de usar, con una navegación clara y una experiencia de usuario consistente.
+Los criterios de aceptación para el lanzamiento exitoso del sistema MultiagentesIA son:
+
+**Dado** que un usuario accede al sistema MultiagentesIA.
+**Cuando** el usuario inicia sesión y navega a la sección de gestión de sprints.
+**Entonces** el sistema debe mostrar una lista de tareas actuales y proyectos.
+**Y** la IA debe sugerir tareas y ajustar la planificación según el progreso y necesidades del equipo.
+**Y** la integración con GitHub debe permitir un seguimiento detallado del progreso de las tareas asignadas.
 
 ## 3. Análisis de Riesgos
-- **Riesgo 1**: Problemas con la integración de la API de Ollama. Posible solución: realizar pruebas exhaustivas y contar con soporte técnico de Ollama.
-- **Riesgo 2**: Complejidad en la interfaz de usuario para usuarios no técnicos. Posible solución: diseñar una interfaz sencilla y realizar pruebas de usabilidad con usuarios objetivo.
-- **Riesgo 3**: Fallos en la sincronización de datos entre Trello y la aplicación. Posible solución: implementar un sistema de verificación de datos y establecer un plan de respaldo en caso de fallo.
+Los principales riesgos identificados para este proyecto incluyen:
+
+- Complejidad en la integración de APIs externas como Ollama y Trello.
+- Incertidumbre en el rendimiento y la precisión de la IA en la gestión de sprints.
+- Problemas de compatibilidad entre las tecnologías utilizadas (Next.js, React, Node.js).
 
 ## 4. Métricas de Éxito
-- **Métrica 1**: Porcentaje de usuarios que logran completar al menos un sprint sin ayuda manual.
-- **Métrica 2**: Tasa de conversión de usuarios primerizos en usuarios recurrentes.
-- **Métrica 3**: Índice de satisfacción del usuario medido a través de encuestas o feedback directo.
+Las métricas clave para evaluar el éxito del sprint incluyen:
 
-Este documento estratégico proporciona una visión clara de los objetivos, criterios de aceptación, riesgos y métricas clave para el sprint de desarrollo de MultiagentesIA.
+- Porcentaje de tareas completadas correctamente y en el tiempo previsto.
+- Retrasos en la implementación de nuevas funcionalidades debido a la integración de APIs.
+- Nivel de satisfacción del usuario medido a través de encuestas o feedback directo.
+- Tiempo de respuesta y eficiencia de la IA en la toma de decisiones.
+
+Este documento estratégico proporciona una visión clara de los objetivos, criterios de aceptación, riesgos y métricas clave para el sprint actual en el desarrollo de MultiagentesIA.
