@@ -1,60 +1,61 @@
 ```javascript
-// ARCHIVO: nombre_del_archivo.ext
+// Importaciones necesarias
+import { Router } from 'express';
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { validate } from 'uuid';
+import { UserService } from '../core/services/userService';
+import { UserModel } from '../core/models/userModel';
+import { config } from '../config/app.config';
 
-import { NextResponse } from 'next/server';
-import { signIn, signOut, getSession } from 'next-auth/react';
-import { getToken } from 'next-auth/jwt';
-import { getServerSession } from 'next-auth/next';
-import { NextRequest } from 'next/server';
+// Creación del router
+const router = Router();
 
-// Configuración de autenticación
-const authConfig = {
-  providers: [
-    // Configuración de proveedores de autenticación
-  ],
-  callbacks: {
-    async signIn({ user, account, profile, isNewUser }) {
-      // Lógica de autenticación
-      return true;
-    },
-    async signOut(params) {
-      // Lógica de cierre de sesión
-      return true;
-    },
-    async session({ session, user, token }) {
-      // Personalizar la sesión
-      session.user = { ...session.user, id: token.sub };
-      return session;
-    },
-    async jwt({ token, user, account, profile, isNewUser }) {
-      // Personalizar el token JWT
-      if (user) {
-        token.sub = user.id;
-      }
-      return token;
-    },
-  },
-  pages: {
-    signIn: '/auth/signin',
-    signOut: '/auth/signout',
-    error: '/auth/error', // Error page
-  },
-};
+// Servicio de usuarios
+const userService = new UserService(UserModel);
 
-// Función para obtener la sesión del usuario
-export async function getServerAuthSession(req) {
-  return await getServerSession(authConfig, req);
-}
+// Endpoint para obtener un usuario por ID
+router.get('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
 
-// Middleware de autenticación
-export async function middleware(req) {
-  const session = await getServerAuthSession(req);
-  if (!session) {
-    return NextResponse.redirect(new URL('/auth/signin', req.url));
+    // Validación del UUID del usuario
+    if (!validate(id)) {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+
+    // Obtener usuario por ID
+    const user = await userService.getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
   }
-  return NextResponse.next();
-}
+});
 
-// Exportar funciones de autenticación
-export { signIn, signOut, getSession, getToken };
+// Endpoint para crear un nuevo usuario
+router.post('/users', async (req, res) => {
+  try {
+    const { name, email } = req.body;
+
+    // Validación de datos de entrada
+    if (!name || !email) {
+      return res.status(400).json({ error: 'Name and email are required' });
+    }
+
+    // Crear nuevo usuario
+    const newUser = await userService.createUser({ id: uuidv4(), name, email });
+
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Exportación del router
+export default router;
 ```

@@ -1,17 +1,5 @@
 [
   {
-    "agent": "arch",
-    "taskId": "task-1792823859635-2",
-    "taskTitle": "Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
-    "prompt": "Eres un Arquitecto de Software Principal (Staff Engineer). Tu trabajo es DISEÑAR. Genera ARCHITECTURE.md. Enfócate en: patrones de diseño específicos, estructura de carpetas exacta, decisiones técnicas (ADR), escalabilidad, seguridad y cómo reducir la deuda técnica. Sé muy específico con las tecnologías.\n\n📂 CONTEXTO GLOBAL DEL PROYECTO:\n- Nombre: Proyecto de Fábrica de Agentes\n- Objetivo General: Desarrollar un sistema autónomo de gestión de sprints con IA.\n- Stack/Tecnologías: Next.js, React, Tailwind, Node.js, Ollama, Trello API, GitHub API.\n\n📋 TU TAREA ESPECÍFICA:\n- Título: Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras\n- Descripción Detallada: [ARCH/DEV] Debido a los retrasos, es necesario revisar y ajustar las esti...",
-    "response": "# Proyecto de Fábrica de Agentes\n\n## Objetivo General\nDesarrollar un sistema autónomo de gestión de sprints con IA.\n\n## Stack/Tecnologías\n- Next.js\n- React\n- Tailwind\n- Node.js\n- Ollama\n- Trello API\n- GitHub API\n\n## Estructura de Carpetas\n```\n/src\n  /components\n    /common\n    /features\n      /home\n      /dashboard\n      /settings\n    /layouts\n    /ui\n  /contexts\n  /hooks\n  /services\n    /api\n    /data\n  /public\n  /styles\n    /globals\n    /tailwind\n  /utils\n```\n\n## Patrones de Diseño\n### Patrón de Diseño: Modelo-Vista-Controlador (MVC)\nSe implementará un patrón MVC para separar las responsabilidades de la lógica de negocio, la presentación y la interacción con el usuario.\n\n### Patrón de Diseño: Inyección de Dependencias\nSe utilizará la inyección de dependencias para mejorar la modularidad y la testabilidad del código.\n\n## Decisiones Técnicas\n### ADR-01: Gestión de Estados con Zustand\nSe utilizará Zustand para la gestión de estados globales de la aplicación.\n\n### ADR-02: Autenticación c...",
-    "status": "done",
-    "startedAt": "2026-10-24T06:40:14.992Z",
-    "completedAt": "2026-10-24T06:41:00.736Z",
-    "fileName": "ProyectoF_bricaDeAgentes_Arquitectura.md",
-    "duration": 46
-  },
-  {
     "agent": "dev",
     "taskId": "task-1792823859635-3",
     "taskTitle": "Revisar y ajustar la planificación para incluir tiempo suficiente para la integración con Ollama en el componente 3D",
@@ -355,5 +343,17 @@
     "completedAt": "2026-10-24T16:01:10.996Z",
     "fileName": "nombre_del_archivo.ext",
     "duration": 56
+  },
+  {
+    "agent": "dev",
+    "taskId": "task-1792857408506-4",
+    "taskTitle": "Añadir tests de integración para el endpoint de usuarios",
+    "prompt": "Eres un Developer Senior (10x Engineer) experto en Clean Code. Tu trabajo es IMPLEMENTAR. \nREGLAS OBLIGATORIAS:\n1. Usa principios SOLID y patrones de diseño mencionados por el Arquitecto.\n2. Maneja TODOS los errores posibles (try/catch, validaciones de input).\n3. El código debe ser modular, testeable y estar profusamente comentado.\n4. Si el contexto del Arquitecto menciona tecnologías específicas, ÚSALAS estrictamente.\n5. Responde SOLO con el contenido del archivo. Primera línea: 'ARCHIVO: ruta/nombre.ext'\n\n📂 CONTEXTO GLOBAL DEL PROYECTO:\n- Nombre: Proyecto de Fábrica de Agentes\n- Objetivo General: Desarrollar un sistema autónomo de gestión de sprints con IA.\n- Stack/Tecnologías: Next.js, React, Tailwind, Node.js, Ollama, Trello API, GitHub API.\n\n📋 TU TAREA ESPECÍFICA:\n- Título: Añadir t...",
+    "response": "```javascript\n// Importaciones necesarias\nimport { Router } from 'express';\nimport axios from 'axios';\nimport { v4 as uuidv4 } from 'uuid';\nimport { validate } from 'uuid';\nimport { UserService } from '../core/services/userService';\nimport { UserModel } from '../core/models/userModel';\nimport { config } from '../config/app.config';\n\n// Creación del router\nconst router = Router();\n\n// Servicio de usuarios\nconst userService = new UserService(UserModel);\n\n// Endpoint para obtener un usuario por ID\nrouter.get('/users/:id', async (req, res) => {\n  try {\n    const { id } = req.params;\n\n    // Validación del UUID del usuario\n    if (!validate(id)) {\n      return res.status(400).json({ error: 'Invalid user ID' });\n    }\n\n    // Obtener usuario por ID\n    const user = await userService.getUserById(id);\n\n    if (!user) {\n      return res.status(404).json({ error: 'User not found' });\n    }\n\n    res.status(200).json(user);\n  } catch (error) {\n    res.status(500).json({ error: 'Internal Server Err...",
+    "status": "done",
+    "startedAt": "2026-10-24T16:01:16.157Z",
+    "completedAt": "2026-10-24T16:02:09.681Z",
+    "fileName": "nombre_del_archivo.ext",
+    "duration": 54
   }
 ]
