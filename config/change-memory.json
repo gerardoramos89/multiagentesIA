@@ -1,5 +1,5 @@
 {
-  "totalCommits": 67,
+  "totalCommits": 68,
   "filesEverChanged": [
     "multiagentesIA.py",
     "DOCUMENTACION.md",
@@ -26,8 +26,10 @@
     "A_adirMasCasosDePrueba.py",
     "QA_REPORT.md",
     "README_MultiagentesIA.md",
-    "RETROSPECTIVE_SUGGESTIONS.md"
+    "RETROSPECTIVE_SUGGESTIONS.md",
+    "MultiAgentManager.py",
+    "arquitectura_multiagentesia.md"
   ],
-  "sprintsCompleted": 13,
-  "lastCommitHash": "c84c25a7b47da459a2c87fabd526f21688c3b575"
+  "sprintsCompleted": 14,
+  "lastCommitHash": "735130ede6aa2d9b1ed545517572fef6435fe4a6"
 }
