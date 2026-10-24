@@ -218,6 +218,27 @@ export default function DashboardScreen() {
     loadHistory();
   }, []);
 
+    // ✅ PRE-LLENAR TAREAS PERSONALIZADAS CON SUGERENCIAS DE LA RETROSPECTIVA
+  useEffect(() => {
+    if (lastRetrospective && (!sprintState || sprintState.sprint?.status === "completed") && customTasks.trim() === "") {
+      const suggestions: string[] = [];
+      
+      if (lastRetrospective.whatNeedsDefinition?.length > 0) {
+        suggestions.push("📌 Tareas sugeridas (Qué falta por definir):");
+        lastRetrospective.whatNeedsDefinition.forEach((item: string) => suggestions.push(`[ARCH/DEV] ${item}`));
+      }
+      
+      if (lastRetrospective.actionItems?.length > 0) {
+        suggestions.push("\n🎯 Plan de acción sugerido:");
+        lastRetrospective.actionItems.forEach((item: string) => suggestions.push(`[DEV/QA] ${item}`));
+      }
+      
+      if (suggestions.length > 0) {
+        setCustomTasks(suggestions.join("\n"));
+      }
+    }
+  }, [lastRetrospective, sprintState]);
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -523,13 +544,13 @@ export default function DashboardScreen() {
               {/* ✅ CAMPO PARA TAREAS PERSONALIZADAS DEL SPRINT */}
               <div className="mb-3 p-3 bg-gray-900/50 border border-gray-700 rounded-lg">
                 <label className="text-[9px] text-gray-400 mb-1 block font-bold">
-                  📋 Tareas del Sprint (Opcional, una por línea). Si lo dejas vacío, la IA las generará automáticamente.
+                  📋 Tareas del Sprint (Editables). La IA sugirió estas basadas en la retrospectiva:
                 </label>
                 <textarea 
                   value={customTasks}
                   onChange={(e) => setCustomTasks(e.target.value)}
-                  placeholder="Ej:&#10;Crear pantalla de login&#10;Configurar base de datos&#10;Implementar API de usuarios"
-                  className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[9px] text-white focus:border-cyan-500 outline-none resize-none h-16"
+                  placeholder="Ej:&#10;[ARCH] Definir arquitectura de base de datos&#10;[DEV] Configurar pipeline de CI/CD"
+                  className="w-full p-2 bg-black/40 border border-gray-700 rounded text-[9px] text-white focus:border-cyan-500 outline-none resize-none h-24"
                 />
               </div>
 
