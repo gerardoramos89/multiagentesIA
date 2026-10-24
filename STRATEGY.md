@@ -1,37 +1,28 @@
-# MultiagentesIA - Análisis Estratégico y Planificación
+# MultiagentesIA - Estrategia de Desarrollo
 
 ## 1. Objetivos del Sprint
 El objetivo principal de este sprint es lanzar una versión beta del sistema autónomo de gestión de sprints con IA, llamado MultiagentesIA. Los objetivos específicos incluyen:
-- Desarrollar una interfaz de usuario intuitiva y eficiente utilizando Next.js y React.
-- Integrar la API de Ollama para la inteligencia artificial en el sistema.
-- Conectar con la API de Trello para la gestión de proyectos y tareas.
-- Implementar funcionalidades avanzadas de IA para la optimización de sprints y la predicción de tiempos.
-- Mejorar la integración con la API de GitHub para el seguimiento de proyectos y colaboración.
+- Implementar la integración con la API de Ollama para la IA.
+- Desarrollar una interfaz de usuario intuitiva utilizando Next.js y React.
+- Integrar la API de Trello para la gestión de proyectos.
+- Crear una herramienta que permita a los usuarios gestionar sus sprints de manera eficiente y con la ayuda de la IA.
 
 ## 2. Criterios de Aceptación
-Los criterios de aceptación para el lanzamiento de la versión beta de MultiagentesIA son:
-- **Dado** que un usuario accede al sistema.
-- **Cuando** el usuario realiza una búsqueda de un proyecto en la base de datos.
-- **Entonces** el sistema debe mostrar una lista de proyectos relevantes y proporcionar una interfaz para gestionar y actualizar el progreso del sprint.
-
-- **Dado** que un usuario ha configurado su cuenta de Trello.
-- **Cuando** el usuario inicia sesión en MultiagentesIA.
-- **Entonces** el sistema debe sincronizar automáticamente las tarjetas de Trello relevantes al sistema.
-
-- **Dado** que el sistema ha sincronizado tarjetas de Trello.
-- **Cuando** el usuario asigna una tarea a un agente de IA.
-- **Entonces** el sistema debe predecir el tiempo de finalización de la tarea y ajustar el cronograma del sprint en consecuencia.
+Para considerar que el sprint ha sido exitoso, se deben cumplir los siguientes criterios:
+- **Dado**: Un usuario ha creado una cuenta en la aplicación MultiagentesIA.
+- **Cuando**: El usuario ha iniciado sesión y ha accedido a la sección de gestión de sprints.
+- **Entonces**: El sistema debe mostrar una lista de tareas pendientes, permitir la adición de nuevas tareas, y permitir la asignación de tareas a agentes de IA.
+- **Y**: La IA debe proporcionar recomendaciones basadas en el historial de tareas y prioridades del usuario.
+- **Y**: La interfaz de usuario debe ser intuitiva y fácil de usar, con una navegación clara y una experiencia de usuario consistente.
 
 ## 3. Análisis de Riesgos
-Los principales riesgos identificados para este sprint incluyen:
-- Problemas de integración entre las tecnologías utilizadas (especialmente la API de Ollama y Trello).
-- Incertidumbre en la precisión de las predicciones de IA para la gestión de tiempos.
-- Complejidad en la interfaz de usuario para usuarios no técnicos.
+- **Riesgo 1**: Problemas con la integración de la API de Ollama. Posible solución: realizar pruebas exhaustivas y contar con soporte técnico de Ollama.
+- **Riesgo 2**: Complejidad en la interfaz de usuario para usuarios no técnicos. Posible solución: diseñar una interfaz sencilla y realizar pruebas de usabilidad con usuarios objetivo.
+- **Riesgo 3**: Fallos en la sincronización de datos entre Trello y la aplicación. Posible solución: implementar un sistema de verificación de datos y establecer un plan de respaldo en caso de fallo.
 
 ## 4. Métricas de Éxito
-Las métricas de éxito para evaluar el éxito del sprint incluyen:
-- Porcentaje de proyectos que se sincronizan correctamente con Trello.
-- Tasa de errores en la predicción de tiempos por parte de la IA.
-- Índice de satisfacción del usuario en la interfaz de usuario.
+- **Métrica 1**: Porcentaje de usuarios que logran completar al menos un sprint sin ayuda manual.
+- **Métrica 2**: Tasa de conversión de usuarios primerizos en usuarios recurrentes.
+- **Métrica 3**: Índice de satisfacción del usuario medido a través de encuestas o feedback directo.
 
-Este documento estratégico proporciona una visión clara de los objetivos, criterios de aceptación, riesgos y métricas clave para el sprint actual de MultiagentesIA, asegurando una planificación efectiva y una gestión precisa del proyecto.
+Este documento estratégico proporciona una visión clara de los objetivos, criterios de aceptación, riesgos y métricas clave para el sprint de desarrollo de MultiagentesIA.

@@ -2867,3 +2867,19 @@
 {"ts":"2026-10-24T07:13:26.796Z","level":"SPRINT","source":"system","message":"✅ Retrospectiva generada. Creando tarjetas de revisión..."}
 {"ts":"2026-10-24T07:13:29.493Z","level":"SPRINT","source":"system","message":"✅ Tarjetas creadas. Esperando respuestas del humano..."}
 {"ts":"2026-10-24T07:13:37.700Z","level":"SPRINT","source":"system","message":"✅ Sprint #20 cerrado y archivado"}
+{"ts":"2026-10-24T14:52:07.448Z","level":"INFO","source":"executor","message":"Resetando 12 tareas a \"pending\"..."}
+{"ts":"2026-10-24T14:52:07.449Z","level":"SPRINT","source":"system","message":"🚀 Sprint #21 iniciado. 12 tareas en cola."}
+{"ts":"2026-10-24T14:52:07.450Z","level":"SPRINT","source":"system","message":"  1. 📋 [PO] 📋 [PO] Análisis estratégico y planificación de MultiagentesIA"}
+{"ts":"2026-10-24T14:52:07.450Z","level":"SPRINT","source":"system","message":"  2. 🛠️ [DEV] roles del equipo"}
+{"ts":"2026-10-24T14:52:07.450Z","level":"SPRINT","source":"system","message":"  3. 🛠️ [DEV] Product"}
+{"ts":"2026-10-24T14:52:07.451Z","level":"SPRINT","source":"system","message":"  4. 🛠️ [DEV] Arquitecto"}
+{"ts":"2026-10-24T14:52:07.451Z","level":"SPRINT","source":"system","message":"  5. 🛠️ [DEV] Developer"}
+{"ts":"2026-10-24T14:52:07.452Z","level":"SPRINT","source":"system","message":"  6. 🛠️ [DEV] QA"}
+{"ts":"2026-10-24T14:52:07.452Z","level":"SPRINT","source":"system","message":"  7. 🛠️ [DEV] Technical"}
+{"ts":"2026-10-24T14:52:07.453Z","level":"SPRINT","source":"system","message":"  8. 🛠️ [DEV] Scrum master"}
+{"ts":"2026-10-24T14:52:07.453Z","level":"SPRINT","source":"system","message":"  9. 🏗️ [ARCH] 🏗️ [ARCH] Diseño de arquitectura para MultiagentesIA"}
+{"ts":"2026-10-24T14:52:07.453Z","level":"SPRINT","source":"system","message":"  10. 🧪 [QA] 🧪 [QA] Revisión de calidad y pruebas"}
+{"ts":"2026-10-24T14:52:07.454Z","level":"SPRINT","source":"system","message":"  11. 📝 [DOC] 📝 [DOC] Documentación completa del sprint"}
+{"ts":"2026-10-24T14:52:07.454Z","level":"SPRINT","source":"system","message":"  12. 📋 [PO] 📊 [PO] Retrospectiva y propuesta de mejora para el próximo sprint"}
+{"ts":"2026-10-24T14:52:07.455Z","level":"INFO","source":"executor","message":"Tareas pendientes: 12"}
+{"ts":"2026-10-24T14:52:07.457Z","level":"AGENT","source":"po","message":"Product Owner empezó: 📋 [PO] Análisis estratégico y planificación de MultiagentesIA"}
