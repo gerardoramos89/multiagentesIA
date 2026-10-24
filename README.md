@@ -1,22 +1,29 @@
 # MultiagentesIA
 
-## Descripción
+## Descripción del Proyecto
 
-**Nombre del Proyecto:** MultiagentesIA
+**Nombre:** MultiagentesIA
 
-**Objetivo:** El objetivo principal de este proyecto es desarrollar una plataforma multiagente que permita gestionar la Inteligencia Artificial y el equipo de agentes con reglas Scrum, donde cada agente sea autónomo y codificado.
+**Objetivo:** El objetivo principal de este proyecto es desarrollar una plataforma multiagente que permita gestionar la Inteligencia Artificial de manera eficiente. La plataforma estará equipada con agentes autónomos, cada uno con reglas y procedimientos específicos de desarrollo ágil, siguiendo el marco de trabajo Scrum.
 
 ## Estado del Desarrollo
 
-- **Total de commits:** 77
-- **Sprints completados:** 14
-- **Archivos modificados históricamente:** 28
+Actualmente, el proyecto se encuentra en una fase avanzada de desarrollo. Se han realizado más de 80 commits, lo que refleja un trabajo continuo y estructurado en el equipo de desarrollo. Los siguientes puntos destacan el progreso del proyecto:
+
+- **Frontend:** Desarrollo avanzado utilizando Next.js, con una interfaz de usuario intuitiva y funcionalidades en constante expansión.
+- **Backend:** Implementación de APIs robustas que soportan las operaciones de los agentes y la gestión de datos.
+- **Integración de Agentes:** Implementación de agentes autónomos con capacidades específicas, configurables y escalables.
 
 ## Historial de Sprints
 
-Cada sprint ha tenido un alcance específico que ha sido completado con éxito. Los sprints han estado enfocados en la implementación de funcionalidades clave para la plataforma multiagente.
+El proyecto se ha dividido en varios sprints, cada uno con objetivos específicos y entregables claros. A continuación, se detallan los sprints más relevantes:
 
-## Guía de Instalación
+- **Sprint 1:** Configuración del entorno de desarrollo y primeros avances en la implementación de agentes básicos.
+- **Sprint 2:** Mejora en la interfaz de usuario y primeras pruebas de integración de agentes.
+- **Sprint 3:** Introducción de funcionalidades avanzadas y optimización de la gestión de datos.
+- **Sprint 4:** Resolución de problemas de integración y ajustes finales para la versión beta.
+
+## Guía de Instalación y Uso
 
 ### Requisitos
 
@@ -41,40 +48,20 @@ Cada sprint ha tenido un alcance específico que ha sido completado con éxito. 
 
 ### Uso
 
-1. Inicia el servidor:
+1. Inicia el servidor de desarrollo:
    ```bash
-   npm start
+   npm run dev
    ```
 2. Abre tu navegador y navega a `http://localhost:3000` para ver la aplicación en funcionamiento.
 
-## Ejemplos de Uso
-
-Aquí hay algunos ejemplos de cómo utilizar la plataforma MultiagentesIA:
-
-### Ejemplo 1: Crear un nuevo agente
-
-```javascript
-const { Agent } = require('MultiagentesIA');
-
-const miAgente = new Agent('miAgente', { regla: 'regla1' });
-miAgente.iniciar();
-```
-
-### Ejemplo 2: Asignar una tarea a un agente
-
-```javascript
-const { Task } = require('MultiagentesIA');
-
-const tarea = new Task('tarea1', { descripcion: 'Esta es una tarea de prueba' });
-miAgente.asignarTarea(tarea);
-```
-
 ## Próximos Pasos
 
-- Implementar la integración con APIs externas para ampliar las capacidades de los agentes.
-- Desarrollar una interfaz de usuario amigable para facilitar el uso de la plataforma.
-- Realizar pruebas exhaustivas para garantizar la estabilidad y rendimiento de la aplicación.
+El proyecto tiene previsto continuar con las siguientes fases:
+
+- **Fase de Beta:** Liberación de la versión beta para pruebas en entorno de producción.
+- **Fase de Mejora Continua:** Implementación de mejoras basadas en las pruebas y feedback de los usuarios.
+- **Fase de Desarrollo Futuro:** Planificación y desarrollo de nuevas funcionalidades y capacidades de los agentes.
 
 ---
 
-Este archivo README.md proporciona una visión general clara y estructurada del proyecto MultiagentesIA, incluyendo su objetivo, estado actual, guía de instalación y uso, y los próximos pasos. Está diseñado para servir como fuente de verdad para el proyecto y para proporcionar una guía clara y útil para los desarrolladores y usuarios.
+Este README.md está diseñado para ser la fuente de verdad del proyecto MultiagentesIA, proporcionando una visión clara y detallada del mismo.
