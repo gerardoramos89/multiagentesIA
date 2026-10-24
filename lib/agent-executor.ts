@@ -263,14 +263,55 @@ async function executeAgentTask(task: SprintTask): Promise<{ success: boolean; o
     addAgentLog(task.agent, `Iniciando: ${task.title}`, "info");
     
     const model = process.env.DEEPSEEK_MODEL || "deepseek-coder-v2:16b";
-    const prompt = `Tarea: ${task.title}\nDescripción: ${task.description}\n\nPor favor, implementa esta tarea siguiendo las mejores prácticas. Responde SOLO con el contenido del archivo. En la primera línea pon 'ARCHIVO: nombre_del_archivo.ext' y luego el código.`;
     
-    addAgentLog(task.agent, `Generando código con ${model}...`, "info");
+    // ✅ PROMPTS ESPECIALIZADOS POR ROL
+    const rolePrompts: Record<string, string> = {
+      po: `Eres un Product Owner experto en metodologías ágiles. Tu trabajo es ESTRATÉGICO.
+No generes código. Genera documentos de planificación y análisis.
+Responde con el contenido del archivo. Primera línea: 'ARCHIVO: nombre.md'
+Enfócate en: objetivos claros, criterios de aceptación medibles, identificación de riesgos, y propuestas de mejora basadas en datos.`,
+      
+      arch: `Eres un Arquitecto de Software senior. Tu trabajo es DISEÑAR y ESTRUCTURAR.
+No implementes funcionalidades completas. Diseña la arquitectura.
+Responde con el contenido del archivo. Primera línea: 'ARCHIVO: nombre.md'
+Enfócate en: patrones de diseño, estructura de carpetas, decisiones técnicas (ADR), escalabilidad, y reducción de deuda técnica.`,
+      
+      dev: `Eres un Developer senior experto en código limpio. Tu trabajo es IMPLEMENTAR.
+Genera código funcional, modular y bien comentado.
+Responde con el contenido del archivo. Primera línea: 'ARCHIVO: nombre.ext'
+Enfócate en: código que funcione, principios SOLID, manejo de errores, y código que sea fácil de testear.`,
+      
+      qa: `Eres un QA Engineer experto en calidad de software. Tu trabajo es VALIDAR y MEJORAR.
+Genera reportes de calidad y tests funcionales.
+Responde con el contenido del archivo. Primera línea: 'ARCHIVO: nombre.md' o 'ARCHIVO: nombre.test.js'
+Enfócate en: encontrar bugs reales, cobertura de tests, casos edge, y recomendaciones accionables.`,
+      
+      doc: `Eres un Technical Writer experto en documentación técnica. Tu trabajo es DOCUMENTAR.
+Genera documentación clara, profesional y útil para desarrolladores.
+Responde con el contenido del archivo. Primera línea: 'ARCHIVO: nombre.md'
+Enfócate en: README actualizado, guías de instalación, ejemplos de uso, y documentación que sea la FUENTE DE VERDAD del proyecto.`
+    };
+
+    const rolePrompt = rolePrompts[task.agent] || rolePrompts.dev;
+    
+    const prompt = `${rolePrompt}
+
+CONTEXTO DEL PROYECTO:
+- Nombre: ${task.title}
+- Descripción: ${task.description}
+
+INSTRUCCIÓN ESPECÍFICA:
+Genera UN SOLO archivo (el más importante para esta tarea) que aporte valor real al proyecto. 
+El archivo debe ser profesional, completo y listo para usar.
+
+Responde SOLO con el contenido del archivo. En la primera línea pon 'ARCHIVO: nombre_del_archivo.ext' y luego el código/documento.`;
+
+    addAgentLog(task.agent, `Generando con ${model}...`, "info");
     
     const response = await fetch("http://127.0.0.1:11434/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.2, num_predict: 2000 } })
+      body: JSON.stringify({ model, prompt, stream: false, options: { temperature: 0.3, num_predict: 2500 } })
     });
     
     if (!response.ok) throw new Error(`Ollama API error: ${response.status}`);

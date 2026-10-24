@@ -1,17 +1,17 @@
 {
-  "id": "job_mvlt4fk9_i1rfpj",
+  "id": "job_mvlw731x_45cezk",
   "kind": "project-analyze",
   "status": "done",
   "phase": "done",
   "progress": 100,
   "message": "Análisis completado",
-  "createdAt": 1792810567881,
-  "updatedAt": 1792810572919,
+  "createdAt": 1792815730485,
+  "updatedAt": 1792815734706,
   "result": {
     "projectName": "multiagentesIA",
     "owner": "gerardoramos89",
     "repo": "multiagentesIA",
-    "analyzedAt": "2026-10-24T02:56:12.913Z",
+    "analyzedAt": "2026-10-24T04:22:14.698Z",
     "gitSha": "074fe158540346e87aebc127477b545704424ac2",
     "type": "existing",
     "stack": {
@@ -38,7 +38,7 @@
       "coverage": "full",
       "filesScanned": 37,
       "apiRequests": 0,
-      "durationMs": 5031,
+      "durationMs": 4211,
       "warnings": []
     },
     "branch": "main",

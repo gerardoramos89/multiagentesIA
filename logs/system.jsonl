@@ -2149,3 +2149,167 @@
 {"ts":"2026-10-24T03:48:54.989Z","level":"INFO","source":"doc","message":"Inyectando contexto completo para README vivo..."}
 {"ts":"2026-10-24T03:49:57.900Z","level":"AGENT","source":"doc","message":"Technical Writer completó: 📝 [DOC] Actualizar documentación y README del sprint en 62.9s"}
 {"ts":"2026-10-24T03:49:59.915Z","level":"AGENT","source":"qa","message":"QA Engineer empezó: 🧪 [QA] Revisión de calidad y pruebas del sprint"}
+{"ts":"2026-10-24T03:50:22.988Z","level":"AGENT","source":"qa","message":"QA Engineer completó: 🧪 [QA] Revisión de calidad y pruebas del sprint en 23.1s"}
+{"ts":"2026-10-24T03:50:25.008Z","level":"SPRINT","source":"system","message":"📋 Sprint #11 completado. Generando retrospectiva..."}
+{"ts":"2026-10-24T03:50:44.949Z","level":"SPRINT","source":"system","message":"✅ Retrospectiva generada. Creando encuestas en Trello..."}
+{"ts":"2026-10-24T03:50:47.541Z","level":"SPRINT","source":"system","message":"✅ Encuestas creadas en Trello. Esperando respuestas del humano..."}
+{"ts":"2026-10-24T03:51:03.143Z","level":"SPRINT","source":"system","message":"✅ Sprint #11 cerrado y archivado"}
+{"ts":"2026-10-24T04:22:10.487Z","level":"INFO","source":"analysis","message":"Job iniciado: job_mvlw731x_45cezk para gerardoramos89/multiagentesIA"}
+{"ts":"2026-10-24T04:22:10.500Z","level":"INFO","source":"analysis","message":"auth 2% · Validando token de GitHub","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:10.503Z","level":"INFO","source":"api","message":"Análisis encolado: job_mvlw731x_45cezk para gerardoramos89/multiagentesIA"}
+{"ts":"2026-10-24T04:22:11.057Z","level":"INFO","source":"analysis","message":"auth 5% · Autenticado como gerardoramos89","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:11.065Z","level":"INFO","source":"analysis","message":"metadata 8% · Obteniendo metadata del repo","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:11.395Z","level":"INFO","source":"analysis","message":"metadata 15% · ★0 · 1 commits","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:11.403Z","level":"INFO","source":"analysis","message":"tree 18% · Leyendo árbol del repo","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:11.809Z","level":"INFO","source":"analysis","message":"tree 40% · 1 archivos","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:11.815Z","level":"INFO","source":"analysis","message":"files 42% · Leyendo archivos clave","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:11.992Z","level":"INFO","source":"analysis","message":"files 42% · Leyendo package.json (1/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.002Z","level":"INFO","source":"analysis","message":"files 43% · Leyendo package-lock.json (2/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.142Z","level":"INFO","source":"analysis","message":"files 43% · Leyendo pnpm-lock.yaml (3/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.152Z","level":"INFO","source":"analysis","message":"files 44% · Leyendo yarn.lock (4/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.283Z","level":"INFO","source":"analysis","message":"files 44% · Leyendo next.config.js (5/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.345Z","level":"INFO","source":"analysis","message":"files 45% · Leyendo tsconfig.json (6/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.406Z","level":"INFO","source":"analysis","message":"files 45% · Leyendo next.config.mjs (7/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.430Z","level":"INFO","source":"analysis","message":"files 46% · Leyendo next.config.ts (8/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.567Z","level":"INFO","source":"analysis","message":"files 46% · Leyendo vite.config.ts (9/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.656Z","level":"INFO","source":"analysis","message":"files 47% · Leyendo vite.config.js (10/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.687Z","level":"INFO","source":"analysis","message":"files 47% · Leyendo webpack.config.js (11/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.693Z","level":"INFO","source":"analysis","message":"files 48% · Leyendo tailwind.config.js (12/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.846Z","level":"INFO","source":"analysis","message":"files 48% · Leyendo tailwind.config.ts (13/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.935Z","level":"INFO","source":"analysis","message":"files 49% · Leyendo postcss.config.js (14/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:12.987Z","level":"INFO","source":"analysis","message":"files 49% · Leyendo .eslintrc.json (15/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.110Z","level":"INFO","source":"analysis","message":"files 50% · Leyendo .eslintrc.js (16/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.128Z","level":"INFO","source":"analysis","message":"files 50% · Leyendo .prettierrc (17/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.267Z","level":"INFO","source":"analysis","message":"files 51% · Leyendo readme.md (18/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.286Z","level":"INFO","source":"analysis","message":"files 51% · Leyendo README.md (19/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.385Z","level":"INFO","source":"analysis","message":"files 52% · Leyendo CONTRIBUTING.md (20/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.450Z","level":"INFO","source":"analysis","message":"files 52% · Leyendo requirements.txt (21/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.542Z","level":"INFO","source":"analysis","message":"files 53% · Leyendo Pipfile (22/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.552Z","level":"INFO","source":"analysis","message":"files 53% · Leyendo pyproject.toml (23/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.676Z","level":"INFO","source":"analysis","message":"files 54% · Leyendo Cargo.toml (24/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.717Z","level":"INFO","source":"analysis","message":"files 54% · Leyendo go.mod (25/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.809Z","level":"INFO","source":"analysis","message":"files 55% · Leyendo build.gradle (26/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.836Z","level":"INFO","source":"analysis","message":"files 55% · Leyendo pom.xml (27/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:13.932Z","level":"INFO","source":"analysis","message":"files 56% · Leyendo docker-compose.yml (28/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.003Z","level":"INFO","source":"analysis","message":"files 56% · Leyendo docker-compose.yaml (29/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.086Z","level":"INFO","source":"analysis","message":"files 57% · Leyendo Dockerfile (30/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.112Z","level":"INFO","source":"analysis","message":"files 57% · Leyendo .github/workflows/ci.yml (31/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.209Z","level":"INFO","source":"analysis","message":"files 58% · Leyendo .github/workflows/main.yml (32/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.271Z","level":"INFO","source":"analysis","message":"files 58% · Leyendo .github/workflows/build.yml (33/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.356Z","level":"INFO","source":"analysis","message":"files 59% · Leyendo .github/workflows/test.yml (34/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.383Z","level":"INFO","source":"analysis","message":"files 59% · Leyendo jest.config.js (35/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.506Z","level":"INFO","source":"analysis","message":"files 60% · Leyendo jest.config.ts (36/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.539Z","level":"INFO","source":"analysis","message":"files 60% · Leyendo vitest.config.ts (37/37)","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.651Z","level":"INFO","source":"analysis","message":"files 60% · 1 archivos leídos exitosamente","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.659Z","level":"INFO","source":"analysis","message":"frameworks 62% · Detectando frameworks y herramientas...","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.665Z","level":"INFO","source":"analysis","message":"frameworks 75% · 0 frameworks detectados","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.675Z","level":"INFO","source":"analysis","message":"quality 77% · Evaluando calidad y deuda técnica...","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.681Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvlw731x_45cezk"}}
+{"ts":"2026-10-24T04:22:14.699Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
+{"ts":"2026-10-24T04:22:14.707Z","level":"INFO","source":"analysis","message":"Job job_mvlw731x_45cezk completado en 4220ms"}
+{"ts":"2026-10-24T04:22:15.245Z","level":"INFO","source":"analysis","message":"Job iniciado: job_mvlw76q3_nxq1qy para gerardoramos89/multiagentesIA"}
+{"ts":"2026-10-24T04:22:15.262Z","level":"INFO","source":"analysis","message":"auth 2% · Validando token de GitHub","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:15.264Z","level":"INFO","source":"api","message":"Análisis encolado: job_mvlw76q3_nxq1qy para gerardoramos89/multiagentesIA"}
+{"ts":"2026-10-24T04:22:15.273Z","level":"INFO","source":"analysis","message":"Job iniciado: job_mvlw76qv_lp69wf para gerardoramos89/multiagentesIA"}
+{"ts":"2026-10-24T04:22:15.286Z","level":"INFO","source":"analysis","message":"auth 2% · Validando token de GitHub","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:15.287Z","level":"INFO","source":"api","message":"Análisis encolado: job_mvlw76qv_lp69wf para gerardoramos89/multiagentesIA"}
+{"ts":"2026-10-24T04:22:15.630Z","level":"INFO","source":"analysis","message":"auth 5% · Autenticado como gerardoramos89","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:15.639Z","level":"INFO","source":"analysis","message":"metadata 8% · Obteniendo metadata del repo","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:15.674Z","level":"INFO","source":"analysis","message":"auth 5% · Autenticado como gerardoramos89","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:15.681Z","level":"INFO","source":"analysis","message":"metadata 8% · Obteniendo metadata del repo","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:15.933Z","level":"INFO","source":"analysis","message":"metadata 15% · ★0 · 1 commits","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:15.941Z","level":"INFO","source":"analysis","message":"tree 18% · Leyendo árbol del repo","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:15.975Z","level":"INFO","source":"analysis","message":"metadata 15% · ★0 · 1 commits","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:15.981Z","level":"INFO","source":"analysis","message":"tree 18% · Leyendo árbol del repo","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.180Z","level":"INFO","source":"analysis","message":"tree 40% · 1 archivos","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.188Z","level":"INFO","source":"analysis","message":"files 42% · Leyendo archivos clave","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.198Z","level":"INFO","source":"analysis","message":"tree 40% · 1 archivos","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.206Z","level":"INFO","source":"analysis","message":"files 42% · Leyendo archivos clave","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.338Z","level":"INFO","source":"analysis","message":"files 42% · Leyendo package-lock.json (1/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.372Z","level":"INFO","source":"analysis","message":"files 43% · Leyendo package.json (2/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.374Z","level":"INFO","source":"analysis","message":"files 42% · Leyendo package.json (1/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.381Z","level":"INFO","source":"analysis","message":"files 43% · Leyendo yarn.lock (3/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.525Z","level":"INFO","source":"analysis","message":"files 43% · Leyendo package-lock.json (2/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.529Z","level":"INFO","source":"analysis","message":"files 44% · Leyendo pnpm-lock.yaml (4/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.534Z","level":"INFO","source":"analysis","message":"files 43% · Leyendo pnpm-lock.yaml (3/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.541Z","level":"INFO","source":"analysis","message":"files 44% · Leyendo yarn.lock (4/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.584Z","level":"INFO","source":"analysis","message":"files 44% · Leyendo tsconfig.json (5/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.621Z","level":"INFO","source":"analysis","message":"files 44% · Leyendo tsconfig.json (5/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.639Z","level":"INFO","source":"analysis","message":"files 45% · Leyendo next.config.js (6/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.657Z","level":"INFO","source":"analysis","message":"files 45% · Leyendo next.config.ts (7/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.787Z","level":"INFO","source":"analysis","message":"files 45% · Leyendo next.config.ts (6/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.794Z","level":"INFO","source":"analysis","message":"files 45% · Leyendo next.config.js (7/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.800Z","level":"INFO","source":"analysis","message":"files 46% · Leyendo next.config.mjs (8/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.812Z","level":"INFO","source":"analysis","message":"files 46% · Leyendo next.config.mjs (8/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.835Z","level":"INFO","source":"analysis","message":"files 46% · Leyendo vite.config.ts (9/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.890Z","level":"INFO","source":"analysis","message":"files 46% · Leyendo vite.config.ts (9/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:16.917Z","level":"INFO","source":"analysis","message":"files 47% · Leyendo webpack.config.js (10/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:16.929Z","level":"INFO","source":"analysis","message":"files 47% · Leyendo vite.config.js (11/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.045Z","level":"INFO","source":"analysis","message":"files 47% · Leyendo vite.config.js (10/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.059Z","level":"INFO","source":"analysis","message":"files 47% · Leyendo tailwind.config.js (11/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.078Z","level":"INFO","source":"analysis","message":"files 48% · Leyendo tailwind.config.js (12/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.084Z","level":"INFO","source":"analysis","message":"files 48% · Leyendo tailwind.config.ts (13/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.087Z","level":"INFO","source":"analysis","message":"files 48% · Leyendo webpack.config.js (12/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.174Z","level":"INFO","source":"analysis","message":"files 49% · Leyendo .eslintrc.json (14/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.180Z","level":"INFO","source":"analysis","message":"files 49% · Leyendo postcss.config.js (15/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.183Z","level":"INFO","source":"analysis","message":"files 48% · Leyendo tailwind.config.ts (13/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.299Z","level":"INFO","source":"analysis","message":"files 49% · Leyendo postcss.config.js (14/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.334Z","level":"INFO","source":"analysis","message":"files 50% · Leyendo .eslintrc.js (16/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.342Z","level":"INFO","source":"analysis","message":"files 50% · Leyendo .prettierrc (17/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.344Z","level":"INFO","source":"analysis","message":"files 49% · Leyendo .eslintrc.json (15/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.363Z","level":"INFO","source":"analysis","message":"files 50% · Leyendo .eslintrc.js (16/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.434Z","level":"INFO","source":"analysis","message":"files 51% · Leyendo README.md (18/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.488Z","level":"INFO","source":"analysis","message":"files 50% · Leyendo .prettierrc (17/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.549Z","level":"INFO","source":"analysis","message":"files 51% · Leyendo readme.md (19/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.562Z","level":"INFO","source":"analysis","message":"files 51% · Leyendo README.md (18/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.598Z","level":"INFO","source":"analysis","message":"files 52% · Leyendo CONTRIBUTING.md (20/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.608Z","level":"INFO","source":"analysis","message":"files 51% · Leyendo readme.md (19/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.618Z","level":"INFO","source":"analysis","message":"files 52% · Leyendo CONTRIBUTING.md (20/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.623Z","level":"INFO","source":"analysis","message":"files 52% · Leyendo requirements.txt (21/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.687Z","level":"INFO","source":"analysis","message":"files 53% · Leyendo Pipfile (22/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.766Z","level":"INFO","source":"analysis","message":"files 52% · Leyendo requirements.txt (21/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.808Z","level":"INFO","source":"analysis","message":"files 53% · Leyendo Pipfile (22/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.810Z","level":"INFO","source":"analysis","message":"files 53% · Leyendo pyproject.toml (23/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.857Z","level":"INFO","source":"analysis","message":"files 54% · Leyendo Cargo.toml (24/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.878Z","level":"INFO","source":"analysis","message":"files 53% · Leyendo Cargo.toml (23/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.880Z","level":"INFO","source":"analysis","message":"files 54% · Leyendo go.mod (25/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:17.892Z","level":"INFO","source":"analysis","message":"files 54% · Leyendo pyproject.toml (24/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:17.955Z","level":"INFO","source":"analysis","message":"files 55% · Leyendo pom.xml (26/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.059Z","level":"INFO","source":"analysis","message":"files 54% · Leyendo go.mod (25/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.063Z","level":"INFO","source":"analysis","message":"files 55% · Leyendo build.gradle (27/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.070Z","level":"INFO","source":"analysis","message":"files 55% · Leyendo pom.xml (26/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.135Z","level":"INFO","source":"analysis","message":"files 56% · Leyendo docker-compose.yaml (28/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.144Z","level":"INFO","source":"analysis","message":"files 56% · Leyendo docker-compose.yml (29/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.146Z","level":"INFO","source":"analysis","message":"files 55% · Leyendo build.gradle (27/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.172Z","level":"INFO","source":"analysis","message":"files 56% · Leyendo docker-compose.yml (28/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.227Z","level":"INFO","source":"analysis","message":"files 57% · Leyendo Dockerfile (30/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.322Z","level":"INFO","source":"analysis","message":"files 56% · Leyendo Dockerfile (29/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.324Z","level":"INFO","source":"analysis","message":"files 57% · Leyendo .github/workflows/ci.yml (31/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.336Z","level":"INFO","source":"analysis","message":"files 57% · Leyendo docker-compose.yaml (30/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.399Z","level":"INFO","source":"analysis","message":"files 58% · Leyendo .github/workflows/build.yml (32/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.402Z","level":"INFO","source":"analysis","message":"files 57% · Leyendo .github/workflows/ci.yml (31/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.414Z","level":"INFO","source":"analysis","message":"files 58% · Leyendo .github/workflows/main.yml (33/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.439Z","level":"INFO","source":"analysis","message":"files 58% · Leyendo .github/workflows/main.yml (32/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.504Z","level":"INFO","source":"analysis","message":"files 59% · Leyendo .github/workflows/test.yml (34/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.568Z","level":"INFO","source":"analysis","message":"files 58% · Leyendo .github/workflows/build.yml (33/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.579Z","level":"INFO","source":"analysis","message":"files 59% · Leyendo jest.config.js (35/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.587Z","level":"INFO","source":"analysis","message":"files 59% · Leyendo .github/workflows/test.yml (34/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.641Z","level":"INFO","source":"analysis","message":"files 60% · Leyendo jest.config.ts (36/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.668Z","level":"INFO","source":"analysis","message":"files 59% · Leyendo jest.config.js (35/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.676Z","level":"INFO","source":"analysis","message":"files 60% · Leyendo vitest.config.ts (37/37)","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.736Z","level":"INFO","source":"analysis","message":"files 60% · Leyendo jest.config.ts (36/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.781Z","level":"INFO","source":"analysis","message":"files 60% · 1 archivos leídos exitosamente","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.789Z","level":"INFO","source":"analysis","message":"frameworks 62% · Detectando frameworks y herramientas...","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.795Z","level":"INFO","source":"analysis","message":"frameworks 75% · 0 frameworks detectados","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.801Z","level":"INFO","source":"analysis","message":"quality 77% · Evaluando calidad y deuda técnica...","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.810Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvlw76q3_nxq1qy"}}
+{"ts":"2026-10-24T04:22:18.825Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
+{"ts":"2026-10-24T04:22:18.832Z","level":"INFO","source":"analysis","message":"Job job_mvlw76q3_nxq1qy completado en 3587ms"}
+{"ts":"2026-10-24T04:22:18.842Z","level":"INFO","source":"analysis","message":"files 60% · Leyendo vitest.config.ts (37/37)","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.953Z","level":"INFO","source":"analysis","message":"files 60% · 1 archivos leídos exitosamente","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.961Z","level":"INFO","source":"analysis","message":"frameworks 62% · Detectando frameworks y herramientas...","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.967Z","level":"INFO","source":"analysis","message":"frameworks 75% · 0 frameworks detectados","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.975Z","level":"INFO","source":"analysis","message":"quality 77% · Evaluando calidad y deuda técnica...","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.983Z","level":"INFO","source":"analysis","message":"quality 85% · Deuda estimada: medium","meta":{"jobId":"job_mvlw76qv_lp69wf"}}
+{"ts":"2026-10-24T04:22:18.999Z","level":"INFO","source":"brief","message":"Brief guardado en C:\\Users\\GERARD\\Documents\\Proyectos\\fabric-agents-grtec\\config\\project-brief.json"}
+{"ts":"2026-10-24T04:22:19.006Z","level":"INFO","source":"analysis","message":"Job job_mvlw76qv_lp69wf completado en 3733ms"}
