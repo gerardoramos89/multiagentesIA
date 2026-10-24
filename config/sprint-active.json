@@ -24,15 +24,24 @@
       "title": "Es necesario definir y documentar más claramente los roles y responsabilidades en el equipo para evitar confusiones",
       "description": "[ARCH/DEV] Es necesario definir y documentar más claramente los roles y responsabilidades en el equipo para evitar confusiones",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T06:38:50.531Z"
+      "status": "done",
+      "startedAt": "2026-10-24T06:38:50.531Z",
+      "completedAt": "2026-10-24T06:40:12.963Z",
+      "output": "Generado: arquitectura_proyecto_f_brica_de_agentes.md",
+      "commits": [
+        "a0908d6fc33847b23fb0c6e602015fbaa5550965"
+      ],
+      "filesModified": [
+        "arquitectura_proyecto_f_brica_de_agentes.md"
+      ]
     },
     {
       "id": "task-1792823859635-2",
       "title": "Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "description": "[ARCH/DEV] Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T06:40:14.983Z"
     },
     {
       "id": "task-1792823859635-3",
@@ -81,6 +90,7 @@
     "isCompleted": true
   },
   "filesChanged": [
-    "STRATEGY.md"
+    "STRATEGY.md",
+    "arquitectura_proyecto_f_brica_de_agentes.md"
   ]
 }
