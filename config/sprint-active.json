@@ -120,15 +120,24 @@
       "title": "Añadir más casos de prueba",
       "description": "[DEV/QA] Añadir más casos de prueba",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T04:29:17.476Z"
+      "status": "done",
+      "startedAt": "2026-10-24T04:29:17.476Z",
+      "completedAt": "2026-10-24T04:32:33.204Z",
+      "output": "Generado: A_adirMasCasosDePrueba.py",
+      "commits": [
+        "c3359d8ae6e6a7e6ab970429aad63845572c088a"
+      ],
+      "filesModified": [
+        "A_adirMasCasosDePrueba.py"
+      ]
     },
     {
       "id": "task-1792815742561-8",
       "title": "🧪 [QA] Revisión de calidad y pruebas",
       "description": "Como QA Engineer, revisa TODO el código generado en este sprint. Crea un archivo QA_REPORT.md con: 1) Bugs encontrados, 2) Cobertura de tests, 3) Recomendaciones de mejora, 4) Casos de prueba críticos. Si es posible, crea tests unitarios funcionales.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T04:32:35.215Z"
     },
     {
       "id": "task-1792815742561-9",
@@ -162,6 +171,7 @@
     "api_arquitectura.md",
     "plan_de_accion_sugerido.py",
     "revisar_readme.py",
-    "configure_ci_cd_pipeline.py"
+    "configure_ci_cd_pipeline.py",
+    "A_adirMasCasosDePrueba.py"
   ]
 }
