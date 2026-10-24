@@ -4,23 +4,19 @@
 
 **Nombre del Proyecto:** MultiagentesIA
 
-**Objetivo:** El objetivo principal de este proyecto es desarrollar una plataforma multiagente que gestione la Inteligencia Artificial y permita a los equipos de agentes operar bajo reglas de Scrum, siendo autónomos y codificados.
+**Objetivo:** El objetivo de este proyecto es desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial, con un equipo de agentes que sigan reglas Scrum para ser autónomos, codificados y creando todo lo que un ciclo del software requiera.
 
 ## Estado del Desarrollo
 
-- **Total de commits:** 59
-- **Sprints completados:** 12
-- **Archivos modificados históricamente:** 15
+- **Total de commits:** 66
+- **Sprints completados:** 13
+- **Archivos modificados históricamente:** 26
 
 ## Historial de Sprints
 
-Cada sprint ha tenido un alcance específico que ha ido evolucionando desde la concepción inicial hasta la implementación de funcionalidades avanzadas. Los sprints han estado enfocados en:
+Cada sprint ha tenido un alcance específico y ha sido gestionado con herramientas de gestión de proyectos como JIRA. Los sprints han cubierto desde la configuración inicial del entorno de desarrollo hasta la implementación de funcionalidades avanzadas.
 
-- **Sprint 1-4:** Configuración del entorno de desarrollo y primeros prototipos.
-- **Sprint 5-8:** Implementación de la lógica de agentes y su integración con la plataforma.
-- **Sprint 9-12:** Desarrollo de interfaces de usuario y pruebas de concepto.
-
-## Guía de Instalación
+## Guía de Instalación y Uso
 
 ### Requisitos Previos
 
@@ -51,16 +47,36 @@ Cada sprint ha tenido un alcance específico que ha ido evolucionando desde la c
    ```
 2. Accede a la aplicación en tu navegador web a través de `http://localhost:3000`.
 
-## Ejemplos de Uso
-
-Para una guía detallada de cómo utilizar la plataforma, consulta la [documentación completa del sprint](https://github.com/tu-usuario/MultiagentesIA/docs).
-
 ## Próximos Pasos
 
-- **Mejoras de rendimiento:** Optimizar la carga de datos y reducir tiempos de respuesta.
-- **Nuevas funcionalidades:** Implementar un sistema de notificaciones y alertas para los agentes.
-- **Integración con APIs externas:** Explorar la integración con APIs de inteligencia artificial para ampliar funcionalidades.
+- Implementar funcionalidades de IA avanzadas.
+- Mejorar la interfaz de usuario.
+- Realizar pruebas unitarias y de integración.
+- Documentar el código y crear una API documentada.
+
+## Contribución
+
+¡Estamos emocionados de recibir contribuciones de la comunidad! Para contribuir, sigue estos pasos:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama para tu característica o corrección de errores:
+   ```bash
+   git checkout -b nueva-caracteristica
+   ```
+3. Haz los cambios y realiza commits:
+   ```bash
+   git commit -am 'Añadir nueva característica'
+   ```
+4. Haz push a tu fork:
+   ```bash
+   git push origin nueva-caracteristica
+   ```
+5. Abre una pull request en el repositorio original.
+
+## Licencia
+
+Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
 ---
 
-Este archivo proporciona una visión general clara y estructurada del proyecto MultiagentesIA, incluyendo su objetivo, estado actual, guía de instalación y uso, y los próximos pasos.
+¡Gracias por usar y contribuir a MultiagentesIA!
