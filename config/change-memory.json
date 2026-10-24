@@ -1,11 +1,12 @@
 {
-  "totalCommits": 23,
+  "totalCommits": 24,
   "filesEverChanged": [
     "multiagentesIA.py",
     "DOCUMENTACION.md",
     "jest.config.js",
-    "README.md"
+    "README.md",
+    "jest-config.js"
   ],
-  "sprintsCompleted": 6,
-  "lastCommitHash": "aef2b61979f08651fe8590be4a554377894362ae"
+  "sprintsCompleted": 7,
+  "lastCommitHash": "ab5ef14cf5b84f7a78b0f3b4b04faa8699c92701"
 }
