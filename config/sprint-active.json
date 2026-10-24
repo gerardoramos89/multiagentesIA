@@ -56,15 +56,24 @@
       "title": "Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "description": "[ARCH/DEV] Debido a los retrasos, es necesario revisar y ajustar las estimaciones de tiempo y esfuerzo para las tareas futuras",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T06:17:32.957Z"
+      "status": "done",
+      "startedAt": "2026-10-24T06:17:32.957Z",
+      "completedAt": "2026-10-24T06:18:10.063Z",
+      "output": "Generado: ProyectoRevisado.md",
+      "commits": [
+        "75d662bdc767bdb97d65c38ced769b7a0bd63f99"
+      ],
+      "filesModified": [
+        "ProyectoRevisado.md"
+      ]
     },
     {
       "id": "task-1792822478685-4",
       "title": "🎯 Plan de acción sugerido:",
       "description": "🎯 Plan de acción sugerido:",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T06:18:12.077Z"
     },
     {
       "id": "task-1792822478685-5",
@@ -115,6 +124,7 @@
   "filesChanged": [
     "Strategy.md",
     "tareas_sugeridas.py",
-    "RolesResponsabilidadesEquipo.md"
+    "RolesResponsabilidadesEquipo.md",
+    "ProyectoRevisado.md"
   ]
 }
