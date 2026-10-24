@@ -56,15 +56,24 @@
       "title": "Revisar y ajustar la estrategia de refactorización de datos",
       "description": "[DEV/QA] Revisar y ajustar la estrategia de refactorización de datos",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T17:11:51.671Z"
+      "status": "done",
+      "startedAt": "2026-10-24T17:11:51.671Z",
+      "completedAt": "2026-10-24T17:13:56.194Z",
+      "output": "Generado: nombre_del_archivo.ext",
+      "commits": [
+        "d96ee504a1150bafbad1f485b6b27dd34b3e74ff"
+      ],
+      "filesModified": [
+        "nombre_del_archivo.ext"
+      ]
     },
     {
       "id": "task-1792861692408-4",
       "title": "Implementar tests unitarios adicionales para capturar errores de validación",
       "description": "[DEV/QA] Implementar tests unitarios adicionales para capturar errores de validación",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T17:13:58.209Z"
     },
     {
       "id": "task-1792861692408-5",
@@ -108,6 +117,7 @@
   "filesChanged": [
     "STRATEGY.md",
     "arquitectura_proyectofabricaagentes.md",
-    "ARCHITECTURE.md"
+    "ARCHITECTURE.md",
+    "nombre_del_archivo.ext"
   ]
 }
