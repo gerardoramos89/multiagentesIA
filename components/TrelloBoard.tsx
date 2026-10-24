@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Archive, RefreshCw, CheckCircle2 } from "lucide-react";
+import { ExternalLink, Archive, RefreshCw } from "lucide-react";
 
 interface TrelloBoardProps {
   apiKey: string;
@@ -34,9 +34,10 @@ export default function TrelloBoard({ apiKey, token, boardId }: TrelloBoardProps
 
   useEffect(() => {
     fetchCards();
-    const interval = setInterval(fetchCards, 10000); // Actualizar cada 10 segundos
+    // ✅ Refrescar cada 10 segundos para ver nuevas tarjetas de encuesta
+    const interval = setInterval(fetchCards, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [apiKey, token, boardId]);
 
   const archiveOldCards = async () => {
     if (!confirm("¿Archivar tarjetas de sprints completados?")) return;
@@ -59,9 +60,9 @@ export default function TrelloBoard({ apiKey, token, boardId }: TrelloBoardProps
 
   const getListColor = (listName: string) => {
     if (/sprint.*actual|to do|por hacer/i.test(listName)) return "from-blue-600 to-cyan-600";
-    if (/in progress|en progreso/i.test(listName)) return "from-purple-600 to-pink-600";
+    if (/in progress|en progreso|agentes/i.test(listName)) return "from-purple-600 to-pink-600";
     if (/done|completado|hecho/i.test(listName)) return "from-emerald-600 to-green-600";
-    if (/retrospectiva|survey|encuesta/i.test(listName)) return "from-amber-600 to-orange-600";
+    if (/retrospectiva|review humano|encuesta/i.test(listName)) return "from-amber-600 to-orange-600";
     return "from-gray-600 to-slate-600";
   };
 
@@ -94,70 +95,77 @@ export default function TrelloBoard({ apiKey, token, boardId }: TrelloBoardProps
           className="flex items-center gap-1 px-2 py-1 bg-amber-600/20 border border-amber-500/50 text-amber-400 text-[9px] font-bold rounded hover:bg-amber-600/40 transition-all disabled:opacity-50"
         >
           <Archive size={10} />
-          {archiving ? "Archivando..." : "Archivar Viejas"}
+          {archiving ? "Archivando..." : "Limpiar Viejas"}
         </button>
       </div>
 
       <div className="space-y-2 max-h-96 overflow-y-auto custom-scrollbar">
-  {lists.map((list) => { // ✅ QUITAR .slice(0, 5) para mostrar TODAS las listas
-    const listCards = cards[list.name] || [];
-    if (listCards.length === 0) return null;
+        {lists.map((list) => {
+          const listCards = cards[list.name] || [];
+          // ✅ Mostrar listas aunque tengan 0 tarjetas si son importantes (como Review Humano)
+          if (listCards.length === 0 && !/review humano|encuesta|retrospectiva/i.test(list.name)) return null;
 
-    return (
-      <div key={list.id} className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden">
-        <div className={`bg-gradient-to-r ${getListColor(list.name)} px-3 py-1.5`}>
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold text-white">{list.name}</span>
-            <span className="text-[9px] text-white/80 bg-black/20 px-1.5 py-0.5 rounded-full">
-              {listCards.length}
-            </span>
-          </div>
-        </div>
-        <div className="p-2 space-y-1.5">
-          {listCards.slice(0, 10).map((card: any) => ( // ✅ Mostrar hasta 10 tarjetas por lista
-            <motion.a
-              key={card.id}
-              href={card.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="block p-2 bg-gray-800/50 border border-gray-700 rounded hover:border-cyan-500/50 hover:bg-gray-800 transition-all group"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <span className="text-[9px] text-gray-300 group-hover:text-white transition-colors line-clamp-2">
-                  {card.name}
-                </span>
-                <ExternalLink size={10} className="text-gray-500 group-hover:text-cyan-400 transition-colors shrink-0 mt-0.5" />
-              </div>
-              {card.labels && card.labels.length > 0 && (
-                <div className="flex gap-1 mt-1 flex-wrap">
-                  {card.labels.slice(0, 3).map((label: any) => (
-                    <span
-                      key={label.id}
-                      className="text-[7px] px-1 py-0.5 rounded-full font-bold"
-                      style={{ 
-                        backgroundColor: label.color ? `${label.color}33` : "#66666633",
-                        color: label.color || "#999"
-                      }}
-                    >
-                      {label.name}
-                    </span>
-                  ))}
+          return (
+            <div key={list.id} className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden">
+              <div className={`bg-gradient-to-r ${getListColor(list.name)} px-3 py-1.5`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-white">{list.name}</span>
+                  <span className="text-[9px] text-white/80 bg-black/20 px-1.5 py-0.5 rounded-full">
+                    {listCards.length}
+                  </span>
                 </div>
-              )}
-            </motion.a>
-          ))}
-          {listCards.length > 10 && (
-            <div className="text-center text-[8px] text-gray-500 pt-1">
-              +{listCards.length - 10} tarjetas más
+              </div>
+              <div className="p-2 space-y-1.5">
+                {listCards.length === 0 ? (
+                  <div className="text-center text-[9px] text-gray-500 py-2 italic">
+                    No hay tarjetas aún
+                  </div>
+                ) : (
+                  listCards.slice(0, 10).map((card: any) => (
+                    <motion.a
+                      key={card.id}
+                      href={card.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="block p-2 bg-gray-800/50 border border-gray-700 rounded hover:border-cyan-500/50 hover:bg-gray-800 transition-all group"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="text-[9px] text-gray-300 group-hover:text-white transition-colors line-clamp-2">
+                          {card.name}
+                        </span>
+                        <ExternalLink size={10} className="text-gray-500 group-hover:text-cyan-400 transition-colors shrink-0 mt-0.5" />
+                      </div>
+                      {card.labels && card.labels.length > 0 && (
+                        <div className="flex gap-1 mt-1 flex-wrap">
+                          {card.labels.slice(0, 3).map((label: any) => (
+                            <span
+                              key={label.id}
+                              className="text-[7px] px-1 py-0.5 rounded-full font-bold"
+                              style={{ 
+                                backgroundColor: label.color ? `${label.color}33` : "#66666633",
+                                color: label.color || "#999"
+                              }}
+                            >
+                              {label.name}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </motion.a>
+                  ))
+                )}
+                {listCards.length > 10 && (
+                  <div className="text-center text-[8px] text-gray-500 pt-1">
+                    +{listCards.length - 10} tarjetas más
+                  </div>
+                )}
+              </div>
             </div>
-          )}
-        </div>
+          );
+        })}
       </div>
-    );
-  })}
-</div>
     </div>
   );
 }

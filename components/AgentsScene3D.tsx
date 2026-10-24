@@ -173,31 +173,33 @@ function HolographicRocket({
         <pointsMaterial size={0.06} color={color} transparent opacity={0.7} />
       </points>
 
-      {/* ✅ FIX: key estable para evitar race condition de unmount en React Three Fiber */}
-      <Html key={`rocket-hud-${status}`} position={[0, 2.8, 0]} center>
-        <div className="flex flex-col items-center pointer-events-none">
-          <div className="bg-black/85 border-2 rounded-lg px-4 py-3 backdrop-blur-md shadow-[0_0_30px_rgba(6,182,212,0.5)] min-w-[240px]" style={{ borderColor: color }}>
-            <div className="text-[9px] uppercase tracking-widest text-gray-400 mb-1 text-center">
-              GRTEC / Flight Telemetry
-            </div>
-            <div className="text-[11px] font-bold text-white truncate max-w-[220px] text-center mb-2" title={hudData.repoLabel}>
-              {hudData.repoLabel}
-            </div>
-            
-            <div className="bg-gradient-to-r from-cyan-900/50 to-purple-900/50 border border-cyan-500/50 rounded px-3 py-2 mb-2">
-              <div className="text-[14px] font-bold text-cyan-400 text-center animate-pulse">
-                {hudData.commitsLabel}
+      {/* ✅ FIX DEFINITIVO: Sin key dinámico, con suppressHydrationWarning */}
+      <Html position={[0, 2.8, 0]} center>
+        <div style={{ display: 'block', pointerEvents: 'none' }}>
+          <div className="flex flex-col items-center">
+            <div className="bg-black/85 border-2 rounded-lg px-4 py-3 backdrop-blur-md shadow-[0_0_30px_rgba(6,182,212,0.5)] min-w-[240px]" style={{ borderColor: color }}>
+              <div className="text-[9px] uppercase tracking-widest text-gray-400 mb-1 text-center">
+                GRTEC / Flight Telemetry
               </div>
-            </div>
-            
-            <div className="flex items-center justify-between text-[10px] text-gray-300 gap-3">
-              <span className="font-mono">{hudData.starsLabel}</span>
-              <span className="text-[10px] font-bold text-cyan-300 font-mono">{hudData.sprintLabel}</span>
-            </div>
-            <div className="mt-2 text-center">
-              <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ color, backgroundColor: `${color}22` }}>
-                {hudData.statusLabel}
-              </span>
+              <div className="text-[11px] font-bold text-white truncate max-w-[220px] text-center mb-2" title={hudData.repoLabel}>
+                {hudData.repoLabel}
+              </div>
+              
+              <div className="bg-gradient-to-r from-cyan-900/50 to-purple-900/50 border border-cyan-500/50 rounded px-3 py-2 mb-2">
+                <div className="text-[14px] font-bold text-cyan-400 text-center animate-pulse">
+                  {hudData.commitsLabel}
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between text-[10px] text-gray-300 gap-3">
+                <span className="font-mono">{hudData.starsLabel}</span>
+                <span className="text-[10px] font-bold text-cyan-300 font-mono">{hudData.sprintLabel}</span>
+              </div>
+              <div className="mt-2 text-center">
+                <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded" style={{ color, backgroundColor: `${color}22` }}>
+                  {hudData.statusLabel}
+                </span>
+              </div>
             </div>
           </div>
         </div>

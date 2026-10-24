@@ -1,7 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
 import { Rocket, CheckCircle2, Terminal, Cpu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface LaunchModalProps {
   isOpen: boolean;
@@ -11,19 +11,19 @@ interface LaunchModalProps {
 
 export default function LaunchModal({ isOpen, onClose, sprintNumber }: LaunchModalProps) {
   const [step, setStep] = useState(1);
+  const hasStarted = useRef(false);
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !hasStarted.current) {
+      hasStarted.current = true;
       setStep(1);
       
-      // ✅ TEMPORIZADORES PARA LA ANIMACIÓN
       const timer1 = setTimeout(() => setStep(2), 1500);
       const timer2 = setTimeout(() => setStep(3), 3500);
       const timer3 = setTimeout(() => setStep(4), 5500);
-      
-      // ✅ CIERRE AUTOMÁTICO DESPUÉS DE 7 SEGUNDOS
       const timerClose = setTimeout(() => {
         onClose();
+        hasStarted.current = false; // Resetear para la próxima vez
       }, 7000);
       
       return () => {
@@ -32,6 +32,10 @@ export default function LaunchModal({ isOpen, onClose, sprintNumber }: LaunchMod
         clearTimeout(timer3);
         clearTimeout(timerClose);
       };
+    }
+    
+    if (!isOpen) {
+      hasStarted.current = false;
     }
   }, [isOpen, onClose]);
 
@@ -50,11 +54,12 @@ export default function LaunchModal({ isOpen, onClose, sprintNumber }: LaunchMod
         exit={{ scale: 0.8, y: 50 }}
         className="relative w-full max-w-lg p-8 bg-gray-900/90 border border-cyan-500/50 rounded-2xl shadow-[0_0_50px_rgba(6,182,212,0.3)] overflow-hidden"
       >
-        {/* Botón de cierre manual */}
         <button 
-          onClick={onClose}
+          onClick={() => {
+            hasStarted.current = false;
+            onClose();
+          }}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors z-20"
-          title="Cerrar y ver progreso"
         >
           <X size={24} />
         </button>
@@ -98,7 +103,6 @@ export default function LaunchModal({ isOpen, onClose, sprintNumber }: LaunchMod
             </motion.div>
           )}
 
-          {/* Barra de progreso futurista */}
           <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden mt-6">
             <motion.div 
               className="h-full bg-gradient-to-r from-cyan-500 to-purple-500"
@@ -109,7 +113,10 @@ export default function LaunchModal({ isOpen, onClose, sprintNumber }: LaunchMod
           </div>
 
           <button 
-            onClick={onClose}
+            onClick={() => {
+              hasStarted.current = false;
+              onClose();
+            }}
             className="mt-4 px-6 py-2 bg-cyan-600/20 border border-cyan-500/50 text-cyan-400 text-sm font-bold rounded hover:bg-cyan-600/40 transition-all"
           >
             Ver Progreso en el Dashboard →

@@ -10,15 +10,13 @@ export async function GET() {
       return NextResponse.json({ success: false, message: "Faltan credenciales de Trello" }, { status: 400 });
     }
 
-    // Obtener todas las tarjetas del tablero
     const cardsRes = await fetch(`https://api.trello.com/1/boards/${boardId}/cards?key=${key}&token=${token}&filter=open`);
     const cards = await cardsRes.json();
 
-    // Obtener listas para saber en qué lista está cada tarjeta
     const listsRes = await fetch(`https://api.trello.com/1/boards/${boardId}/lists?key=${key}&token=${token}`);
     const lists = await listsRes.json();
 
-    // Organizar tarjetas por lista
+    // ✅ AGRUPAR POR NOMBRE DE LISTA (no por ID)
     const cardsByList: Record<string, any[]> = {};
     for (const list of lists) {
       cardsByList[list.name] = cards.filter((c: any) => c.idList === list.id);

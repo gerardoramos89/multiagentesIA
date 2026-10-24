@@ -141,6 +141,10 @@ function LiveLogs() {
 export default function DashboardScreen() {
   const [analysisJobId, setAnalysisJobId] = useState<string | null>(null);
   const analysis = useAnalysisJob(analysisJobId);
+  
+  // ✅ 1. TODOS LOS ESTADOS DECLARADOS UNA SOLA VEZ AL PRINCIPIO
+  const [realCommitsCount, setRealCommitsCount] = useState(0);
+  const [sprintsCompleted, setSprintsCompleted] = useState(0);
   const [projectStatus, setProjectStatus] = useState<"config" | "ready" | "building" | "testing" | "deployed">("config");
   const [commitsCount, setCommitsCount] = useState(0);
   const [lastWorkTimes, setLastWorkTimes] = useState<Record<string, string>>({});
@@ -177,22 +181,25 @@ export default function DashboardScreen() {
   const [sprintExecuting, setSprintExecuting] = useState(false);
   const [sprintState, setSprintState] = useState<any>(null);
 
-  // ✅ ESTADOS INDEPENDIENTES (NO dependen de sprintState)
-  const [lastRetrospective, setLastRetrospective] = useState<any>(null);
-  const [lastSprintNumber, setLastSprintNumber] = useState<number>(0);
-  const [hasCompletedSprints, setHasCompletedSprints] = useState(false);
-
   const [projectVision, setProjectVision] = useState({ name: "", generalObjective: "", specificObjectives: "", scope: "", targetSkills: "", isCompleted: false });
   const [showLaunchModal, setShowLaunchModal] = useState(false);
   const [showRetrospectiveModal, setShowRetrospectiveModal] = useState(false);
   const [autoCheckSurveys, setAutoCheckSurveys] = useState(true);
+  const [hasCompletedSprints, setHasCompletedSprints] = useState(false);
+  const [lastRetrospective, setLastRetrospective] = useState<any>(null);
+  const [lastSprintNumber, setLastSprintNumber] = useState<number>(0);
 
+  // ✅ 2. VARIABLES DERIVADAS (UNA SOLA VEZ)
+  const configuredCount = modules.filter(m => m.status === "on").length;
+  const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady;
+  const [openPanel, setOpenPanel] = useState<string>("");
+
+  // ✅ 3. USEEFFECTS LIMPIOS Y SIN DUPLICADOS
   useEffect(() => {
     const savedVision = localStorage.getItem('projectVision');
     if (savedVision) { try { setProjectVision(JSON.parse(savedVision)); } catch {} }
   }, []);
 
-  // ✅ CARGAR HISTORIAL AL INICIO (para saber si hay sprints completados)
   useEffect(() => {
     const loadHistory = async () => {
       try {
@@ -208,11 +215,22 @@ export default function DashboardScreen() {
     loadHistory();
   }, []);
 
-  const configuredCount = modules.filter(m => m.status === "on").length;
-  const canLaunch = modules.every(m => m.status === "on") && projectConfig !== null && diagnosticsReady;
-  const [openPanel, setOpenPanel] = useState<string>("");
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch("/api/commits/stats");
+        const data = await res.json();
+        if (data.success) {
+          setRealCommitsCount(data.totalCommits || 0);
+          setSprintsCompleted(data.sprintsCompleted || 0);
+        }
+      } catch {}
+    };
+    fetchStats();
+    const interval = setInterval(fetchStats, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-  // ✅ POLLING AUTOMÁTICO DEL ESTADO DEL SPRINT
   useEffect(() => {
     const fetchSprintState = async () => {
       try {
@@ -228,17 +246,10 @@ export default function DashboardScreen() {
           for (const task of data.sprint.tasks) {
             if (task.status === "working") {
               newStates[task.agent] = "working";
-              newStates["ollama"] = "working";
-              newStates["deepseek"] = "working";
-              newStates["hermes"] = "working";
-              newStates["aider"] = "working";
-              newStates["github"] = "working";
-              newStates["trello"] = "working";
+              ["ollama", "deepseek", "hermes", "aider", "github", "trello"].forEach(m => newStates[m] = "working");
             } else if (task.status === "done") {
               newStates[task.agent] = "done";
-              if (task.completedAt) {
-                newTimes[task.agent] = new Date(task.completedAt).toLocaleString("es-ES", { hour: '2-digit', minute: '2-digit' });
-              }
+              if (task.completedAt) newTimes[task.agent] = new Date(task.completedAt).toLocaleString("es-ES", { hour: '2-digit', minute: '2-digit' });
             }
           }
           
@@ -247,16 +258,9 @@ export default function DashboardScreen() {
             setLastWorkTimes(prev => ({ ...prev, ...newTimes }));
           }
           
-          if (data.sprint.status === "executing") { 
-            setSprintExecuting(true); 
-          }
-          if (data.sprint.status === "completed") { 
-            setSprintExecuting(false); 
-            setProjectStatus("deployed"); 
-            setShowLaunchModal(false);
-          }
+          if (data.sprint.status === "executing") { setSprintExecuting(true); }
+          if (data.sprint.status === "completed") { setSprintExecuting(false); setProjectStatus("deployed"); setShowLaunchModal(false); }
         } else {
-          // ✅ Solo limpiar sprintState, NO tocar lastRetrospective
           setSprintState(null);
         }
       } catch {}
@@ -266,24 +270,17 @@ export default function DashboardScreen() {
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ VERIFICACIÓN AUTOMÁTICA DE ENCUESTAS EN TRELLO
   useEffect(() => {
     if (!autoCheckSurveys || sprintState?.sprint?.status !== "survey") return;
-
     const checkSurveys = async () => {
       try {
         const res = await fetch("/api/survey/check");
         const data = await res.json();
-        
         if (data.success && data.allAnswered) {
           const closeRes = await fetch("/api/sprint/close", { method: "POST" });
           const closeData = await closeRes.json();
-          
           if (closeData.success) {
-            setSprintPlanned(false);
-            setSprintExecuting(false);
-            setSprintState(null);
-            // ✅ Recargar historial para actualizar lastRetrospective
+            setSprintPlanned(false); setSprintExecuting(false); setSprintState(null);
             const histRes = await fetch("/api/sprint/last-retrospective");
             const histData = await histRes.json();
             if (histData.success && histData.retrospective) {
@@ -296,7 +293,6 @@ export default function DashboardScreen() {
         }
       } catch {}
     };
-
     checkSurveys();
     const interval = setInterval(checkSurveys, 15000);
     return () => clearInterval(interval);
@@ -318,7 +314,11 @@ export default function DashboardScreen() {
 
   useEffect(() => {
     if (analysis.status === "done" && analysis.result) {
-      setProjectConfig({ owner: githubConfig.owner, repo: githubConfig.repo, branch: analysis.result.branch, language: analysis.result.stack.languages[0]?.name ?? "Desconocido", hasReadme: analysis.result.status.hasReadme, totalCommits: analysis.result.status.commits, lastPush: "" });
+      setProjectConfig({ 
+        owner: githubConfig.owner, repo: githubConfig.repo, branch: analysis.result.branch, 
+        language: analysis.result.stack.languages[0]?.name ?? "Desconocido", 
+        hasReadme: analysis.result.status.hasReadme, totalCommits: realCommitsCount, lastPush: "" 
+      });
       setCommitsCount(analysis.result.status.commits);
       setProjectStatus("ready");
       setIsAnalyzingProject(false);
@@ -326,8 +326,11 @@ export default function DashboardScreen() {
       alert(`Error en análisis: ${analysis.error}`);
       setIsAnalyzingProject(false);
     }
-  }, [analysis.status, analysis.result, githubConfig.owner, githubConfig.repo]);
+  }, [analysis.status, analysis.result, githubConfig.owner, githubConfig.repo, realCommitsCount]);
 
+  useEffect(() => { loadConfigFromServer(); }, []);
+
+  // ✅ 4. FUNCIONES AUXILIARES
   const loadConfigFromServer = async () => {
     try {
       const res = await fetch('/api/config/status');
@@ -342,8 +345,6 @@ export default function DashboardScreen() {
       }
     } catch (error) { console.error("Error cargando config:", error); }
   };
-
-  useEffect(() => { loadConfigFromServer(); }, []);
 
   const analyzeProject = async () => {
     if (!githubConfig.owner || !githubConfig.repo || !githubConfig.token) { alert("Configura GitHub primero"); return; }
@@ -382,55 +383,26 @@ export default function DashboardScreen() {
 
   const progress = (configuredCount / modules.length) * 100;
   
-// ✅ ESTADO PARA CONTADOR REAL DE COMMITS
-const [realCommitsCount, setRealCommitsCount] = useState(0);
-const [sprintsCompleted, setSprintsCompleted] = useState(0);
+  const telemetry: FlightTelemetry = useMemo(() => {
+    const currentSprintNumber = sprintState?.sprint?.sprintNumber || (sprintPlanned ? 1 : null);
+    let realStatus: "config" | "ready" | "building" | "testing" | "deployed" = "config";
+    if (sprintState?.sprint?.status === "executing") realStatus = "building";
+    else if (sprintState?.sprint?.status === "survey" || sprintState?.sprint?.status === "review") realStatus = "testing";
+    else if (sprintState?.sprint?.status === "completed" || hasCompletedSprints) realStatus = "deployed";
+    else if (projectConfig) realStatus = "ready";
+    
+    return {
+      repo: githubConfig.owner && githubConfig.repo ? { owner: githubConfig.owner, name: githubConfig.repo } : null,
+      stars: null,
+      commits: realCommitsCount,
+      sprint: { number: currentSprintNumber, source: "active" },
+      status: realStatus,
+      progress,
+      lastActivity: null,
+    };
+  }, [githubConfig, realCommitsCount, projectStatus, progress, sprintPlanned, sprintExecuting, sprintState, hasCompletedSprints, projectConfig]);
 
-// ✅ POLLING PARA OBTENER ESTADÍSTICAS REALES
-useEffect(() => {
-  const fetchStats = async () => {
-    try {
-      const res = await fetch("/api/commits/stats");
-      const data = await res.json();
-      if (data.success) {
-        setRealCommitsCount(data.totalCommits || 0);
-        setSprintsCompleted(data.sprintsCompleted || 0);
-      }
-    } catch {}
-  };
-  fetchStats();
-  const interval = setInterval(fetchStats, 5000);
-  return () => clearInterval(interval);
-}, []);
-
-// ✅ TELEMETRÍA CORREGIDA
-const telemetry: FlightTelemetry = useMemo(() => {
-  // ✅ Determinar el número real del sprint
-  const currentSprintNumber = sprintState?.sprint?.sprintNumber || (sprintPlanned ? 1 : null);
-  
-  // ✅ Determinar el estado real del proyecto
-  let realStatus: "config" | "ready" | "building" | "testing" | "deployed" = "config";
-  if (sprintState?.sprint?.status === "executing") {
-    realStatus = "building";
-  } else if (sprintState?.sprint?.status === "survey" || sprintState?.sprint?.status === "review") {
-    realStatus = "testing";
-  } else if (sprintState?.sprint?.status === "completed" || hasCompletedSprints) {
-    realStatus = "deployed";
-  } else if (projectConfig) {
-    realStatus = "ready";
-  }
-  
-  return {
-    repo: githubConfig.owner && githubConfig.repo ? { owner: githubConfig.owner, name: githubConfig.repo } : null,
-    stars: null,
-    commits: realCommitsCount, // ✅ Usar contador real de commits
-    sprint: { number: currentSprintNumber, source: "active" },
-    status: realStatus,
-    progress,
-    lastActivity: null,
-  };
-}, [githubConfig, realCommitsCount, projectStatus, progress, sprintPlanned, sprintExecuting, sprintState, hasCompletedSprints, projectConfig]);
-
+  // ✅ 5. RENDERIZADO (JSX)
   return (
     <div className="h-screen w-full bg-black flex overflow-hidden">
       <div className="w-full md:w-[70%] h-full relative">
@@ -503,9 +475,20 @@ const telemetry: FlightTelemetry = useMemo(() => {
 
           <AccordionItem title="Configuración del Proyecto" icon={FolderGit2} id="project" isOpen={openPanel === "project"} onToggle={() => setOpenPanel(openPanel === "project" ? "" : "project")} badge={!diagnosticsReady ? "🔒 Bloqueado" : projectConfig ? "Analizado" : "Pendiente"}>
             <div className="space-y-3">
-              {!diagnosticsReady ? <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded"><p className="text-[9px] text-amber-300/80">Debes aprobar el <strong>Test Pre-Vuelo</strong>.</p></div>
-              : !projectConfig ? <button onClick={analyzeProject} disabled={!githubConfig.token} className="w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold rounded transition-all"><GitBranch size={12} className="inline mr-1"/> Analizar Proyecto</button>
-              : <div className="p-2 bg-emerald-950/20 border border-emerald-500/30 rounded"><div className="text-[10px] text-emerald-400 font-bold mb-1">✓ Proyecto Detectado</div><div className="text-[9px] text-gray-300">📦 {projectConfig.owner}/{projectConfig.repo} · 🔢 {projectConfig.totalCommits} commits</div></div>}
+              {!diagnosticsReady ? (
+                <div className="p-3 bg-amber-950/20 border border-amber-500/40 rounded">
+                  <p className="text-[9px] text-amber-300/80">Debes aprobar el <strong>Test Pre-Vuelo</strong>.</p>
+                </div>
+              ) : !projectConfig ? (
+                <button onClick={analyzeProject} disabled={!githubConfig.token} className="w-full py-2 bg-cyan-600 hover:bg-cyan-500 text-white text-[10px] font-bold rounded transition-all">
+                  <GitBranch size={12} className="inline mr-1"/> Analizar Proyecto
+                </button>
+              ) : (
+                <div className="p-2 bg-emerald-950/20 border border-emerald-500/30 rounded">
+                  <div className="text-[10px] text-emerald-400 font-bold mb-1">✓ Proyecto Detectado</div>
+                  <div className="text-[9px] text-gray-300">📦 {projectConfig.owner}/{projectConfig.repo} · 🔢 {realCommitsCount} commits totales</div>
+                </div>
+              )}
             </div>
           </AccordionItem>
 
@@ -525,41 +508,23 @@ const telemetry: FlightTelemetry = useMemo(() => {
             <ProjectVisionForm vision={projectVision} setVision={setProjectVision} onComplete={() => {}} />
           )}
 
-          {/* ✅ LÓGICA DEFINITIVA: Basada en hasCompletedSprints (no depende de sprintState) */}
           {!sprintState || sprintState?.sprint?.status === "completed" ? (
             <>
               <button 
                 disabled={!projectConfig || !diagnosticsReady || !projectVision.isCompleted}
                 onClick={async () => {
                   try {
-                    const res = await fetch("/api/sprint/plan", { 
-                      method: "POST", 
-                      headers: { "Content-Type": "application/json" }, 
-                      body: JSON.stringify({ 
-                        agents: agentsConfig.filter(a => a.enabled), 
-                        brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief) 
-                      }) 
-                    });
+                    const res = await fetch("/api/sprint/plan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ agents: agentsConfig.filter(a => a.enabled), brief: await fetch("/api/project/brief").then(r => r.json()).then(d => d.brief) }) });
                     const data = await res.json();
                     if (data.success) { 
                       alert(`✅ Sprint #${data.sprintNumber || 1} planificado con ${data.tasksCount} tareas.`); 
-                      setSprintPlanned(true);
-                      setSprintState(null);
-                    } else { 
-                      alert(`❌ Error: ${data.message}`); 
-                    }
-                  } catch (err: any) {
-                    alert(`❌ Error: ${err.message}`);
-                  }
+                      setSprintPlanned(true); setSprintState(null);
+                    } else { alert(`❌ Error: ${data.message}`); }
+                  } catch (err: any) { alert(`❌ Error: ${err.message}`); }
                 }} 
-                className={`w-full py-2 rounded-lg font-bold text-[10px] transition-all flex items-center justify-center gap-2 ${
-                  projectConfig && diagnosticsReady && projectVision.isCompleted 
-                    ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" 
-                    : "bg-gray-800 text-gray-500 cursor-not-allowed"
-                }`}
+                className={`w-full py-2 rounded-lg font-bold text-[10px] transition-all flex items-center justify-center gap-2 ${projectConfig && diagnosticsReady && projectVision.isCompleted ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-500 hover:to-blue-500" : "bg-gray-800 text-gray-500 cursor-not-allowed"}`}
               >
-                <LayoutGrid size={14} /> 
-                {hasCompletedSprints ? "Planificar Nuevo Sprint" : "Planificar Primer Sprint"}
+                <LayoutGrid size={14} /> {hasCompletedSprints ? "Planificar Nuevo Sprint" : "Planificar Primer Sprint"}
               </button>
               
               <button 
@@ -567,7 +532,6 @@ const telemetry: FlightTelemetry = useMemo(() => {
                   try {
                     const res = await fetch("/api/sprint/last-retrospective");
                     const data = await res.json();
-                    
                     if (data.success && data.retrospective) {
                       setLastRetrospective(data.retrospective);
                       setLastSprintNumber(data.sprintNumber);
@@ -575,9 +539,7 @@ const telemetry: FlightTelemetry = useMemo(() => {
                     } else {
                       alert("ℹ️ No hay sprints completados aún");
                     }
-                  } catch (err: any) {
-                    alert(`❌ Error: ${err.message}`);
-                  }
+                  } catch (err: any) { alert(`❌ Error: ${err.message}`); }
                 }}
                 className="w-full py-2 bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-[10px] font-bold rounded hover:from-cyan-500 hover:to-blue-500 transition-all flex items-center justify-center gap-2"
               >
@@ -596,25 +558,11 @@ const telemetry: FlightTelemetry = useMemo(() => {
                   try {
                     const savedVision = typeof window !== 'undefined' ? localStorage.getItem('projectVision') : null;
                     const vision = savedVision ? JSON.parse(savedVision) : projectVision;
-                    const payload = { vision };
-                    
-                    const res = await fetch("/api/sprint/execute", { 
-                      method: "POST", 
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify(payload)
-                    });
+                    const res = await fetch("/api/sprint/execute", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ vision }) });
                     const data = await res.json();
-                    
-                    if (data.success) { 
-                      setShowLaunchModal(true);
-                      setSprintExecuting(true); 
-                      setProjectStatus("building"); 
-                    } else { 
-                      alert(`❌ Error: ${data.message}`); 
-                    }
-                  } catch (err: any) {
-                    alert(`❌ Error de conexión: ${err.message}`);
-                  }
+                    if (data.success) { setShowLaunchModal(true); setSprintExecuting(true); setProjectStatus("building"); } 
+                    else { alert(`❌ Error: ${data.message}`); }
+                  } catch (err: any) { alert(`❌ Error de conexión: ${err.message}`); }
                 }} className="w-full py-2 bg-gradient-to-r from-emerald-600 to-green-600 text-white text-[10px] font-bold rounded hover:from-emerald-500 hover:to-green-500 transition-all flex items-center justify-center gap-2 animate-pulse">
                   <Play size={14} /> INICIAR EJECUCIÓN DEL SPRINT
                 </button>
@@ -639,12 +587,7 @@ const telemetry: FlightTelemetry = useMemo(() => {
                   <div className="flex items-center gap-2"><Eye size={14} className="text-amber-400 animate-pulse" /><span className="text-[10px] font-bold text-amber-400">Esperando tus respuestas en Trello</span></div>
                   <p className="text-[9px] text-gray-400">Responde las encuestas en Trello. El sistema cerrará el sprint automáticamente.</p>
                   <div className="flex items-center gap-2">
-                    <input 
-                      type="checkbox" 
-                      checked={autoCheckSurveys}
-                      onChange={(e) => setAutoCheckSurveys(e.target.checked)}
-                      className="w-3 h-3"
-                    />
+                    <input type="checkbox" checked={autoCheckSurveys} onChange={(e) => setAutoCheckSurveys(e.target.checked)} className="w-3 h-3" />
                     <span className="text-[8px] text-gray-400">Verificación automática cada 15s</span>
                   </div>
                 </div>
@@ -653,51 +596,31 @@ const telemetry: FlightTelemetry = useMemo(() => {
               {sprintState?.sprint?.status === "review" && (
                 <div className="p-3 bg-emerald-950/20 border border-emerald-500/40 rounded space-y-2">
                   <div className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-400" /><span className="text-[10px] font-bold text-emerald-400">Sprint Completado</span></div>
-                  <button 
-                    onClick={async () => {
-                      try {
-                        const res = await fetch("/api/sprint/last-retrospective");
-                        const data = await res.json();
-                        
-                        if (data.success && data.retrospective) {
-                          setLastRetrospective(data.retrospective);
-                          setLastSprintNumber(data.sprintNumber);
-                          setShowRetrospectiveModal(true);
-                        } else {
-                          alert("❌ No se encontró la retrospectiva");
-                        }
-                      } catch (err: any) {
-                        alert(`❌ Error: ${err.message}`);
-                      }
-                    }}
-                    className="w-full py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1"
-                  >
+                  <button onClick={async () => {
+                    try {
+                      const res = await fetch("/api/sprint/last-retrospective");
+                      const data = await res.json();
+                      if (data.success && data.retrospective) {
+                        setLastRetrospective(data.retrospective); setLastSprintNumber(data.sprintNumber); setShowRetrospectiveModal(true);
+                      } else { alert("❌ No se encontró la retrospectiva"); }
+                    } catch (err: any) { alert(`❌ Error: ${err.message}`); }
+                  }} className="w-full py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1">
                     <FileText size={12} /> Ver Retrospectiva
                   </button>
-                  <button 
-                    onClick={async () => {
-                      if (!confirm("¿Cerrar sprint y archivar en historial?")) return;
-                      const res = await fetch("/api/sprint/close", { method: "POST" });
-                      const data = await res.json();
-                      if (data.success) {
-                        alert("✅ Sprint cerrado exitosamente");
-                        setSprintPlanned(false);
-                        setSprintExecuting(false);
-                        setSprintState(null);
-                        // ✅ Recargar historial para actualizar hasCompletedSprints
-                        const histRes = await fetch("/api/sprint/last-retrospective");
-                        const histData = await histRes.json();
-                        if (histData.success && histData.retrospective) {
-                          setLastRetrospective(histData.retrospective);
-                          setLastSprintNumber(histData.sprintNumber);
-                          setHasCompletedSprints(true);
-                        }
-                      } else {
-                        alert(`❌ Error: ${data.message}`);
+                  <button onClick={async () => {
+                    if (!confirm("¿Cerrar sprint y archivar en historial?")) return;
+                    const res = await fetch("/api/sprint/close", { method: "POST" });
+                    const data = await res.json();
+                    if (data.success) {
+                      alert("✅ Sprint cerrado exitosamente");
+                      setSprintPlanned(false); setSprintExecuting(false); setSprintState(null);
+                      const histRes = await fetch("/api/sprint/last-retrospective");
+                      const histData = await histRes.json();
+                      if (histData.success && histData.retrospective) {
+                        setLastRetrospective(histData.retrospective); setLastSprintNumber(histData.sprintNumber); setHasCompletedSprints(true);
                       }
-                    }}
-                    className="w-full py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1"
-                  >
+                    } else { alert(`❌ Error: ${data.message}`); }
+                  }} className="w-full py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-[9px] font-bold rounded transition-all flex items-center justify-center gap-1">
                     <CheckCircle2 size={12} /> Cerrar Sprint
                   </button>
                 </div>
@@ -722,19 +645,8 @@ const telemetry: FlightTelemetry = useMemo(() => {
         )}
       </AnimatePresence>
 
-      <LaunchModal 
-        isOpen={showLaunchModal} 
-        onClose={() => setShowLaunchModal(false)} 
-        sprintNumber={sprintState?.sprint?.sprintNumber || 1} 
-      />
-      
-      {/* ✅ MODAL DE RETROSPECTIVA: Usa lastRetrospective (estado independiente) */}
-      <SprintRetrospectiveModal 
-        isOpen={showRetrospectiveModal}
-        onClose={() => setShowRetrospectiveModal(false)}
-        retrospective={lastRetrospective}
-        sprintNumber={lastSprintNumber || 1}
-      />
+      <LaunchModal isOpen={showLaunchModal} onClose={() => setShowLaunchModal(false)} sprintNumber={sprintState?.sprint?.sprintNumber || 1} />
+      <SprintRetrospectiveModal isOpen={showRetrospectiveModal} onClose={() => setShowRetrospectiveModal(false)} retrospective={lastRetrospective} sprintNumber={lastSprintNumber || 1} />
     </div>
   );
 }
