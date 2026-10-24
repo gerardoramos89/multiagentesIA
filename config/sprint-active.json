@@ -104,15 +104,24 @@
       "title": "🛠️ [DEV] [DEV/QA] Añadir más casos de prueba",
       "description": "Implementar: [DEV/QA] Añadir más casos de prueba. Contexto: Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y con equiupo de agentes con reglas scrumt sean autonomos codificado y creandoo todo lo de un cliclo del software requiera.",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T03:48:09.054Z"
+      "status": "done",
+      "startedAt": "2026-10-24T03:48:09.054Z",
+      "completedAt": "2026-10-24T03:48:52.971Z",
+      "output": "Generado: casos_de_prueba.py",
+      "commits": [
+        "729537ef524fb38cc7cd9820fa60c8bbe3fac046"
+      ],
+      "filesModified": [
+        "casos_de_prueba.py"
+      ]
     },
     {
       "id": "task-1792813383557-7",
       "title": "📝 [DOC] Actualizar documentación y README del sprint",
       "description": "Actualizar el README.md con los avances, nuevos archivos, cambios de arquitectura y guía de uso de este sprint.",
       "agent": "doc",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T03:48:54.987Z"
     },
     {
       "id": "task-1792813383557-8",
@@ -138,6 +147,7 @@
     "api_routes.py",
     "plan_accion_desarrollo_plataforma_multiagente.txt",
     "README.md",
-    "pipeline_ci_cd.yml"
+    "pipeline_ci_cd.yml",
+    "casos_de_prueba.py"
   ]
 }

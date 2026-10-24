@@ -1,66 +1,96 @@
-# Proyecto de Plataforma Multiagente para Inteligencia Artificial
+```markdown
+# MultiagentesIA
 
-## Descripción del Proyecto
-Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial. La plataforma está diseñada para facilitar la gestión de equipos de agentes autónomos, utilizando reglas y metodologías ágiles como Scrum.
+## Objetivo
+Este proyecto tiene como objetivo desarrollar una plataforma multiagente para gestionar la Inteligencia Artificial y con equipo de agentes con reglas Scrumt sean autónomos codificado y creandoo todo lo de un cliclo del software requiera.
 
-## Características Principales
-- **Multiagente**: La plataforma soporta múltiples agentes interconectados para una gestión eficiente de la Inteligencia Artificial.
-- **Autonomía**: Los agentes son autónomos y pueden operar bajo sus propias reglas y lógica de decisión.
-- **Metodología Ágil**: Se implementa la metodología Scrum para un desarrollo ágil y controlado.
-- **Integración de Todo en Un Cliclo del Software**: Todo el ciclo de desarrollo del software se realiza de manera automatizada y con una interfaz amigable para el usuario.
+## Alcance
+- Skills: Next
+- Contexto adicional: No proporcionado
 
 ## Estructura del Proyecto
-El proyecto se divide en varios módulos principales:
-- **Módulo de Agentes**: Implementación de agentes autónomos con capacidades específicas para la gestión de IA.
-- **Módulo de Reglas Scrum**: Implementación de reglas y procesos ágiles para el desarrollo del software.
-- **Módulo de Interfaz de Usuario**: Una interfaz web que permite la gestión y visualización de los agentes y su desempeño.
 
-## Requisitos del Sistema
-- Python 3.8 o superior
-- Bases de datos relacionales (MySQL, PostgreSQL, etc.)
-- Node.js y npm para el frontend
+### Estructura de Carpetas
+- **src/**: Contiene el código fuente de la aplicación.
+  - **components/**: Componentes reutilizables de la interfaz de usuario.
+  - **pages/**: Páginas principales de la aplicación.
+  - **services/**: Servicios para interactuar con APIs y bases de datos.
+  - **utils/**: Herramientas y utilidades misceláneas.
+- **public/**: Archivos estáticos y el archivo de índice principal.
+- **README.md**: Este archivo de documentación.
+- **package.json**: Dependencias y configuraciones del proyecto.
 
-## Instalación
-### Paso 1: Clonar el repositorio
-```bash
-git clone https://github.com/tu-usuario/tu-repositorio.git
-cd tu-repositorio
-```
+### Estructura de Archivos
+- **src/index.js**: Punto de entrada de la aplicación.
+- **src/App.js**: Componente principal de la aplicación.
+- **src/components/Header.js**: Componente de la cabecera de la aplicación.
+- **src/components/Footer.js**: Componente del pie de página de la aplicación.
 
-### Paso 2: Instalar dependencias
-```bash
-# Para el backend
-pip install -r requirements.txt
+## Guía de Uso
 
-# Para el frontend
-cd frontend
-npm install
-```
+### Instalación
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/MultiagentesIA.git
+   ```
+2. Navega al directorio del proyecto:
+   ```bash
+   cd MultiagentesIA
+   ```
+3. Instala las dependencias:
+   ```bash
+   npm install
+   ```
 
-### Paso 3: Configurar la base de datos
-Configurar las variables de entorno y la base de datos en el archivo `.env`.
+### Ejecución
+1. Inicia la aplicación:
+   ```bash
+   npm start
+   ```
+2. Abre tu navegador y navega a `http://localhost:3000` para ver la aplicación en funcionamiento.
 
-### Paso 4: Ejecutar la aplicación
-```bash
-# Para el backend
-python manage.py runserver
+### Despliegue
+1. Construye la aplicación para producción:
+   ```bash
+   npm run build
+   ```
+2. Los archivos construidos se encontrarán en el directorio `build/`.
 
-# Para el frontend
-npm start
-```
+## Desarrollo
 
-## Contribución
-Las contribuciones son bienvenidas. Para contribuir, por favor seguir estos pasos:
-1. Hacer un fork del repositorio.
-2. Crear una nueva rama para la característica o corrección de errores.
-3. Hacer los cambios y hacer un pull request.
+### Cambios de Arquitectura
+En este sprint, se ha realizado un refactor en la estructura de la aplicación para mejorar la modularidad y la mantenibilidad. Se han creado nuevos componentes y servicios para manejar mejor las funcionalidades de la plataforma.
+
+### Nuevos Archivos
+- **src/components/AgentList.js**: Componente para listar y gestionar agentes.
+- **src/services/AgentService.js**: Servicio para interactuar con la API de agentes.
+
+### Avances
+- Se ha implementado la autenticación básica para los agentes.
+- Se ha añadido una interfaz de usuario para la gestión de tareas asignadas a los agentes.
+
+## Próximos Pasos
+- Implementar la integración con APIs externas para obtener datos en tiempo real.
+- Añadir pruebas unitarias y de integración.
+- Mejorar la interfaz de usuario para una experiencia de usuario más fluida.
+
+## Contribuciones
+¡Las contribuciones son bienvenidas! Si deseas contribuir al proyecto, sigue estos pasos:
+1. Haz un fork del repositorio.
+2. Crea una nueva rama para tu característica o corrección de errores:
+   ```bash
+   git checkout -b nueva-caracteristica
+   ```
+3. Realiza tus cambios y haz commit:
+   ```bash
+   git commit -m 'Añade nueva característica'
+   ```
+4. Haz push a tu fork:
+   ```bash
+   git push origin nueva-caracteristica
+   ```
+5. Abre una pull request en el repositorio original.
 
 ## Licencia
-Este proyecto está bajo la licencia MIT.
-
-## Contacto
-Para cualquier consulta, puede contactar al correo electrónico: contacto@tu-correo.com
-
----
-
-¡Gracias por leer el README! Esperamos que encuentres esta información útil para entender mejor el proyecto.
+Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+```
