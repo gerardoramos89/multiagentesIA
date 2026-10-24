@@ -24,15 +24,24 @@
       "title": "Refactorizar la estructura de datos para una mayor eficiencia",
       "description": "[ARCH/DEV] Refactorizar la estructura de datos para una mayor eficiencia",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T15:57:50.891Z"
+      "status": "done",
+      "startedAt": "2026-10-24T15:57:50.891Z",
+      "completedAt": "2026-10-24T15:58:53.141Z",
+      "output": "Generado: arquitectura_proyecto_f_brica_de_agentes.md",
+      "commits": [
+        "9a1ac9536e63df112e6a79227e26ec16557faf38"
+      ],
+      "filesModified": [
+        "arquitectura_proyecto_f_brica_de_agentes.md"
+      ]
     },
     {
       "id": "task-1792857408506-2",
       "title": "Implementar un sistema de alertas para errores críticos",
       "description": "[ARCH/DEV] Implementar un sistema de alertas para errores críticos",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T15:58:55.162Z"
     },
     {
       "id": "task-1792857408506-3",
@@ -88,6 +97,7 @@
     "isCompleted": true
   },
   "filesChanged": [
-    "STRATEGY.md"
+    "STRATEGY.md",
+    "arquitectura_proyecto_f_brica_de_agentes.md"
   ]
 }
