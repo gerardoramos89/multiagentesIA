@@ -1,47 +1,5 @@
 [
   {
-    "agent": "doc",
-    "message": "✅ Push exitoso: 7b5267d",
-    "timestamp": "2026-10-24T06:22:31.848Z",
-    "level": "success"
-  },
-  {
-    "agent": "doc",
-    "message": "✅ Completado en 43.7s",
-    "timestamp": "2026-10-24T06:22:31.856Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "🎯 Trabajando en: 📊 [PO] Retrospectiva y propuesta de mejora para el próximo sprint",
-    "timestamp": "2026-10-24T06:22:33.863Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "Iniciando: 📊 [PO] Retrospectiva y propuesta de mejora para el próximo sprint",
-    "timestamp": "2026-10-24T06:22:33.870Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "Generando con deepseek-coder-v2:16b...",
-    "timestamp": "2026-10-24T06:22:33.878Z",
-    "level": "info"
-  },
-  {
-    "agent": "po",
-    "message": "✅ Archivo creado: RETROSPECTIVE_SUGGESTIONS.md en 40s",
-    "timestamp": "2026-10-24T06:23:13.380Z",
-    "level": "success"
-  },
-  {
-    "agent": "po",
-    "message": "Preparando commit...",
-    "timestamp": "2026-10-24T06:23:13.389Z",
-    "level": "info"
-  },
-  {
     "agent": "po",
     "message": "✅ Push exitoso: a2105a5",
     "timestamp": "2026-10-24T06:23:16.331Z",
@@ -297,6 +255,48 @@
     "agent": "dev",
     "message": "Preparando commit...",
     "timestamp": "2026-10-24T06:42:51.652Z",
+    "level": "info"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Push exitoso: 3687ebd",
+    "timestamp": "2026-10-24T06:42:54.551Z",
+    "level": "success"
+  },
+  {
+    "agent": "dev",
+    "message": "✅ Completado en 81.4s",
+    "timestamp": "2026-10-24T06:42:54.559Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "🎯 Trabajando en: 🧪 [QA] Revisión de calidad y pruebas",
+    "timestamp": "2026-10-24T06:42:56.570Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Iniciando: 🧪 [QA] Revisión de calidad y pruebas",
+    "timestamp": "2026-10-24T06:42:56.578Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "Generando con deepseek-coder-v2:16b (con contexto cruzado)...",
+    "timestamp": "2026-10-24T06:42:56.585Z",
+    "level": "info"
+  },
+  {
+    "agent": "qa",
+    "message": "✅ Archivo creado: QA_REPORT.md en 90s",
+    "timestamp": "2026-10-24T06:44:26.117Z",
+    "level": "success"
+  },
+  {
+    "agent": "qa",
+    "message": "Preparando commit...",
+    "timestamp": "2026-10-24T06:44:26.127Z",
     "level": "info"
   }
 ]
