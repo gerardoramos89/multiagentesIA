@@ -88,15 +88,24 @@
       "title": "QA",
       "description": "QA",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T14:56:19.724Z"
+      "status": "done",
+      "startedAt": "2026-10-24T14:56:19.724Z",
+      "completedAt": "2026-10-24T14:57:15.548Z",
+      "output": "Generado: nombre_del_archivo.ext",
+      "commits": [
+        "c5ed75e14c17217e73ce4ef670d8a5d69b0e072a"
+      ],
+      "filesModified": [
+        "nombre_del_archivo.ext"
+      ]
     },
     {
       "id": "task-1792853523834-6",
       "title": "Technical",
       "description": "Technical",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T14:57:17.561Z"
     },
     {
       "id": "task-1792853523834-7",
