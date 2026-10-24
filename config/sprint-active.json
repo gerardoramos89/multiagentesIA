@@ -120,15 +120,24 @@
       "title": "📝 [DOC] Actualizar documentación y README del sprint",
       "description": "Actualizar el README.md con los avances, nuevos archivos, cambios de arquitectura y guía de uso de este sprint.",
       "agent": "doc",
-      "status": "working",
-      "startedAt": "2026-10-24T03:48:54.987Z"
+      "status": "done",
+      "startedAt": "2026-10-24T03:48:54.987Z",
+      "completedAt": "2026-10-24T03:49:57.900Z",
+      "output": "Generado: README.md",
+      "commits": [
+        "ecf50ecfedb6805e1ecb0a8103fc1c297753cf45"
+      ],
+      "filesModified": [
+        "README.md"
+      ]
     },
     {
       "id": "task-1792813383557-8",
       "title": "🧪 [QA] Revisión de calidad y pruebas del sprint",
       "description": "Verificar que el código generado cumpla con los estándares, revisar errores y añadir/actualizar tests unitarios.",
       "agent": "qa",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T03:49:59.915Z"
     }
   ],
   "status": "executing",
