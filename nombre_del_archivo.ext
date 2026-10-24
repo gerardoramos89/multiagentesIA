@@ -1,140 +1,60 @@
 ```javascript
-// nombre_del_archivo.ext
+// ARCHIVO: nombre_del_archivo.ext
 
-// Importaciones necesarias
-import express from 'express';
-import bodyParser from 'body-parser';
-import { v4 as uuidv4 } from 'uuid';
-import { createClient } from 'redis';
-import { Client } from '@elastic/elasticsearch';
-import { Sequelize } from 'sequelize';
-import { Command, Query } from 'cqrs';
-import { Container } from 'inversify';
+import { NextResponse } from 'next/server';
+import { signIn, signOut, getSession } from 'next-auth/react';
+import { getToken } from 'next-auth/jwt';
+import { getServerSession } from 'next-auth/next';
+import { NextRequest } from 'next/server';
 
-// Configuración de la aplicación
-const app = express();
-const port = 3000;
-
-// Middleware
-app.use(bodyParser.json());
-
-// Inicialización de módulos
-const container = new Container();
-
-// Módulo Core
-const coreModule = {
-  services: {
-    // Servicios del módulo Core
-  },
-  models: {
-    // Modelos del módulo Core
-  },
-  utils: {
-    // Utilidades del módulo Core
-  },
-  config: {
-    // Configuración del módulo Core
-  }
-};
-
-container.bind(coreModule);
-
-// Módulo Agentes
-const agentModule = {
-  base_agent: {
-    // Implementación del agente base
-  },
-  specific_agent1: {
-    // Implementación del agente específico 1
-  },
-  specific_agent2: {
-    // Implementación del agente específico 2
-  },
-  config: {
-    // Configuración del módulo Agentes
-  }
-};
-
-container.bind(agentModule);
-
-// Módulo Comunicación
-const communicationModule = {
-  protocols: {
-    // Protocolos de comunicación
-  },
-  message_handlers: {
-    // Manejadores de mensajes
-  },
-  config: {
-    // Configuración del módulo Comunicación
-  }
-};
-
-container.bind(communicationModule);
-
-// Configuración de la base de datos
-const sequelize = new Sequelize('sqlite::memory:');
-
-// Configuración de Redis
-const redisClient = createClient();
-redisClient.connect().catch(console.error);
-
-// Configuración de Elasticsearch
-const elasticClient = new Client({ node: 'http://localhost:9200' });
-
-// Configuración de logging (opcional)
-const winston = require('winston');
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'logs/combined.log' }),
+// Configuración de autenticación
+const authConfig = {
+  providers: [
+    // Configuración de proveedores de autenticación
   ],
-});
+  callbacks: {
+    async signIn({ user, account, profile, isNewUser }) {
+      // Lógica de autenticación
+      return true;
+    },
+    async signOut(params) {
+      // Lógica de cierre de sesión
+      return true;
+    },
+    async session({ session, user, token }) {
+      // Personalizar la sesión
+      session.user = { ...session.user, id: token.sub };
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      // Personalizar el token JWT
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
+  },
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error', // Error page
+  },
+};
 
-// Rutas de la aplicación
-app.post('/agents', (req, res) => {
-  try {
-    const agent = container.get(req.body.agentType);
-    res.send(agent);
-  } catch (error) {
-    res.status(500).send(error.message);
+// Función para obtener la sesión del usuario
+export async function getServerAuthSession(req) {
+  return await getServerSession(authConfig, req);
+}
+
+// Middleware de autenticación
+export async function middleware(req) {
+  const session = await getServerAuthSession(req);
+  if (!session) {
+    return NextResponse.redirect(new URL('/auth/signin', req.url));
   }
-});
+  return NextResponse.next();
+}
 
-app.get('/tasks', (req, res) => {
-  try {
-    const tasks = container.get(coreModule.services.taskService).getAllTasks();
-    res.send(tasks);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-});
-
-// Inicio de la aplicación
-app.listen(port, () => {
-  console.log(`Servidor corriendo en http://localhost:${port}`);
-});
-
-// Pruebas unitarias (opcional)
-describe('Agent Module', () => {
-  it('should create a new agent', () => {
-    const agent = container.get(agentModule.specific_agent1);
-    expect(agent).toBeDefined();
-  });
-});
+// Exportar funciones de autenticación
+export { signIn, signOut, getSession, getToken };
 ```
-
-Este archivo contiene el código base para el módulo Scrum master en el proyecto MultiagentesIA. A continuación, se detallan las principales partes del código:
-
-1. **Importaciones y Configuración**: Se importan los módulos necesarios y se configura la aplicación con Express y otros paquetes.
-2. **Inicialización de Módulos**: Se utiliza Inversify para la inyección de dependencias y se configura el módulo Core, Agentes y Comunicación.
-3. **Configuración de la Base de Datos y Redis**: Se configura una base de datos SQLite y un cliente Redis.
-4. **Configuración de Logging**: Se configura un logger con Winston para registros.
-5. **Rutas de la Aplicación**: Se definen las rutas para la creación de agentes y la obtención de tareas, manejando errores con try/catch.
-6. **Pruebas Unitarias**: Se definen pruebas unitarias básicas para el módulo Agentes.
-
-Este código cumple con los requisitos establecidos y sigue las directrices de diseño y arquitectura propuestas por el arquitecto.
