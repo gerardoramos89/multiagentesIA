@@ -24,15 +24,24 @@
       "title": "Definir mejoras en la estrategia de manejo de datos para futuras refactorizaciones",
       "description": "[ARCH/DEV] Definir mejoras en la estrategia de manejo de datos para futuras refactorizaciones",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T17:09:14.431Z"
+      "status": "done",
+      "startedAt": "2026-10-24T17:09:14.431Z",
+      "completedAt": "2026-10-24T17:10:32.840Z",
+      "output": "Generado: arquitectura_proyectofabricaagentes.md",
+      "commits": [
+        "7a2690dbc4d2fe0279fe60e1413cfe8789ac6b0b"
+      ],
+      "filesModified": [
+        "arquitectura_proyectofabricaagentes.md"
+      ]
     },
     {
       "id": "task-1792861692408-2",
       "title": "Crear casos de prueba específicos para errores de validación en el endpoint de usuarios",
       "description": "[ARCH/DEV] Crear casos de prueba específicos para errores de validación en el endpoint de usuarios",
       "agent": "arch",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T17:10:34.857Z"
     },
     {
       "id": "task-1792861692408-3",
@@ -88,6 +97,7 @@
     "isCompleted": true
   },
   "filesChanged": [
-    "STRATEGY.md"
+    "STRATEGY.md",
+    "arquitectura_proyectofabricaagentes.md"
   ]
 }
