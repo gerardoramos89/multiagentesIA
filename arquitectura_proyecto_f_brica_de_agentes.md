@@ -1,8 +1,8 @@
 # Arquitectura del Proyecto de Fábrica de Agentes
 
 ## 1. Introducción
-El proyecto de Fábrica de Agentes tiene como objetivo principal desarrollar un sistema autónomo de gestión de sprints con inteligencia artificial (IA). El sistema estará construido utilizando las siguientes tecnologías:
-- Frontend: Next.js, React, Tailwind
+El proyecto de Fábrica de Agentes tiene como objetivo principal desarrollar un sistema autónomo de gestión de sprints con inteligencia artificial (IA). Este sistema estará construido utilizando las siguientes tecnologías:
+- Frontend: Next.js, React, Tailwind CSS
 - Backend: Node.js
 - IA: Ollama
 - Integración: Trello API, GitHub API
@@ -12,62 +12,59 @@ La estructura de carpetas del proyecto se organizará de la siguiente manera:
 
 ```
 /proyecto-fábrica-de-agentes
-├── /src
-│   ├── /components
-│   │   ├── /common
-│   │   ├── /pages
-│   │   ├── /features
-│   │   └── /layouts
-│   ├── /context
-│   ├── /hooks
-│   ├── /services
-│   ├── /store
-│   └── /types
-├── /public
-├── /node_modules
-├── /config
-├── /scripts
-├── /tests
-├── /docs
-│   ├── /arquitectura
-│   └── /guías
-├── package.json
-├── .gitignore
-├── README.md
+  /src
+    /components
+    /context
+    /hooks
+    /pages
+    /public
+    /services
+    /utils
+  /config
+  /docs
+  /scripts
+  /tests
 ```
 
 ## 3. Patrones de Diseño
-### 3.1. Patrón de Contexto (Context API)
-Se utilizará el Patrón de Contexto para la gestión de estados globales y propiedades compartidas. Esto permitirá una gestión centralizada de datos y estados, facilitando la sincronización y la comunicación entre componentes.
+### 3.1. Patrón de Diseño de Contexto (Context API)
+Se utilizará el Patrón de Diseño de Contexto para la gestión de estados globales. Esto permitirá una distribución clara y eficiente de los datos y funciones a través de la aplicación.
 
-### 3.2. Patrón de Diseño de Servicios (Service Pattern)
-Se implementará el Patrón de Diseño de Servicios para abstraer la lógica de negocio y las operaciones de datos. Cada servicio estará encapsulado en su propio módulo, facilitando la testeabilidad y la modularidad del código.
+### 3.2. Patrón de Diseño de Hooks (Custom Hooks)
+Se implementarán custom hooks para abstraer la lógica de negocio y reutilización de código.
 
 ## 4. Decisiones Técnicas
-### 4.1. Autenticación y Seguridad
-Se implementará un sistema de autenticación robusto utilizando JSON Web Tokens (JWT) y OAuth 2.0. Además, se utilizarán prácticas de seguridad como el manejo adecuado de permisos y la validación de entradas para proteger la información y los datos sensibles.
+### 4.1. Administración de Estado
+El estado global de la aplicación se gestionará mediante el Context API de React. Esto asegurará una gestión eficiente y predecible del estado de la aplicación.
 
-### 4.2. Escalabilidad
-Para garantizar la escalabilidad del sistema, se utilizarán contenedores de Docker para el despliegue de aplicaciones y servicios. Además, se implementarán patrones de escalabilidad como el uso de clusters de servidores y el balanceo de carga para manejar un mayor número de solicitudes y usuarios.
+### 4.2. Autenticación y Seguridad
+La autenticación de usuarios se realizará mediante OAuth con GitHub API. Todas las comunicaciones entre el frontend y el backend serán seguras utilizando HTTPS.
 
-### 4.3. Integración con APIs Externas
-La integración con APIs externas como Trello y GitHub se realizará mediante middlewares y servicios específicos. Se implementarán políticas de reintento y manejo de errores para garantizar la robustez y la confiabilidad de las integraciones.
+### 4.3. Escalabilidad
+La arquitectura de microservicios se implementará utilizando Node.js y Express para el backend. Esto permitirá una escalabilidad horizontal y una gestión más eficiente de los componentes del sistema.
 
-## 5. Documentación de Decisiones Técnicas (ADR)
-- [ADR-001: Sistema de Autenticación](docs/arquitectura/ADR-001-sistema-de-autenticación.md)
-- [ADR-002: Patrón de Contexto](docs/arquitectura/ADR-002-patrón-de-contexto.md)
-- [ADR-003: Integración con APIs Externas](docs/arquitectura/ADR-003-integración-con-apis-externas.md)
+## 5. Integración con APIs
+### 5.1. Integración con Trello API
+La integración con Trello API permitirá la gestión de sprints y tareas. Se utilizarán queries y mutations para interactuar con la API de Trello.
 
-## 6. Roles y Responsabilidades
-### 6.1. Equipo de Desarrollo
-- **Arquitecto de Software Principal (Staff Engineer)**: Responsable de la arquitectura general del sistema, definición de patrones de diseño, decisiones técnicas y aseguramiento de la calidad del código.
-- **Desarrollador Frontend**: Responsable del desarrollo y mantenimiento del frontend utilizando React y Next.js.
-- **Desarrollador Backend**: Responsable del desarrollo y mantenimiento del backend utilizando Node.js.
-- **Ingeniero de Datos**: Responsable de la integración con APIs externas y la gestión de datos.
-- **Ingeniero de IA**: Responsable del desarrollo y entrenamiento del modelo de IA utilizando Ollama.
+### 5.2. Integración con GitHub API
+La integración con GitHub API permitirá la gestión de repositorios y colaboradores. Se utilizarán queries y mutations para interactuar con la API de GitHub.
 
-### 6.2. Comunicación y Colaboración
-Se establecerán reuniones regulares (meetings) y canales de comunicación (slack, teams) para mantener una comunicación fluida y colaborativa entre los miembros del equipo.
+## 6. Herramientas y Tecnologías
+- **Next.js**: Para el frontend, proporcionando SSR y generación de sitios estáticos.
+- **React**: Para la construcción de interfaces de usuario.
+- **Tailwind CSS**: Para estilos y componentes de diseño.
+- **Node.js**: Para el backend y la gestión de servicios.
+- **Ollama**: Para la inteligencia artificial en el sistema.
 
-## 7. Conclusiones
-Este documento proporciona una visión general de la arquitectura del Proyecto de Fábrica de Agentes, incluyendo la estructura de carpetas, patrones de diseño, decisiones técnicas y roles y responsabilidades del equipo. Estas definiciones claras ayudarán a evitar confusiones y a asegurar un desarrollo eficiente y efectivo del proyecto.
+## 7. Seguridad
+- **Autenticación OAuth con GitHub API**: Para la autenticación de usuarios.
+- **HTTPS**: Para todas las comunicaciones entre el frontend y el backend.
+- **Validaciones**: Implementación de validaciones en el frontend y backend para proteger la integridad de los datos.
+
+## 8. Reducción de Deuda Técnica
+- **Pruebas Unitarias y de Integración**: Implementación de pruebas automatizadas para reducir riesgos y mejorar la calidad del código.
+- **Revisión Continua**: Implementación de sistemas de revisión continua para detectar y corregir problemas temprano en el ciclo de desarrollo.
+
+## 9. Conclusiones
+Este documento ha detallado la arquitectura del Proyecto de Fábrica de Agentes, incluyendo la estructura de carpetas, patrones de diseño, decisiones técnicas, escalabilidad, seguridad y reducción de deuda técnica. Esta arquitectura asegura una implementación eficiente y escalable del sistema de gestión de sprints con IA.
