@@ -72,15 +72,24 @@
       "title": "Añadir tests de integración para el endpoint de usuarios",
       "description": "[DEV/QA] Añadir tests de integración para el endpoint de usuarios",
       "agent": "dev",
-      "status": "working",
-      "startedAt": "2026-10-24T16:01:16.147Z"
+      "status": "done",
+      "startedAt": "2026-10-24T16:01:16.147Z",
+      "completedAt": "2026-10-24T16:02:12.689Z",
+      "output": "Generado: nombre_del_archivo.ext",
+      "commits": [
+        "ff3787e592f27a6ff216b2cfa14d46bdaf8da56c"
+      ],
+      "filesModified": [
+        "nombre_del_archivo.ext"
+      ]
     },
     {
       "id": "task-1792857408506-5",
       "title": "Actualizar el diagrama de flujo en el manual de operaciones",
       "description": "[DEV/QA] Actualizar el diagrama de flujo en el manual de operaciones",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T16:02:14.698Z"
     },
     {
       "id": "task-1792857408506-6",
