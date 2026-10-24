@@ -24,15 +24,24 @@
       "title": "[ARCH] Diseñar e implementar un sistema de persistencia en localStorage para guardar el historial de sprints y que no se pierda al recargar el Dashboard.",
       "description": "[ARCH] Diseñar e implementar un sistema de persistencia en localStorage para guardar el historial de sprints y que no se pierda al recargar el Dashboard.",
       "agent": "arch",
-      "status": "working",
-      "startedAt": "2026-10-24T05:46:01.839Z"
+      "status": "done",
+      "startedAt": "2026-10-24T05:46:01.839Z",
+      "completedAt": "2026-10-24T05:46:55.876Z",
+      "output": "Generado: sistema_persistencia_localstorage.md",
+      "commits": [
+        "d0b15530d7cba56b150880949c1206098052f027"
+      ],
+      "filesModified": [
+        "sistema_persistencia_localstorage.md"
+      ]
     },
     {
       "id": "task-1792820689114-2",
       "title": "Mejorar el componente 3D 'AgentWorkPanel' para que muestre una barra de progreso animada mientras el agente está generando el código en Ollama.",
       "description": "[DEV] Mejorar el componente 3D 'AgentWorkPanel' para que muestre una barra de progreso animada mientras el agente está generando el código en Ollama.",
       "agent": "dev",
-      "status": "pending"
+      "status": "working",
+      "startedAt": "2026-10-24T05:46:57.897Z"
     },
     {
       "id": "task-1792820689114-3",
@@ -74,6 +83,7 @@
     "isCompleted": true
   },
   "filesChanged": [
-    "Strategy.md"
+    "Strategy.md",
+    "sistema_persistencia_localstorage.md"
   ]
 }
